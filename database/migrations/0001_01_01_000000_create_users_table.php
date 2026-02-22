@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\UserStatus;
+use App\Enums\UserType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('status', UserStatus::values())->default(UserStatus::default());
+            $table->enum('type', UserType::values())->default(UserType::default());
             $table->rememberToken();
             $table->timestamps();
         });
