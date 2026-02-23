@@ -32,11 +32,8 @@ Lumexa is a multi-tenant SaaS platform providing:
 
 -   Organization and user management
 -   Role-based access control (system/admin/customer portals)
--   Lead and call center management
--   Dark web breach monitoring with AI summaries
--   Billing integration (Stripe)
+-   Billing integration (Laravel Cashier - Stripe)
 -   Real-time notifications (Reverb)
--   API-first architecture
 
 **Key Principles:**
 
@@ -52,7 +49,7 @@ Lumexa is a multi-tenant SaaS platform providing:
 ### Backend
 
 -   **Framework:** Laravel 12
--   **Database:** MySQL/PostgreSQL
+-   **Database:** MySQL/PostgreSQL/SQLite
 -   **Cache:** Redis
 -   **Queue:** Laravel Queue
 -   **Authentication:** Sanctum + Laravel built-in
@@ -62,19 +59,13 @@ Lumexa is a multi-tenant SaaS platform providing:
 
 ### Frontend
 
--   **UI:** React 19 (optional)
--   **Meta-Framework:** Inertia.js 2
+-   **UI:** Livewire
 -   **Styling:** Tailwind CSS 4
 -   **Components:** Livewire 3
--   **Charts:** Chart.js / ApexCharts
 
 ### External Services
 
--   **Twilio** - VoIP & SMS
 -   **Stripe** - Payments
--   **AI Provider** - AI content generation
--   **Dark Web Scan SDK** - Breach detection
--   **Pusher/Reverb** - Real-time events
 
 ---
 
@@ -99,9 +90,6 @@ Lumexa-portal/
 │   ├── Providers/            # Service providers
 │   └── Tenancy/              # Multi-tenancy support
 ├── modules/                  # Feature modules
-│   ├── ai-studio/
-│   ├── callcenter/
-│   ├── campaign/
 │   ├── invitation/
 │   ├── leadmanage/
 │   └── onboarding/
@@ -185,26 +173,6 @@ Relations: companies(), services()
 Relations: company(), product()
 ```
 
-### DarkWebScan (Breach)
-
-```
-- id, name, title, domain
-- breach_date, added_date, pwn_count
-- description, summary (AI-generated)
-- data_classes (JSON), is_verified, is_sensitive
-
-Relations: users() (via MonitorEmail), blogs()
-```
-
-### MonitorEmail
-
-```
-- id, company_id, user_id, email
-- is_active, last_checked_at
-
-Relations: company(), user(), breaches()
-```
-
 ### Invitation
 
 ```
@@ -223,9 +191,9 @@ Relations: company()
 **System Admin Portal**
 
 -   Access: System administrators
--   Routes: `/administrator`, `/system`
+-   Routes: `/administrator`, `/system` or configureable
 -   Capabilities: System settings, all companies/users, service configs
--   Middleware: `administrator`
+-   Middleware: `administrator` or `super`
 
 **Admin Portal**
 
@@ -245,40 +213,13 @@ Relations: company()
 
 **Roles:** Super Admin, Admin, Manager, Editor, User/Customer
 
-**Permissions:** manage_users, manage_companies, manage_billing, manage_products, view_reports, manage_campaigns, manage_leads, manage_callcenter, access_monitoring, generate_ai_content
+**Permissions:** manage_users, manage_companies, manage_billing, manage_products, view_reports, manage_leads, access_monitoring, generate_ai_content
 
 **Enforcement:** Gates in `AuthServiceProvider`, Policy-based checks
 
 ---
 
 ## Modules
-
-### AI Studio
-
-AI-powered content generation for breach reporting and other AI features.
-
--   OpenAI integration
--   Breach summary generation
--   Blog post generation
--   Prompt management
-
-### Call Center
-
-VoIP management with Twilio integration.
-
--   Inbound/outbound calls
--   Call recording and storage
--   Automatic transcription
--   Call queue and routing
--   Analytics
-
-### Campaign
-
-Marketing campaign management and execution.
-
--   Campaign creation
--   Multi-channel execution
--   Analytics and reporting
 
 ### Lead Management
 
@@ -287,8 +228,7 @@ Lead tracking and sales enablement.
 -   CSV/Excel import
 -   Status tracking (new, contacted, qualified, lost)
 -   Assignment and routing
--   Lead scoring
--   Vendor integration
+-   Lead formating
 
 ### Onboarding
 
@@ -319,14 +259,13 @@ User invitation and account creation.
 1. Email/Password - Traditional login
 2. Phone Authentication - SMS via Twilio
 3. API Tokens - Sanctum for programmatic access
-5. Webhooks - Signature verification (Twilio, API provider)
+4. Webhooks - Signature verification (Twilio, API provider)
 
 ### Middleware Stack
 
 ```
 - twilio: Validate Twilio signature
 - api: Sanctum + JSON + Throttle
-- auth: Require authentication
 - two-factor: Phone or authenticator app
 - admin: Admin role required
 - customer: Customer role required
@@ -532,7 +471,6 @@ app(DarkWebService::class)->syncBreaches($monitor);
 ### Technologies
 
 -   **Livewire 3-4** - Interactive components (tables, forms, charts)
--   **Inertia.js** - Server-driven frontend
 -   **Tailwind CSS 4** - Utility styling
 -   **Heroicons/Lucide** - Icons
 -   **Chart.js/ApexCharts** - Visualizations
@@ -671,18 +609,5 @@ composer run test         # Run all tests
 -   Health checks verified
 -   Rollback plan ready
 
----
 
-## Summary
-
-Lumexa is a modern, scalable Laravel SaaS platform with:
-
--   **Robust multi-tenancy** - Company-based isolation with flexible access
--   **Security-first** - Role-based access, encryption, audit logging
--   **Modular design** - feature modules with clear boundaries
--   **API-first** - RESTful endpoints with Sanctum authentication
--   **Real-time** - WebSocket support via Reverb
-
-**Key Features:** User/org management, lead tracking, call center, breach monitoring with AI, billing, real-time notifications
-
-**Tech:** Laravel 12, PHP 8.2+, React, Tailwind, Pest, Stripe, Twilio, OpenAI
+**Tech:** Laravel 12, PHP 8.2+, Tailwind, Pest, Stripe
