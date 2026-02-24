@@ -54,6 +54,13 @@ return [
 
     'channels' => [
 
+        // create a  custom database log channel
+        'database' => [
+            'driver'  => 'monolog',
+            'handler' => App\Logging\DatabaseHandler::class,
+            'tap'     => [App\Logging\AddCallerIntrospection::class],
+        ],
+
         'stack' => [
             'driver'            => 'stack',
             'channels'          => explode(',', (string) env('LOG_STACK', 'single')),
