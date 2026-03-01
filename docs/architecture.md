@@ -164,15 +164,6 @@ Relations: users()
 Relations: companies(), services()
 ```
 
-### Service
-
-```
-- id, company_id, product_id
-- settings (JSON), is_active
-
-Relations: company(), product()
-```
-
 ### Invitation
 
 ```
