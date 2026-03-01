@@ -44,6 +44,17 @@ Lumexa is a multi-tenant SaaS platform providing:
 
 ---
 
+## Terminology
+
+| Term | Meaning |
+|------|---------|
+| **Tenant / Company** | The client organization - these are the same thing |
+| **User** | People who work at the company |
+| **System Admin** | You (the platform owner) |
+| **Company Admin** | Admin user within a specific company |
+
+---
+
 ## Technology Stack
 
 ### Backend
