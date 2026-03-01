@@ -67,8 +67,7 @@ class Company extends Model
         'timezone',
         'currency',
         'country',
-        'status',
-        'is_public',
+        'is_active',
         'created_by',
         'updated_by',
     ];
@@ -80,9 +79,8 @@ class Company extends Model
      */
     protected $casts = [
         'config'    => 'array',
-        'status'    => 'boolean',
+        'is_active' => 'boolean',
         'is_msp'    => 'boolean',
-        'is_public' => 'boolean',
     ];
 
     /**
@@ -107,6 +105,8 @@ class Company extends Model
 
     /**
      * Get all user for this compoany
+     *
+     * @return BelongsToMany<User>
      */
     public function users(): BelongsToMany
     {
@@ -115,6 +115,8 @@ class Company extends Model
 
     /**
      * Get admin users
+     *
+     * @return BelongsToMany<User>
      */
     public function admins(): BelongsToMany
     {
@@ -123,9 +125,21 @@ class Company extends Model
 
     /**
      * Get customers
+     *
+     * @return BelongsToMany<User>
      */
     public function customers(): BelongsToMany
     {
         return $this->users()->wherePivot('role', self::ROLE_CUSTOMER);
+    }
+
+    /**
+     * Products assigned to the company.
+     *
+     * @return BelongsToMany<Product>
+     */
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'company_product')->withTimestamps();
     }
 }

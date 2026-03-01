@@ -24,14 +24,14 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
+            $table->boolean('is_active')->default(true)->index();
 
             $table->string('language')->default('en');
             $table->string('timezone')->default('UTC');
             $table->string('currency')->default('USD');
             $table->string('country')->default('US');
-            $table->string('status')->default(false);
-            $table->boolean('is_public')->default(true);
-            $table->text('config')->nullable();
+
+            $table->json('settings')->nullable();
 
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
