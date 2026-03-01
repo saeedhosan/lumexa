@@ -32,6 +32,7 @@ class User extends Authenticatable
         'status',
         'password',
         'type',
+        'current_company_id',
     ];
 
     /**
@@ -75,9 +76,9 @@ class User extends Authenticatable
      *
      * Used when a user has a default or active company.
      */
-    public function company(): BelongsTo
+    public function currentCompany(): BelongsTo
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Company::class, 'current_company_id');
     }
 
     /**

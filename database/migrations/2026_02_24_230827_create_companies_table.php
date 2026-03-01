@@ -39,16 +39,20 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::table('users', function (Blueprint $table): void {
-            $table->foreignIdFor(Company::class)->nullable()->constrained()->nullOnDelete();
-        });
-
         Schema::create('company_user', function (Blueprint $table): void {
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Company::class)->constrained()->cascadeOnDelete();
             $table->string('role')->default(Company::ROLE_CUSTOMER);
+            $table->primary(['user_id', 'company_id']);
             $table->unique(['user_id', 'company_id']);
             $table->timestamps();
+        });
+
+        Schema::table('users', function (Blueprint $table): void {
+            $table->foreignIdFor(Company::class, 'current_company_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
         });
     }
 
@@ -60,9 +64,9 @@ return new class extends Migration
         Schema::dropIfExists('company_user');
 
         Schema::table('users', function (Blueprint $table): void {
-            if (Schema::hasColumn('users', 'company_id')) {
-                $table->dropForeign(['company_id']);
-                $table->dropColumn('company_id');
+            if (Schema::hasColumn('users', 'current_company_id')) {
+                $table->dropForeign(['current_company_id']);
+                $table->dropColumn('current_company_id');
             }
         });
 
