@@ -17,23 +17,24 @@ Lumexa is a multi-tenant SaaS platform where companies subscribe to plans that g
 
 ### 1. Products (What You Offer)
 
-Products are the features or services your platform provides. Examples:
-- Breach Monitoring
-- Lead Management
-- Dark Web Scanning
-- AI Content Generation
+Products are the SaaS features or services your platform provides:
+
+| Product | Code | Goal |
+|---------|------|------|
+| Breach Monitoring | `breach_monitoring` | Monitor emails for data breaches |
+| Lead Management | `lead_management` | Track and manage sales leads |
 
 Each product can be enabled/disabled and has its own settings.
 
 ### 2. Plans (Subscription Tiers)
 
-Plans group products together into pricing tiers. Example:
+Plans group products together into pricing tiers:
 
-| Plan | Products Included | Typical Use |
+| Plan | Products Included | User Limit |
 |------|-------------------|-------------|
-| **Startup** | Basic Monitoring, 1 User | Small teams |
-| **Standard** | Full Monitoring, Lead Management, 5 Users | Growing businesses |
-| **Business** | All Products, Unlimited Users | Enterprises |
+| **Starter** | Breach Monitoring | 1 user |
+| **Professional** | Breach Monitoring + Lead Management | 5 users |
+| **Enterprise** | All products | Unlimited users |
 
 ### 3. Company (Tenant)
 
@@ -66,10 +67,31 @@ Users
 
 | Table | Purpose |
 |-------|---------|
-| `plans` | Stores plan info (name, price, description) |
+| `products` | Available features/services (name, code, settings) |
+| `plans` | Subscription tiers (name, limits, Stripe price IDs) |
 | `plan_products` | Links plans to products (which products are in which plan) |
-| `companies` | Has `plan_id` to track current subscription |
-| `products` | Available features/services |
+| `companies` | Has `plan_id`, `plan_started_at`, `plan_ends_at` |
+
+### Relationships
+
+```
+Plan (1) ──────< (many) PlanProduct >────── (1) Product
+  │
+  └── Company (belongs_to Plan)
+        │
+        └── Users (inherit access through company)
+```
+
+### How Access Control Works
+
+1. User logs in → System loads their company
+2. Company has a plan → Plan defines accessible products
+3. Feature check → UI shows upgrade prompt if product not included
+
+```php
+// Check if company can access a product
+$company->plan->products->contains('code', 'lead_management');
+```
 
 ## Key Benefits
 
@@ -84,5 +106,6 @@ Users
 When needed, you can add:
 - Usage-based billing (per email monitored, per lead, etc.)
 - Custom plans per company
-- Trial periods
+- Trial periods with `trial_days` on plans
 - Invoice management
+- Per-company product overrides (bypass plan)
