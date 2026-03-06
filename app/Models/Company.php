@@ -68,6 +68,7 @@ class Company extends Model
         'currency',
         'country',
         'is_active',
+        'plan_id',
         'created_by',
         'updated_by',
     ];
@@ -141,5 +142,15 @@ class Company extends Model
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'company_product')->withTimestamps();
+    }
+
+    /**
+     * The plan assigned to the company.
+     *
+     * @return BelongsTo<Plan, $this>
+     */
+    public function plan(): BelongsTo
+    {
+        return $this->belongsTo(Plan::class);
     }
 }
