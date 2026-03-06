@@ -29,7 +29,12 @@ Plan {
   trial_days: integer   // Trial period (0 = no trial)
   max_users: integer   // 0 = unlimited
   
-  // Store Price IDs from Stripe Dashboard
+  // Display prices (for customers)
+  price_monthly: decimal(10,2)   // 29.00
+  price_yearly: decimal(10,2)   // 290.00
+  currency: string              // USD
+  
+  // Stripe Price IDs (for checkout)
   stripe_price_id_monthly: string|null
   stripe_price_id_yearly: string|null
   
@@ -38,6 +43,45 @@ Plan {
   
   timestamps
 }
+```
+
+### Migration
+
+```php
+Schema::create('plans', function (Blueprint $table) {
+    $table->id();
+    $table->string('name');
+    $table->string('slug')->unique();
+    $table->text('description')->nullable();
+    $table->boolean('is_active')->default(true);
+    $table->boolean('is_default')->default(false);
+    $table->integer('trial_days')->default(14);
+    $table->integer('max_users')->default(5);
+    
+    // Display prices
+    $table->decimal('price_monthly', 10, 2)->nullable();
+    $table->decimal('price_yearly', 10, 2)->nullable();
+    $table->string('currency')->default('USD');
+    
+    // Stripe Price IDs
+    $table->string('stripe_price_id_monthly')->nullable();
+    $table->string('stripe_price_id_yearly')->nullable();
+    
+    $table->json('features')->nullable();
+    $table->json('settings')->nullable();
+    $table->timestamps();
+});
+```
+
+### Displaying Prices
+
+```blade
+<!-- In pricing page -->
+${{ $plan->price_monthly }} / month
+${{ $plan->price_yearly }} / year
+
+<!-- With currency -->
+{{ $plan->currency }} {{ number_format($plan->price_monthly, 2) }} / month
 ```
 
 ### Plan-Product Relationship
@@ -101,13 +145,18 @@ $company->newSubscription('default', $plan->stripe_price_id_monthly)
     ->checkout();
 ```
 
-### Pass Price from Client
+### Checkout with Plan
 
-If you don't store Price IDs in Plan:
+Use Price ID from Plan to create subscription:
 
 ```php
-// From form: $request->price_id
-$company->newSubscription('default', $request->price_id)
+// Get the price based on billing cycle
+$priceId = $request->billing_cycle === 'yearly' 
+    ? $plan->stripe_price_id_yearly 
+    : $plan->stripe_price_id_monthly;
+
+$company->newSubscription('default', $priceId)
+    ->trialDays($plan->trial_days)
     ->checkout();
 ```
 
