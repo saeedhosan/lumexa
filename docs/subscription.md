@@ -1,6 +1,6 @@
 # Subscriptions
 
-This document covers Plans and billing with Laravel Cashier (Stripe).
+Plans and billing with Laravel Cashier (Stripe).
 
 > For Products (features), see [docs/product-pro.md](product-pro.md)
 
@@ -8,15 +8,13 @@ This document covers Plans and billing with Laravel Cashier (Stripe).
 
 ## Plans
 
-Plans bundle products into subscription tiers.
+| Plan | Products | Users | Monthly | Yearly |
+|------|----------|-------|---------|--------|
+| Starter | Breach Monitoring | 1 | $9 | $90 |
+| Professional | Breach Monitoring + Lead Management | 5 | $29 | $290 |
+| Enterprise | All products | Unlimited | $99 | $990 |
 
-| Plan | Products | Users | Monthly Price |
-|------|----------|-------|---------------|
-| Starter | Breach Monitoring | 1 | $9 |
-| Professional | Breach Monitoring + Lead Management | 5 | $29 |
-| Enterprise | All products | Unlimited | $99 |
-
-### Plan Data Model
+## Plan Data Model
 
 ```php
 Plan {
@@ -26,77 +24,41 @@ Plan {
   description: string   // Short description
   is_active: boolean    // Available for subscription
   is_default: boolean   // Default for new companies
-  trial_days: integer   // Trial period (0 = no trial)
+  trial_days: integer   // Trial period
   max_users: integer   // 0 = unlimited
   
-  // Display prices (for customers)
-  price_monthly: decimal(10,2)   // 29.00
-  price_yearly: decimal(10,2)   // 290.00
-  currency: string              // USD
+  // Display prices
+  price_monthly: decimal(10,2)
+  price_yearly: decimal(10,2)
+  currency: string
   
-  // Stripe Price IDs (for checkout)
+  // Stripe Price IDs
   stripe_price_id_monthly: string|null
   stripe_price_id_yearly: string|null
   
-  features: json       // Feature flags
-  settings: json      // Settings
-  
+  features: json
+  settings: json
   timestamps
 }
 ```
 
-### Migration
+## Migration
 
-```php
-Schema::create('plans', function (Blueprint $table) {
-    $table->id();
-    $table->string('name');
-    $table->string('slug')->unique();
-    $table->text('description')->nullable();
-    $table->boolean('is_active')->default(true);
-    $table->boolean('is_default')->default(false);
-    $table->integer('trial_days')->default(14);
-    $table->integer('max_users')->default(5);
-    
-    // Display prices
-    $table->decimal('price_monthly', 10, 2)->nullable();
-    $table->decimal('price_yearly', 10, 2)->nullable();
-    $table->string('currency')->default('USD');
-    
-    // Stripe Price IDs
-    $table->string('stripe_price_id_monthly')->nullable();
-    $table->string('stripe_price_id_yearly')->nullable();
-    
-    $table->json('features')->nullable();
-    $table->json('settings')->nullable();
-    $table->timestamps();
-});
+```bash
+php artisan migrate
 ```
 
-### Displaying Prices
-
-```blade
-<!-- In pricing page -->
-${{ $plan->price_monthly }} / month
-${{ $plan->price_yearly }} / year
-
-<!-- With currency -->
-{{ $plan->currency }} {{ number_format($plan->price_monthly, 2) }} / month
-```
-
-### Plan-Product Relationship
-
-```
-Plan (1) ──────< (many) PlanProduct >────── (1) Product
-```
-
-A Plan has many Products through the pivot table.
+Creates:
+- `plans` table with price columns
+- `plan_products` pivot table
+- `plan_id` column on `companies` table
+- Cashier columns on `companies` table
 
 ---
 
 ## Laravel Cashier Setup
 
-### 1. Install Cashier
+### 1. Install
 
 ```bash
 composer require laravel/cashier
@@ -120,41 +82,17 @@ php artisan vendor:publish --tag="cashier-migrations"
 php artisan migrate
 ```
 
-Cashier adds these columns to `companies`:
-- `stripe_customer_id`
-- `stripe_subscription_id`
-- `stripe_price_id`
-- `stripe_current_period_end`
-
 ---
 
 ## Creating Subscriptions
 
-### Basic Checkout
-
 ```php
-$company->newSubscription('default', 'price_pro_monthly')
-    ->checkout();
-```
-
-### With Trial
-
-```php
-$company->newSubscription('default', $plan->stripe_price_id_monthly)
-    ->trialDays($plan->trial_days)
-    ->checkout();
-```
-
-### Checkout with Plan
-
-Use Price ID from Plan to create subscription:
-
-```php
-// Get the price based on billing cycle
+// Get price based on billing cycle
 $priceId = $request->billing_cycle === 'yearly' 
     ? $plan->stripe_price_id_yearly 
     : $plan->stripe_price_id_monthly;
 
+// Create subscription
 $company->newSubscription('default', $priceId)
     ->trialDays($plan->trial_days)
     ->checkout();
@@ -162,30 +100,25 @@ $company->newSubscription('default', $priceId)
 
 ---
 
-## Checking Subscription Status
+## Checking Status
 
 ```php
 // Has active subscription?
 $company->subscribed('default');
 
 // Get subscription
-$subscription = $company->subscription('default');
-
-// Is active?
-$subscription->active();
+$company->subscription('default')->active();
 
 // Cancel
 $company->subscription('default')->cancel();
 
-// Swap to different price
+// Swap plan
 $company->subscription('default')->swap('price_enterprise_monthly');
 ```
 
 ---
 
 ## Webhooks
-
-Add the webhook route to handle Stripe events:
 
 ```php
 // routes/callback.php
@@ -194,7 +127,7 @@ Route::post('/stripe/webhook',
 );
 ```
 
-Enable these events in Stripe Dashboard:
+Enable in Stripe Dashboard:
 - `customer.subscription.created`
 - `customer.subscription.updated`
 - `customer.subscription.deleted`
@@ -203,34 +136,15 @@ Enable these events in Stripe Dashboard:
 
 ---
 
-## User Flow
-
-```
-1. User signs up → Create Company
-2. User selects Plan → Choose Starter/Pro/Enterprise
-3. Redirect to Stripe Checkout → Pay
-4. Stripe webhook → Subscription created in database
-5. User accesses Products → Based on Plan
-```
-
----
-
 ## Quick Reference
 
 ```php
-// Create subscription
-$company->newSubscription('default', $priceId)->checkout();
+// Display price
+${{ $plan->price_monthly }} / month
 
-// Check if subscribed
+// Checkout
+$company->newSubscription('default', $plan->stripe_price_id_monthly)->checkout();
+
+// Check subscription
 $company->subscribed('default');
-
-// Get subscription
-$company->subscription('default')->active();
-
-// Cancel
-$company->subscription('default')->cancel();
 ```
-
----
-
-**End of Subscription Documentation**

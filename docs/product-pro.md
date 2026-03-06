@@ -29,22 +29,17 @@ Product {
 ## Relationships
 
 ```
-Plan ──────< PlanProduct >────── Product
+Plan (1) ──────< (many) PlanProduct >────── (1) Product
 ```
 
-- Plan has many Products (via `plan_products` pivot)
-- Product belongs to many Plans
+- Plan has many Products (`$plan->products()`)
+- Product belongs to many Plans (`$product->plans()`)
 
 ## Access Control
 
-Check if a company can access a product:
-
 ```php
-// Simple check
+// Check if company can access a product
 $company->plan->products->contains('code', 'lead_management');
-
-// Or use ProductService
-app(ProductService::class)->isAccessible($company, 'lead_management');
 ```
 
 ## Blade Directive
