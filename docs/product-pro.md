@@ -96,10 +96,6 @@ Plan {
   is_default: boolean  // Default for new companies
   trial_days: integer  // Trial period (0 = no trial)
   
-  // Stripe integration
-  stripe_price_id_monthly: string|null
-  stripe_price_id_yearly: string|null
-  
   // Limits
   max_users: integer    // 0 = unlimited
   
@@ -134,9 +130,6 @@ Schema::create('plans', function (Blueprint $table) {
     $table->boolean('is_default')->default(false);
     $table->integer('trial_days')->default(14);
     
-    $table->string('stripe_price_id_monthly')->nullable();
-    $table->string('stripe_price_id_yearly')->nullable();
-    
     $table->integer('max_users')->default(5);
     $table->json('features')->nullable();
     $table->json('settings')->nullable();
@@ -151,14 +144,17 @@ Schema::create('plan_products', function (Blueprint $table) {
     $table->primary(['plan_id', 'product_id']);
 });
 
-// Add plan_id to companies
+// Add plan_id to companies (Cashier adds stripe columns automatically)
 Schema::table('companies', function (Blueprint $table) {
     $table->foreignId('plan_id')->nullable()->constrained()->nullOnDelete();
-    $table->timestamp('plan_started_at')->nullable();
-    $table->timestamp('plan_ends_at')->nullable();
-    $table->string('stripe_subscription_id')->nullable();
 });
+
+// Run Cashier migrations separately:
+// php artisan vendor:publish --tag="cashier-migrations"
+// php artisan migrate
 ```
+
+> **Note:** Laravel Cashier automatically adds `stripe_customer_id`, `stripe_subscription_id`, `stripe_price_id`, `stripe_current_period_end`, and other billing columns to the `companies` table when you run its migrations.
 
 ---
 
@@ -230,6 +226,56 @@ class ToggleProductAction
 ---
 
 ## 6. Access Control & Feature Gating
+
+### Laravel Cashier Integration
+
+The Company model uses Laravel Cashier's `Billable` trait for Stripe subscriptions:
+
+```php
+use Laravel\Cashier\Billable;
+
+class Company extends Model
+{
+    use Billable;
+    
+    // ... relationships
+}
+```
+
+#### Creating a Subscription
+
+```php
+// In a controller or service
+$company->newSubscription('default', 'price_pro ->trial_monthly')
+   Days(14)
+    ->checkout();
+```
+
+#### Checking Subscription Status
+
+```php
+// Check if subscribed
+$company->subscribed('default');
+
+// Get active subscription
+$subscription = $company->subscription('default');
+$subscription->active();
+
+// Check specific price
+$company->subscribedToPrice('price_pro_monthly');
+```
+
+#### Webhook Route
+
+```php
+// routes/callback.php
+Route::post('/stripe/webhook', \Laravel\Cashier\Http\Controllers\WebhookController::class);
+```
+
+Enable these events in Stripe Dashboard:
+- `customer.subscription.created`
+- `customer.subscription.updated`
+- `customer.subscription.deleted`
 
 ### How It Works
 

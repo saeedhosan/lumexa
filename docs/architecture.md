@@ -64,7 +64,7 @@ Lumexa is a multi-tenant SaaS platform providing:
 -   **Cache:** Redis
 -   **Queue:** Laravel Queue
 -   **Authentication:** Sanctum + Laravel built-in
--   **Billing:** Laravel Cashier (Stripe)
+-   **Billing:** Laravel Cashier (Stripe) - Subscriptions, webhooks, invoice management
 -   **Testing:** Pest PHP
 -   **Code Quality:** PHPStan, Laravel Pint, Rector
 
@@ -319,7 +319,7 @@ TenantContext {
 | customer.php      | / or /customer | customer      | Customer dashboard         |
 | system.php        | /system        | administrator | System operations          |
 | auth.php          | /auth          | guest\|auth   | Authentication flows       |
-| callback.php      | /callback      | -             | Stripe/Twilio/GHL webhooks |
+| callback.php      | /callback      | -             | Stripe/Twilio/GHL webhooks     |
 | administrator.php | /administrator | administrator | System configuration       |
 
 ### Key API Endpoints
@@ -398,8 +398,11 @@ app(DarkWebService::class)->syncBreaches($monitor);
 1. Collect company info → Create Company
 2. Collect user info → Create User (admin role)
 3. User selects products
-4. Create Stripe checkout session (if paid)
-5. Stripe webhook → Update user plan
+4. Create Stripe checkout session via Cashier:
+   ```php
+   $company->newSubscription('default', 'price_pro_monthly')->checkout();
+   ```
+5. Stripe webhook → Cashier creates subscription in `subscriptions` table
 6. Redirect to admin dashboard
 
 ### 3. Breach Monitoring
@@ -441,11 +444,41 @@ app(DarkWebService::class)->syncBreaches($monitor);
 
 ### Billing
 
--   Stripe integration via Laravel Cashier
+-   Stripe integration via **Laravel Cashier**
+-   Company model uses `Billable` trait
 -   Three-tier plans: Free, Pro, Enterprise
--   Checkout session creation
--   Webhook handling (success/failure)
--   Plan updates on payment
+-   Checkout session creation via `$company->newSubscription()`
+-   Webhook handling for subscription lifecycle
+-   Plan updates on payment events
+
+### Laravel Cashier Setup
+
+```php
+// Company model (app/Models/Company.php)
+use Laravel\Cashier\Billable;
+
+class Company extends Model
+{
+    use Billable;
+}
+```
+
+```bash
+# Publish Cashier migrations
+php artisan vendor:publish --tag="cashier-migrations"
+php artisan migrate
+```
+
+```php
+// Subscription checkout
+$company->newSubscription('default', 'price_pro_monthly')
+    ->checkout();
+
+// Webhook route (routes/callback.php)
+Route::post('/stripe/webhook', 
+    \Laravel\Cashier\Http\Controllers\WebhookController::class
+);
+```
 
 ---
 
