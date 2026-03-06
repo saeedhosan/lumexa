@@ -31,7 +31,7 @@
 Lumexa is a multi-tenant SaaS platform providing:
 
 -   Organization and user management
--   Role-based access control (system/admin/customer portals)
+-   Role-based access control (administrator/admin/customer portals)
 -   Billing integration (Laravel Cashier - Stripe)
 -   Real-time notifications (Reverb)
 
@@ -50,7 +50,7 @@ Lumexa is a multi-tenant SaaS platform providing:
 |------|---------|
 | **Tenant / Company** | The client organization - these are the same thing |
 | **User** | People who work at the company |
-| **System Admin** | You (the platform owner) |
+| **Administrator** | You (the platform owner) |
 | **Company Admin** | Admin user within a specific company |
 
 ---
@@ -114,7 +114,7 @@ Lumexa-portal/
 │   ├── api.php               # API endpoints
 │   ├── admin.php             # Admin panel
 │   ├── customer.php          # Customer portal
-│   ├── system.php            # System operations
+│   ├── administrator.php     # System operations
 │   ├── auth.php              # Auth flows
 │   └── callback.php          # Webhooks
 ├── resources/
@@ -136,7 +136,7 @@ Lumexa-portal/
 
 ```
 - id, uid, company_id
-- portal: system|admin|customer
+- portal: administrator|admin|customer
 - status: active|inactive|blocked|invited
 - plan_id, is_admin, is_customer, is_manager
 
@@ -188,13 +188,13 @@ Relations: company()
 
 ## Portal & Access Control
 
-### Three-Tier Portal System
+### Three-Tier Portal administrator
 
-**System Admin Portal**
+**administrator Portal**
 
--   Access: System administrators
+-   Access: administrator
 -   Routes: `/administrator`, `/system` or configureable
--   Capabilities: System settings, all companies/users, service configs
+-   Capabilities: administrator settings, all companies/users, service configs
 -   Middleware: `administrator` or `super`
 
 **Admin Portal**
@@ -296,7 +296,7 @@ TenantContext {
 
 -   User's primary company_id
 -   Multi-company access via pivot table
--   System users bypass tenancy
+-   Administrator users bypass tenancy
 -   Tenants access child companies
 
 **Enforcement:**
@@ -317,7 +317,6 @@ TenantContext {
 | api.php           | /api           | api           | REST API                   |
 | admin.php         | /admin         | admin         | Admin management           |
 | customer.php      | / or /customer | customer      | Customer dashboard         |
-| system.php        | /system        | administrator | System operations          |
 | auth.php          | /auth          | guest\|auth   | Authentication flows       |
 | callback.php      | /callback      | -             | Stripe/Twilio/GHL webhooks     |
 | administrator.php | /administrator | administrator | System configuration       |
@@ -461,7 +460,7 @@ app(DarkWebService::class)->syncBreaches($monitor);
 ```
 - admin/ - Admin portal views
 - customer/ - Customer portal views
-- administrator/ - System admin views
+- administrator/ - administrator views
 - components/ - Reusable Blade components
 - auth/ - Auth pages (login, register, 2FA)
 ```
@@ -481,7 +480,7 @@ app(DarkWebService::class)->syncBreaches($monitor);
 
 -   `AdminMiddleware` - Restrict admin portal to admins
 -   `CustomerMiddleware` - Restrict customer portal to customers
--   `AdministratorMiddleware` - Restrict system access to super admins
+-   `AdministratorMiddleware` - Restrict administrator access to super admins
 -   `VerifyTwilioSignature` - Validate Twilio webhooks
 
 ### Security Practices
@@ -510,8 +509,6 @@ All schema changes version-controlled.
 
 ### Seeders
 
--   `RoleSeeder` - System roles
--   `PermissionSeeder` - System permissions
 -   `PlanSeeder` - Subscription plans
 -   `ProductSeeder` - Product catalog
 
