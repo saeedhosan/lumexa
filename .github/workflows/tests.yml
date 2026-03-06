@@ -52,7 +52,7 @@ jobs:
             ${{ runner.os }}-composer-${{ matrix.php }}-
 
       - name: Install PHP Dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-progress
+        run: composer update --no-interaction --prefer-dist --optimize-autoloader --no-progress
 
       - name: Copy Environment File
         run: cp .env.example .env
