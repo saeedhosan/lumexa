@@ -4,15 +4,63 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Models\Company;
 use Illuminate\Database\Seeder;
 
 class CompanySeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        //
+        $companies = [
+            [
+                'name'        => 'Acme Corporation',
+                'slug'        => 'acme-corporation',
+                'description' => 'A leading technology solutions provider.',
+                'language'    => 'en',
+                'timezone'    => 'America/New_York',
+                'currency'    => 'USD',
+                'country'     => 'US',
+                'is_active'   => true,
+                'settings'    => [
+                    'notifications' => ['email', 'push'],
+                    'theme'         => 'light',
+                ],
+            ],
+            [
+                'name'        => 'TechStart Inc',
+                'slug'        => 'techstart-inc',
+                'description' => 'Innovative startup focused on AI solutions.',
+                'language'    => 'en',
+                'timezone'    => 'America/Los_Angeles',
+                'currency'    => 'USD',
+                'country'     => 'US',
+                'is_active'   => true,
+                'settings'    => [
+                    'notifications' => ['email', 'sms'],
+                    'theme'         => 'dark',
+                ],
+            ],
+            [
+                'name'        => 'Global Systems Ltd',
+                'slug'        => 'global-systems-ltd',
+                'description' => 'Enterprise-level managed service provider.',
+                'language'    => 'en',
+                'timezone'    => 'Europe/London',
+                'currency'    => 'GBP',
+                'country'     => 'GB',
+                'is_active'   => true,
+                'settings'    => [
+                    'notifications' => ['email', 'push', 'webhook'],
+                    'theme'         => 'light',
+                ],
+            ],
+        ];
+
+        foreach ($companies as $companyData) {
+            Company::updateOrCreate(
+                ['slug' => $companyData['slug']],
+                $companyData
+            );
+        }
     }
 }
