@@ -397,13 +397,9 @@ app(DarkWebService::class)->syncBreaches($monitor);
 
 1. Collect company info → Create Company
 2. Collect user info → Create User (admin role)
-3. User selects products
-4. Create Stripe checkout session via Cashier:
-   ```php
-   $company->newSubscription('default', 'price_pro_monthly')->checkout();
-   ```
-5. Stripe webhook → Cashier creates subscription in `subscriptions` table
-6. Redirect to admin dashboard
+3. User selects plan → Create Stripe checkout (see [docs/subscription.md](subscription.md))
+4. Stripe webhook → Subscription created
+5. Redirect to admin dashboard
 
 ### 3. Breach Monitoring
 
@@ -445,40 +441,7 @@ app(DarkWebService::class)->syncBreaches($monitor);
 ### Billing
 
 -   Stripe integration via **Laravel Cashier**
--   Company model uses `Billable` trait
--   Three-tier plans: Free, Pro, Enterprise
--   Checkout session creation via `$company->newSubscription()`
--   Webhook handling for subscription lifecycle
--   Plan updates on payment events
-
-### Laravel Cashier Setup
-
-```php
-// Company model (app/Models/Company.php)
-use Laravel\Cashier\Billable;
-
-class Company extends Model
-{
-    use Billable;
-}
-```
-
-```bash
-# Publish Cashier migrations
-php artisan vendor:publish --tag="cashier-migrations"
-php artisan migrate
-```
-
-```php
-// Subscription checkout
-$company->newSubscription('default', 'price_pro_monthly')
-    ->checkout();
-
-// Webhook route (routes/callback.php)
-Route::post('/stripe/webhook', 
-    \Laravel\Cashier\Http\Controllers\WebhookController::class
-);
-```
+-   See [docs/subscription.md](subscription.md) for full details
 
 ---
 
