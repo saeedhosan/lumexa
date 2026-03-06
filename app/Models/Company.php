@@ -69,6 +69,7 @@ class Company extends Model
         'country',
         'is_active',
         'plan_id',
+        'settings',
         'created_by',
         'updated_by',
     ];
@@ -79,7 +80,7 @@ class Company extends Model
      * @return array<string, string>
      */
     protected $casts = [
-        'config'    => 'array',
+        'settings'  => 'array',
         'is_active' => 'boolean',
         'is_msp'    => 'boolean',
     ];
