@@ -73,6 +73,16 @@ class Product extends Model
     }
 
     /**
+     * The plans that include this product.
+     *
+     * @return BelongsToMany<Plan>
+     */
+    public function plans(): BelongsToMany
+    {
+        return $this->belongsToMany(Plan::class, 'plan_products')->withTimestamps();
+    }
+
+    /**
      * User who created the product.
      *
      * @return BelongsTo<User, $this>
