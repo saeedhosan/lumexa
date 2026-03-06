@@ -11,7 +11,6 @@ enum Access: string
     case client   = 'access:client';
     case manager  = 'access.manager';
     case admin    = 'access:admin';
-    case msp      = 'access:msp';
     case ghl      = 'access:ghl';
 
     /**
@@ -42,7 +41,6 @@ enum Access: string
     public static function admins(): array
     {
         return [
-            self::msp->value,
             self::admin->value,
             self::client->value,
             self::manager->value,

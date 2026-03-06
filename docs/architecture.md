@@ -138,7 +138,7 @@ Lumexa-portal/
 - id, uid, company_id
 - portal: system|admin|customer
 - status: active|inactive|blocked|invited
-- plan_id, is_admin, is_customer, is_msp, is_manager
+- plan_id, is_admin, is_customer, is_manager
 
 Relations: company(), companies(), account(), plan(),
            breaches(), metas(), monitorEmails()
@@ -148,7 +148,7 @@ Relations: company(), companies(), account(), plan(),
 
 ```
 - id, uuid, slug, name, logo
-- is_msp, is_public, owner_id, parent_id (for hierarchy)
+- is_public, owner_id, parent_id (for hierarchy)
 - config (JSON)
 
 Roles: USER, CLIENT, EDITOR, MANAGER, ADMIN, OWNER
@@ -280,7 +280,7 @@ User invitation and account creation.
 
 ## Multi-Tenancy
 
-**Tenant Model:** Company (organization/MSP)
+**Tenant Model:** Company (organization)
 
 **Tenant Context:**
 
@@ -297,7 +297,7 @@ TenantContext {
 -   User's primary company_id
 -   Multi-company access via pivot table
 -   System users bypass tenancy
--   MSP tenants access child companies
+-   Tenants access child companies
 
 **Enforcement:**
 

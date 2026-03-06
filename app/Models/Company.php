@@ -82,7 +82,6 @@ class Company extends Model
     protected $casts = [
         'settings'  => 'array',
         'is_active' => 'boolean',
-        'is_msp'    => 'boolean',
     ];
 
     /**
