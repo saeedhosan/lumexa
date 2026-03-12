@@ -189,7 +189,7 @@ This document defines all routes for the three portal types: Administrator, Admi
 
 **Prefix:** `/` or `/customer`  
 **Middleware:** `customer`  
-**Purpose:** End-user features including breach monitoring and personal settings.
+**Purpose:** End-user features including leadlist, breach monitoring and personal settings.
 
 ### Dashboard
 
@@ -198,33 +198,52 @@ This document defines all routes for the three portal types: Administrator, Admi
 | GET | / | Customer dashboard |
 | GET | /dashboard | Customer dashboard (alternative) |
 
+### Companies
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | /companies | List companies customer has access to |
+| GET | /companies/{company} | View company details |
+| GET | /companies/{company}/edit | Show edit company form |
+| PUT | /companies/{company} | Update company |
+
+### Products
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | /products | List products available to customer |
+| GET | /products/{product} | View product details |
+
+### Leads
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | /leads | List leads |
+| POST | /leads | Create lead |
+| GET | /leads/import | Show import form |
+| POST | /leads/import | Import leads from CSV/Excel |
+| GET | /leads/{lead} | View lead details |
+| PUT | /leads/{lead} | Update lead |
+| DELETE | /leads/{lead} | Delete lead |
+| PUT | /leads/{lead}/status | Update lead status |
+| POST | /leads/{lead}/assign | Assign lead to member |
+
 ### Breach Monitoring
 
 | Method | Path | Purpose |
 |--------|------|---------|
-| GET | /breaches | List all breaches |
+| GET | /breaches | View breach monitoring dashboard |
 | GET | /breaches/{breach} | View breach details |
-| GET | /breaches/export | Export breaches data |
+| POST | /breaches/{breach}/acknowledge | Acknowledge breach |
 
-### Monitored Emails
-
-| Method | Path | Purpose |
-|--------|------|---------|
-| GET | /monitored-emails | List monitored emails |
-| POST | /monitored-emails | Add email to monitor |
-| GET | /monitored-emails/create | Show add email form |
-| GET | /monitored-emails/{email} | View monitored email details |
-| DELETE | /monitored-emails/{email} | Remove monitored email |
-| POST | /monitored-emails/{email}/rescan | Rescan email for breaches |
-
-### Alerts
+### Activity
 
 | Method | Path | Purpose |
 |--------|------|---------|
-| GET | /alerts | List all alerts |
-| GET | /alerts/{alert} | View alert details |
-| PUT | /alerts/{alert} | Update alert preferences |
-| DELETE | /alerts/{alert} | Dismiss alert |
+| GET | /activity | View activity history |
+
+
+## All User 
 
 ### Settings
 
@@ -247,16 +266,6 @@ This document defines all routes for the three portal types: Administrator, Admi
 | PUT | /profile/avatar | Update avatar |
 | DELETE | /profile/avatar | Remove avatar |
 
----
-
-## API Endpoints
-
-| Method | Path | Purpose |
-|--------|------|---------|
-| POST | /api/generate-token | Generate API token |
-| POST | /api/auth/phone | Phone authentication |
-
----
 
 ## Module Routes
 
@@ -299,7 +308,7 @@ Module-specific routes should be defined in `modules/*/routes/`.
 |------|--------|------------|--------|
 | administrator.php | /administrator | administrator | ~40 |
 | admin.php | /admin | admin | ~30 |
-| customer.php | / | customer | ~25 |
+| customer.php | / | customer | ~45 |
 | api.php | /api | api | 2+ |
 | Module routes | varies | varies | varies |
 
