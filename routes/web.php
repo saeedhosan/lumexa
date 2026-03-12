@@ -14,13 +14,9 @@ Route::view('dashboard', 'dashboard')
 
 require __DIR__.'/settings.php';
 
-Route::prefix('administrator')
-    ->name('administrator.')
-    ->middleware('auth', 'super')
-    ->group(base_path('/routes/administrator.php'));
-
-Route::prefix('admin')->name('admin.')->middleware('auth', 'admin')->group(base_path('routes/admin.php'));
-
-Route::name('customer.')->middleware('auth', 'customer')->group(base_path('routes/customer.php'));
-
-Route::name('user.')->middleware('auth')->group(base_path('/routes/user.php'));
+Route::middleware('auth')->group(function () {
+    Route::name('super.')->middleware('super')->prefix('super')->group(base_path('routes/super.php'));
+    Route::name('admin.')->middleware('admin')->prefix('admin')->group(base_path('routes/admin.php'));
+    Route::name('customer')->middleware('customer')->group(base_path('routes/customer.php'));
+    Route::name('user.')->group(base_path('routes/user.php'));
+});
