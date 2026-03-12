@@ -13,7 +13,23 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+
+        $middleware->alias([
+            'super'    => App\Http\Middleware\AdministratorMiddleware::class,
+            'admin'    => App\Http\Middleware\AdminMiddleware::class,
+            'customer' => App\Http\Middleware\CustomerMiddleware::class,
+        ]);
+
+        $middleware->group('admin', [
+            App\Http\Middleware\AdminMiddleware::class,
+            SaeedHosan\Tenancy\Http\Middleware\TenantMiddleware::class,
+        ]);
+
+        $middleware->group('customer', [
+            Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+            SaeedHosan\Tenancy\Http\Middleware\TenantMiddleware::class,
+            App\Http\Middleware\CustomerMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
