@@ -13,3 +13,8 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 require __DIR__.'/settings.php';
+
+Route::prefix('administrator')
+    ->name('administrator.')
+    ->middleware('auth', 'super')
+    ->group(base_path('/routes/administrator.php'));
