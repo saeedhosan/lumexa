@@ -18,3 +18,5 @@ Route::prefix('administrator')
     ->name('administrator.')
     ->middleware('auth', 'super')
     ->group(base_path('/routes/administrator.php'));
+
+Route::prefix('admin')->name('admin.')->middleware('auth', 'admin')->group(base_path('routes/admin.php'));
