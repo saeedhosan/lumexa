@@ -196,6 +196,112 @@ Located in: `resources/views/components/desktop-user-menu.blade.php`
 
 ---
 
+## Company Switcher
+
+Allows users to switch between companies they belong to. Shows current active company and a list of other accessible companies.
+
+**Location:** `resources/views/components/company-switcher.blade.php` (to be created)
+
+**Usage:** Place in sidebar header area, below logo
+
+**Flux UI Components:**
+- `flux:dropdown` - Dropdown container
+- `flux:sidebar.profile` - Profile button with company name
+- `flux:menu` - Company list container
+- `flux:menu.item` - Individual company option
+- `flux:avatar` - Company logo/initial avatar
+- `flux:icon` - Check mark for active company
+
+### Structure
+
+```blade
+<flux:dropdown position="bottom" align="start">
+    <flux:sidebar.profile
+        :name="$currentCompany?->name ?? 'Select Company'"
+        icon:trailing="chevrons-up-down"
+    />
+
+    <flux:menu class="w-72">
+        <div class="px-2 py-1.5 text-xs font-medium text-zinc-500">
+            {{ __('Switch Company') }}
+        </div>
+
+        <flux:menu.separator />
+
+        @forelse($companies as $company)
+            <form method="POST" action="{{ route('company.switch', $company) }}">
+                @csrf
+                <flux:menu.item as="button" type="submit" class="w-full">
+                    <div class="flex items-center gap-3">
+                        <flux:avatar :name="$company->name" />
+                        <div class="grid flex-1 text-start">
+                            <flux:heading level="5" size="sm">{{ $company->name }}</flux:heading>
+                            <flux:text size="xs">{{ $company->pivot->role ?? 'Member' }}</flux:text>
+                        </div>
+                        @if($company->id === $currentCompany?->id)
+                            <flux:icon name="check" class="size-4" />
+                        @endif
+                    </div>
+                </flux:menu.item>
+            </form>
+        @empty
+            <flux:menu.item disabled>{{ __('No companies available') }}</flux:menu.item>
+        @endforelse
+
+        <flux:menu.separator />
+
+        <flux:menu.item href="{{ route('company.create') }}" icon="plus">
+            {{ __('Add Company') }}
+        </flux:menu.item>
+    </flux:menu>
+</flux:dropdown>
+```
+
+### Data Requirements
+
+**Passed to component:**
+- `$currentCompany` - The user's currently active company (from `auth()->user()->currentCompany`)
+- `$companies` - Collection of companies user belongs to (from `auth()->user()->companies`)
+
+**Route for switching:**
+```php
+Route::post('company/{company}/switch', [CompanyController::class, 'switch'])->name('company.switch');
+```
+
+**Action for switching:**
+```php
+// App/Actions/SwitchCompany.php
+class SwitchCompany
+{
+    public function __invoke(User $user, Company $company): RedirectResponse
+    {
+        // Validate user belongs to company
+        // Update user's current_company_id
+        // Redirect back
+    }
+}
+```
+
+### Placement in Sidebar
+
+Add after logo in `resources/views/layouts/app/sidebar.blade.php`:
+
+```blade
+<flux:sidebar.header>
+    <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
+    <flux:sidebar.collapse class="lg:hidden" />
+</flux:sidebar.header>
+
+<!-- Company Switcher -->
+<x-company-switcher />
+
+<flux:sidebar.nav>
+    <!-- menu items -->
+</flux:sidebar.nav>
+```
+
+---
+
 ## Footer
 
 Currently not implemented as a separate layout component. Footer content can be added directly within the main content area using standard Blade templates or as a custom component.
