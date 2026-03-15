@@ -40,6 +40,190 @@ This document describes the UI layout components available in Lumexa, built with
 
 ---
 
+## Admin Layout
+
+**Component:** `layouts::admin` (to be created - wraps `layouts::app.sidebar`)  
+**Route prefix:** `/admin`  
+**Middleware:** `admin`  
+**Usage:** `<x-layouts::admin :title="__('Admin Dashboard')"> {{ $slot }} </x-layouts::admin>`
+
+| Prop | Type | Description |
+|------|------|-------------|
+| title | string | Page title (optional) |
+
+### Menu Items (from `routes/admin.php`)
+
+| Route Name | URL | Description |
+|------------|-----|-------------|
+| admin.home | /admin | Dashboard |
+| admin.dashboard | /admin/dashboard | Dashboard |
+| admin.company.index | /admin/company | Companies |
+| admin.memebers.index | /admin/memebers | Members |
+| admin.products.index | /admin/products | Products |
+| admin.billing.index | /admin/billing | Billing |
+| admin.invoices.index | /admin/invoices | Invoices |
+| admin.invites.index | /admin/invites | Invitations |
+| admin.reports.index | /admin/reports | Reports |
+
+### Sidebar Structure
+
+```blade
+<flux:sidebar.nav>
+    <flux:sidebar.group :heading="__('Overview')">
+        <flux:sidebar.item icon="home" :href="route('admin.home')" wire:navigate>
+            {{ __('Dashboard') }}
+        </flux:sidebar.item>
+    </flux:sidebar.group>
+
+    <flux:sidebar.group :heading="__('Management')">
+        <flux:sidebar.item icon="building-office" :href="route('admin.company.index')" wire:navigate>
+            {{ __('Companies') }}
+        </flux:sidebar.item>
+        <flux:sidebar.item icon="users" :href="route('admin.memebers.index')" wire:navigate>
+            {{ __('Members') }}
+        </flux:sidebar.item>
+        <flux:sidebar.item icon="cube" :href="route('admin.products.index')" wire:navigate>
+            {{ __('Products') }}
+        </flux:sidebar.item>
+    </flux:sidebar.group>
+
+    <flux:sidebar.group :heading="__('Finance')">
+        <flux:sidebar.item icon="credit-card" :href="route('admin.billing.index')" wire:navigate>
+            {{ __('Billing') }}
+        </flux:sidebar.item>
+        <flux:sidebar.item icon="document-text" :href="route('admin.invoices.index')" wire:navigate>
+            {{ __('Invoices') }}
+        </flux:sidebar.item>
+    </flux:sidebar.group>
+
+    <flux:sidebar.group :heading="__('Settings')">
+        <flux:sidebar.item icon="envelope" :href="route('admin.invites.index')" wire:navigate>
+            {{ __('Invitations') }}
+        </flux:sidebar.item>
+        <flux:sidebar.item icon="chart-bar" :href="route('admin.reports.index')" wire:navigate>
+            {{ __('Reports') }}
+        </flux:sidebar.item>
+    </flux:sidebar.group>
+</flux:sidebar.nav>
+```
+
+---
+
+## Administrator Layout
+
+**Component:** `layouts::administrator` (to be created - wraps `layouts::app.sidebar`)  
+**Route prefix:** `/administrator` or `/super`  
+**Middleware:** `super` or `administrator`  
+**Usage:** `<x-layouts::administrator :title="__('System Dashboard')"> {{ $slot }} </x-layouts::administrator>`
+
+| Prop | Type | Description |
+|------|------|-------------|
+| title | string | Page title (optional) |
+
+### Menu Items (from `routes/super.php`)
+
+| Route Name | URL | Description |
+|------------|-----|-------------|
+| super.home | /super | Dashboard |
+| super.dashobard | /super/dashobard | Dashboard |
+| super.logs.index | /super/logs | System Logs |
+| super.users.index | /super/users | Users |
+| super.plans.index | /super/plans | Plans |
+| super.companies.index | /super/companies | Companies |
+| super.products.index | /super/products | Products |
+| super.settings.index | /super/settings | Settings |
+
+### Sidebar Structure
+
+```blade
+<flux:sidebar.nav>
+    <flux:sidebar.group :heading="__('Overview')">
+        <flux:sidebar.item icon="home" :href="route('super.home')" wire:navigate>
+            {{ __('Dashboard') }}
+        </flux:sidebar.item>
+    </flux:sidebar.group>
+
+    <flux:sidebar.group :heading="__('System')">
+        <flux:sidebar.item icon="users" :href="route('super.users.index')" wire:navigate>
+            {{ __('Users') }}
+        </flux:sidebar.item>
+        <flux:sidebar.item icon="building-office" :href="route('super.companies.index')" wire:navigate>
+            {{ __('Companies') }}
+        </flux:sidebar.item>
+        <flux:sidebar.item icon="cube" :href="route('super.products.index')" wire:navigate>
+            {{ __('Products') }}
+        </flux:sidebar.item>
+    </flux:sidebar.group>
+
+    <flux:sidebar.group :heading="__('Billing')">
+        <flux:sidebar.item icon="currency-dollar" :href="route('super.plans.index')" wire:navigate>
+            {{ __('Plans') }}
+        </flux:sidebar.item>
+    </flux:sidebar.group>
+
+    <flux:sidebar.group :heading=__("__('Maintenance')">
+        <flux:sidebar.item icon="document-text" :href="route('super.logs.index')" wire:navigate>
+            {{ __('Logs') }}
+        </flux:sidebar.item>
+        <flux:sidebar.item icon="cog" :href="route('super.settings.index')" wire:navigate>
+            {{ __('Settings') }}
+        </flux:sidebar.item>
+    </flux:sidebar.group>
+</flux:sidebar.nav>
+```
+
+---
+
+## Customer Layout
+
+**Component:** `layouts::customer` (to be created - wraps `layouts::app.sidebar`)  
+**Route prefix:** `/` or `/customer`  
+**Middleware:** `customer`  
+**Usage:** `<x-layouts::customer :title="__('My Dashboard')"> {{ $slot }} </x-layouts::customer>`
+
+| Prop | Type | Description |
+|------|------|-------------|
+| title | string | Page title (optional) |
+
+### Menu Items (from `routes/customer.php`)
+
+| Route Name | URL | Description |
+|------------|-----|-------------|
+| customer.leads.index | /leads | Leads |
+| customer.breaches.index | /breaches | Breaches |
+| customer.products.index | /products | Products |
+| customer.companies.index | /companies | Companies |
+| customer.activities.index | /activities | Activities |
+
+### Sidebar Structure
+
+```blade
+<flux:sidebar.nav>
+    <flux:sidebar.group :heading="__('Core')">
+        <flux:sidebar.item icon="megaphone" :href="route('customer.leads.index')" wire:navigate>
+            {{ __('Leads') }}
+        </flux:sidebar.item>
+        <flux:sidebar.item icon="shield-exclamation" :href="route('customer.breaches.index')" wire:navigate>
+            {{ __('Breaches') }}
+        </flux:sidebar.item>
+    </flux:sidebar.group>
+
+    <flux:sidebar.group :heading="__('Management')">
+        <flux:sidebar.item icon="cube" :href="route('customer.products.index')" wire:navigate>
+            {{ __('Products') }}
+        </flux:sidebar.item>
+        <flux:sidebar.item icon="building-office" :href="route('customer.companies.index')" wire:navigate>
+            {{ __('Companies') }}
+        </flux:sidebar.item>
+        <flux:sidebar.item icon="clock" :href="route('customer.activities.index')" wire:navigate>
+            {{ __('Activities') }}
+        </flux:sidebar.item>
+    </flux:sidebar.group>
+</flux:sidebar.nav>
+```
+
+---
+
 ## Header / Topbar
 
 Located in: `resources/views/layouts/app/header.blade.php`
