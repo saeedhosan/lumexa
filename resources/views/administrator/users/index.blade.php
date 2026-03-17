@@ -1,12 +1,18 @@
 <x-layouts::administrator title="All users">
 
     <div class="flex items-center justify-between mb-6">
-        <form method="GET" action="{{ route('super.users.index') }}" class="flex-1 max-w-md" x-data="{ search: '{{ $search ?? '' }}' }" @submit.prevent>
-            <flux:input 
-                type="search" 
-                name="search" 
+        <form
+            method="GET"
+            action="{{ route('super.users.index') }}"
+            class="flex-1 max-w-md"
+            x-data="{ search: '{{ $search ?? '' }}' }"
+            @submit.prevent
+        >
+            <flux:input
+                type="search"
+                name="search"
                 value="{{ $search ?? '' }}"
-                placeholder="Search users..." 
+                placeholder="Search users..."
                 icon="magnifying-glass"
                 x-model="search"
                 @change="$el.closest('form').submit()"
@@ -61,7 +67,7 @@
                                     variant="ghost"
                                     size="sm"
                                     icon="trash"
-                                    wire:click="$dispatch('delete-user', {{ $user->id }})"
+                                    onclick="confirm('Are you sure want to delete?') && Livewire.dispatch('user-delete', { user: {{ $user->id }} })"
                                 />
                             </div>
                         </flux:table.cell>
