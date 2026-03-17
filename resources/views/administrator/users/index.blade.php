@@ -20,7 +20,7 @@
     </div>
 
     <div class="overflow-x-auto">
-        <flux:table :paginate="$users" class="min-w-full">
+        <flux:table class="min-w-full">
             <flux:table.columns>
                 <flux:table.column>Name</flux:table.column>
                 <flux:table.column>Email</flux:table.column>
@@ -69,6 +69,10 @@
                 @endforeach
             </flux:table.rows>
         </flux:table>
+    </div>
+
+    <div class="mt-4">
+        {{ $users->links() }}
     </div>
 
     <livewire:administrator.user-delete />
