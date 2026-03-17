@@ -13,9 +13,21 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->get('search');
+
+        $users = User::query()
+            ->with('currentCompany')
+            ->when($search, fn ($query) => $query->where(fn ($q) => $q
+                ->where('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+            ))
+            ->latest()
+            ->paginate()
+            ->withQueryString();
+
+        return view('administrator.users.index', compact('users', 'search'));
     }
 
     /**
@@ -23,7 +35,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('administrator.users.create');
     }
 
     /**
@@ -39,7 +51,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('administrator.users.show', compact('user'));
     }
 
     /**
@@ -47,7 +59,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('administrator.users.eidt', compact('user'));
     }
 
     /**
