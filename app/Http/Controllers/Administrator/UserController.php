@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Administrator;
 
+use App\Enums\UserStatus;
+use App\Enums\UserType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Administrator\UserStoreRequest;
+use App\Models\Company;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -35,15 +40,27 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('administrator.users.create');
+        $companies = Company::where('is_active', true)->orderBy('name')->get();
+        $statuses  = UserStatus::values();
+        $types     = UserType::values();
+
+        return view('administrator.users.create', compact('companies', 'statuses', 'types'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request): RedirectResponse
     {
-        //
+        $data = $request->validated();
+
+        $user = User::create($data);
+
+        if ($data['current_company_id']) {
+            $user->companies()->attach($data['current_company_id'], ['role' => Company::ROLE_CUSTOMER]);
+        }
+
+        return redirect()->route('super.users.index')->with('success', 'User created successfully.');
     }
 
     /**
