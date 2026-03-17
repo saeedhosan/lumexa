@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Enums\Access;
+use App\Enums\UserType;
 use Carbon\CarbonImmutable;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -26,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->withGateAccess();
     }
 
     /**
@@ -48,5 +53,12 @@ class AppServiceProvider extends ServiceProvider
                 ->uncompromised()
             : null
         );
+    }
+
+    private function withGateAccess()
+    {
+        Gate::define(Access::administrator, fn (Authenticatable $user) => $user->type === UserType::administrator);
+        Gate::define(Access::admin, fn (Authenticatable $user) => $user->type === UserType::admin);
+        Gate::define(Access::customer, fn (Authenticatable $user) => $user->type === UserType::customer);
     }
 }
