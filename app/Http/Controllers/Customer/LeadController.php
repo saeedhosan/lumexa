@@ -15,7 +15,7 @@ class LeadController extends Controller
      */
     public function index()
     {
-        //
+        return view('customer.leads.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class LeadController extends Controller
      */
     public function create()
     {
-        //
+        return view('customer.leads.create');
     }
 
     /**
@@ -39,7 +39,7 @@ class LeadController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('customer.leads.show', compact('product'));
     }
 
     /**
@@ -47,7 +47,7 @@ class LeadController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('customer.leads.edit', compact('product'));
     }
 
     /**
