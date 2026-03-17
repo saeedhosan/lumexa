@@ -14,7 +14,7 @@ class BillingController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.billing.index');
     }
 
     /**
@@ -22,7 +22,7 @@ class BillingController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.billing.create');
     }
 
     /**
@@ -38,7 +38,7 @@ class BillingController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('admin.billing.show', compact('id'));
     }
 
     /**
@@ -46,7 +46,7 @@ class BillingController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('admin.billing.edit', compact('id'));
     }
 
     /**

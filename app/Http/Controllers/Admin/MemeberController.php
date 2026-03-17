@@ -15,7 +15,7 @@ class MemeberController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.memebers.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class MemeberController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.memebers.create');
     }
 
     /**
@@ -39,7 +39,7 @@ class MemeberController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('admin.memebers.show', compact('user'));
     }
 
     /**
@@ -47,7 +47,7 @@ class MemeberController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('admin.memebers.edit', compact('user'));
     }
 
     /**
