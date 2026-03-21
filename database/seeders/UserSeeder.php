@@ -15,98 +15,31 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        $acme      = Company::where('slug', 'acme-corporation')->first();
-        $techstart = Company::where('slug', 'techstart-inc')->first();
-        $global    = Company::where('slug', 'global-systems-ltd')->first();
+        $google    = Company::where('slug', 'google')->first();
+        $amazon    = Company::where('slug', 'amazon')->first();
+        $microsoft = Company::where('slug', 'microsoft')->first();
 
-        $users = [
-            [
-                'name'              => 'John Smith',
-                'email'             => 'john@acme-corporation.com',
-                'password'          => Hash::make('password'),
-                'email_verified_at' => now(),
-                'status'            => UserStatus::active,
-                'type'              => UserType::admin,
-                'company'           => $acme,
-                'role'              => Company::ROLE_ADMIN,
-            ],
-            [
-                'name'              => 'Sarah Johnson',
-                'email'             => 'sarah@acme-corporation.com',
-                'password'          => Hash::make('password'),
-                'email_verified_at' => now(),
-                'status'            => UserStatus::active,
-                'type'              => UserType::customer,
-                'company'           => $acme,
-                'role'              => Company::ROLE_CUSTOMER,
-            ],
-            [
-                'name'              => 'Mike Chen',
-                'email'             => 'mike@techstart-inc.com',
-                'password'          => Hash::make('password'),
-                'email_verified_at' => now(),
-                'status'            => UserStatus::active,
-                'type'              => UserType::admin,
-                'company'           => $techstart,
-                'role'              => Company::ROLE_ADMIN,
-            ],
-            [
-                'name'              => 'Emily Davis',
-                'email'             => 'emily@techstart-inc.com',
-                'password'          => Hash::make('password'),
-                'email_verified_at' => now(),
-                'status'            => UserStatus::active,
-                'type'              => UserType::customer,
-                'company'           => $techstart,
-                'role'              => Company::ROLE_CUSTOMER,
-            ],
-            [
-                'name'              => 'David Wilson',
-                'email'             => 'david@global-systems-ltd.com',
-                'password'          => Hash::make('password'),
-                'email_verified_at' => now(),
-                'status'            => UserStatus::active,
-                'type'              => UserType::admin,
-                'company'           => $global,
-                'role'              => Company::ROLE_ADMIN,
-            ],
-            [
-                'name'              => 'Lisa Brown',
-                'email'             => 'lisa@global-systems-ltd.com',
-                'password'          => Hash::make('password'),
-                'email_verified_at' => now(),
-                'status'            => UserStatus::active,
-                'type'              => UserType::customer,
-                'company'           => $global,
-                'role'              => Company::ROLE_CUSTOMER,
-            ],
-            [
-                'name'              => 'Test User',
-                'email'             => 'test@example.com',
-                'password'          => Hash::make('password'),
-                'email_verified_at' => now(),
-                'status'            => UserStatus::active,
-                'type'              => UserType::customer,
-                'company'           => null,
-                'role'              => null,
-            ],
-        ];
+        $admin = User::query()->create([
+            'name'              => 'Admin user',
+            'email'             => 'admin@demo.com',
+            'password'          => Hash::make('1234'),
+            'email_verified_at' => now(),
+            'status'            => UserStatus::active,
+            'type'              => UserType::admin,
+        ]);
 
-        foreach ($users as $userData) {
-            $company = $userData['company'];
-            $role    = $userData['role'];
-            unset($userData['company'], $userData['role']);
+        $admin->companies()->sync($google);
 
-            $user = User::updateOrCreate(
-                ['email' => $userData['email']],
-                $userData
-            );
+        $user = User::query()->create([
+            'name'              => 'User',
+            'email'             => 'user@demo.com',
+            'password'          => Hash::make('1234'),
+            'email_verified_at' => now(),
+            'status'            => UserStatus::active,
+            'type'              => UserType::customer,
+        ]);
 
-            if ($company && $role) {
-                $user->companies()->syncWithoutDetaching([
-                    $company->id => ['role' => $role],
-                ]);
-            }
-        }
+        $user->companies()->sync([$google->id, $amazon->id, $microsoft->id]);
+
     }
 }

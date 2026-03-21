@@ -13,8 +13,8 @@ class CompanySeeder extends Seeder
     {
         $companies = [
             [
-                'name'        => 'Acme Corporation',
-                'slug'        => 'acme-corporation',
+                'name'        => 'Google',
+                'slug'        => 'google',
                 'description' => 'A leading technology solutions provider.',
                 'language'    => 'en',
                 'timezone'    => 'America/New_York',
@@ -27,8 +27,8 @@ class CompanySeeder extends Seeder
                 ],
             ],
             [
-                'name'        => 'TechStart Inc',
-                'slug'        => 'techstart-inc',
+                'name'        => 'Microsoft',
+                'slug'        => 'microsoft',
                 'description' => 'Innovative startup focused on AI solutions.',
                 'language'    => 'en',
                 'timezone'    => 'America/Los_Angeles',
@@ -41,8 +41,8 @@ class CompanySeeder extends Seeder
                 ],
             ],
             [
-                'name'        => 'Global Systems Ltd',
-                'slug'        => 'global-systems-ltd',
+                'name'        => 'Amazon',
+                'slug'        => 'amazon',
                 'description' => 'Enterprise-level managed service provider.',
                 'language'    => 'en',
                 'timezone'    => 'Europe/London',

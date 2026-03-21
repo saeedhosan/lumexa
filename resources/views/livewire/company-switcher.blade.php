@@ -1,12 +1,11 @@
 @php
-    $companies = $companies ?? collect();
-    $currentCompany = $currentCompany ?? null;
+    $companies = Auth::user()->companies;
+    $currentCompany = Auth::user()->currentCompany;
 @endphp
 
-@if($companies->count() > 0)
+@if ($companies->count() > 0)
     <flux:dropdown position="bottom" align="start">
-        <flux:sidebar.profile
-            :name="$currentCompany?->name ?? __('Select Company')"
+        <flux:sidebar.profile :name="$currentCompany?->name ?? __('Select Company')"
             icon:trailing="chevrons-up-down"
         />
 
@@ -18,18 +17,18 @@
             <flux:menu.separator />
 
             @forelse($companies as $company)
-                <flux:menu.item 
-                    wire:click="switchCompany({{ $company->id }})" 
-                    as="button" 
+                <flux:menu.item wire:click="switchCompany({{ $company->id }})" as="button"
                     class="w-full cursor-pointer"
                 >
                     <div class="flex items-center gap-3">
                         <flux:avatar :name="$company->name" />
                         <div class="grid flex-1 text-start">
-                            <flux:heading level="5" size="sm">{{ $company->name }}</flux:heading>
-                            <flux:text size="xs">{{ $company->pivot->role ?? 'Member' }}</flux:text>
+                            <flux:heading level="5" size="sm">{{ $company->name }}
+                            </flux:heading>
+                            <flux:text size="xs">{{ $company->pivot->role ?? 'Member' }}
+                            </flux:text>
                         </div>
-                        @if($company->id === $currentCompany?->id)
+                        @if ($company->id === $currentCompany?->id)
                             <flux:icon name="check" class="size-4" />
                         @endif
                     </div>

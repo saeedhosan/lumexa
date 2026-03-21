@@ -24,11 +24,13 @@ class CompanySwitcher extends Component
 
     public function switchCompany(Company $company): void
     {
-        if (! auth()->user()->companies()->where('companies.id', $company->id)->exists()) {
+        dd($company->name);
+
+        if (! Auth::user()->companies()->where('companies.id', $company->id)->exists()) {
             return;
         }
 
-        auth()->user()->update(['current_company_id' => $company->id]);
+        Auth::user()->update(['current_company_id' => $company->id]);
         $this->currentCompany = $company;
     }
 
