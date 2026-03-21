@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Additions\Eloquent\Concerns\HasBelongsToOne;
-use Additions\Models\Concerns\HasSlug;
-use Additions\Models\Concerns\HasUuid;
 use App\Observers\CompanyObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use SaeedHosan\Additions\Eloquent\Concerns\HasBelongsToOne;
+use SaeedHosan\Additions\Models\Concerns\HasSlug;
+use SaeedHosan\Additions\Models\Concerns\HasUuid;
 
 /**
  * @property int $id
@@ -37,7 +37,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 #[ObservedBy(CompanyObserver::class)]
 class Company extends Model
 {
-    /** @phpstan-ignore-next-line */
     use HasBelongsToOne, HasSlug, HasUuid;
 
     /** @use HasFactory<\Illuminate\Database\Eloquent\Factories\Factory> */
