@@ -22,12 +22,10 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->group('admin', [
             App\Http\Middleware\AdminMiddleware::class,
-            SaeedHosan\Tenancy\Http\Middleware\TenantMiddleware::class,
         ]);
 
         $middleware->group('customer', [
             Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-            SaeedHosan\Tenancy\Http\Middleware\TenantMiddleware::class,
             App\Http\Middleware\CustomerMiddleware::class,
         ]);
     })
