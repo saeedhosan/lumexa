@@ -6,7 +6,7 @@
         <flux:sidebar.collapse class="lg:hidden" />
     </flux:sidebar.header>
 
-    <x-company-switcher />
+    <livewire:company.switch />
 
     <flux:sidebar.nav>
         <flux:sidebar.group :heading="__('Overview')" class="grid">

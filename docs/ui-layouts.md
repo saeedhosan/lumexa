@@ -477,7 +477,7 @@ Add after logo in `resources/views/layouts/app/sidebar.blade.php`:
 </flux:sidebar.header>
 
 <!-- Company Switcher -->
-<x-company-switcher />
+<livewire:company.switcher />
 
 <flux:sidebar.nav>
     <!-- menu items -->
