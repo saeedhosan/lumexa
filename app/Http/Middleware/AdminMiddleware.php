@@ -27,7 +27,7 @@ class AdminMiddleware
             // redirect to customer dashboard
         }
 
-        if ($this->isAdministrator($request->user())) {
+        if ($this->isSuper($request->user())) {
             // redirect to administrator dashboard
         }
 
@@ -44,7 +44,7 @@ class AdminMiddleware
         return $user instanceof Authenticatable && $user->type === UserType::customer;
     }
 
-    private function isAdministrator(?Authenticatable $user)
+    private function isSuper(?Authenticatable $user)
     {
         return $user instanceof Authenticatable && $user->type === UserType::super;
     }

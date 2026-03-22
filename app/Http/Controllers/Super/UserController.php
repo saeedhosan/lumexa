@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Super;
 
 use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Administrator\UserStoreRequest;
+use App\Http\Requests\Super\UserStoreRequest;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -32,7 +32,7 @@ class UserController extends Controller
             ->paginate()
             ->withQueryString();
 
-        return view('administrator.users.index', compact('users', 'search'));
+        return view('super.users.index', compact('users', 'search'));
     }
 
     /**
@@ -44,7 +44,7 @@ class UserController extends Controller
         $statuses  = UserStatus::values();
         $types     = UserType::values();
 
-        return view('administrator.users.create', compact('companies', 'statuses', 'types'));
+        return view('super.users.create', compact('companies', 'statuses', 'types'));
     }
 
     /**
@@ -68,7 +68,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('administrator.users.show', compact('user'));
+        return view('super.users.show', compact('user'));
     }
 
     /**
@@ -76,7 +76,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('administrator.users.eidt', compact('user'));
+        return view('super.users.eidt', compact('user'));
     }
 
     /**

@@ -6,16 +6,16 @@ This document defines all routes for the three portal types: Administrator, Admi
 
 ## Table of Contents
 
-1. [Administrator Portal](#administrator-portal)
+1. [Super Portal](#super-portal)
 2. [Admin Portal](#admin-portal)
 3. [Customer Portal](#customer-portal)
 
 ---
 
-## Administrator Portal
+## Super Portal
 
-**Prefix:** `/administrator`  
-**Middleware:** `administrator` or `super`  
+**Prefix:** `/super`  
+**Middleware:** `super`  
 **Purpose:** System-wide administration, configuration, and oversight.
 
 ### Dashboard
@@ -306,7 +306,7 @@ Module-specific routes should be defined in `modules/*/routes/`.
 
 | File | Prefix | Middleware | Routes |
 |------|--------|------------|--------|
-| administrator.php | /administrator | administrator | ~40 |
+| super.php | /super | super | ~40 |
 | admin.php | /admin | admin | ~30 |
 | customer.php | / | customer | ~45 |
 | api.php | /api | api | 2+ |

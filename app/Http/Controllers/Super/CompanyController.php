@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Super;
 
 use App\Http\Controllers\Controller;
-use App\Models\Plan;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
-class PlanController extends Controller
+class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('administrator.plans.index');
+        return view('super.companies.index');
     }
 
     /**
@@ -37,7 +37,7 @@ class PlanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Plan $plan)
+    public function show(Company $company)
     {
         //
     }
@@ -45,7 +45,7 @@ class PlanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Plan $plan)
+    public function edit(Company $company)
     {
         //
     }
@@ -53,7 +53,7 @@ class PlanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Plan $plan)
+    public function update(Request $request, Company $company)
     {
         //
     }
@@ -61,7 +61,7 @@ class PlanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Plan $plan)
+    public function destroy(Company $company)
     {
         //
     }

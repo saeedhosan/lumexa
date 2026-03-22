@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests\Administrator;
+namespace App\Http\Requests\Super;
 
 use App\Enums\Access;
 use App\Enums\UserStatus;

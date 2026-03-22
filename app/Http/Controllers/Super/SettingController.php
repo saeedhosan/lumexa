@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Super;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Administrator\SettingStoreRequest;
+use App\Http\Requests\Super\SettingStoreRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -18,7 +18,7 @@ class SettingController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
-        return view('administrator.settings.index');
+        return view('super.settings.index');
     }
 
     /**

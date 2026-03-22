@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Administrator;
+namespace App\Livewire\Super;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;

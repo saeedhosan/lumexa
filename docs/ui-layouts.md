@@ -109,10 +109,10 @@ This document describes the UI layout components available in Lumexa, built with
 
 ---
 
-## Administrator Layout
+## Super Layout
 
-**Component:** `layouts::administrator` (to be created - wraps `layouts::app.sidebar`)  
-**Route prefix:** `/administrator` or `/super`  
+**Component:** `layouts::app` (to be created - wraps `layouts::app.sidebar`)  
+**Route prefix:** `/super` or `/super`  
 **Middleware:** `super` or `administrator`  
 **Usage:** `<x-layouts::apptitle="__('System Dashboard')"> {{ $slot }} </x-layouts:x-layouts::app
 

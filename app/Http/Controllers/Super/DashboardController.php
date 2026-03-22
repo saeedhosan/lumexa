@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Super;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,6 +14,6 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return view('administrator.dashboard');
+        return view('super.dashboard');
     }
 }

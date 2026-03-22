@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Administrator\CompanyController;
-use App\Http\Controllers\Administrator\DashboardController;
-use App\Http\Controllers\Administrator\LogController;
-use App\Http\Controllers\Administrator\PlanController;
-use App\Http\Controllers\Administrator\ProductController;
-use App\Http\Controllers\Administrator\SettingController;
-use App\Http\Controllers\Administrator\UserController;
+use App\Http\Controllers\Super\CompanyController;
+use App\Http\Controllers\Super\DashboardController;
+use App\Http\Controllers\Super\LogController;
+use App\Http\Controllers\Super\PlanController;
+use App\Http\Controllers\Super\ProductController;
+use App\Http\Controllers\Super\SettingController;
+use App\Http\Controllers\Super\UserController;
 use Illuminate\Support\Facades\Route;
 
 /**
- * Here's you can defined all administrator routes
+ * Here's you can defined all super/administrator routes
  */
 Route::get('/', DashboardController::class)->name('home');
 Route::get('/dashobard', DashboardController::class)->name('dashobard');
