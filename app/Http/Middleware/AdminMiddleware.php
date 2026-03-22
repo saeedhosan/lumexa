@@ -28,7 +28,7 @@ class AdminMiddleware
         }
 
         if ($this->isSuper($request->user())) {
-            // redirect to administrator dashboard
+            // redirect to super dashboard
         }
 
         abort(Response::HTTP_FORBIDDEN);
