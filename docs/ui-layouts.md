@@ -45,7 +45,7 @@ This document describes the UI layout components available in Lumexa, built with
 **Component:** `layouts::admin` (to be created - wraps `layouts::app.sidebar`)  
 **Route prefix:** `/admin`  
 **Middleware:** `admin`  
-**Usage:** `<x-layouts::admin :title="__('Admin Dashboard')"> {{ $slot }} </x-layouts::admin>`
+**Usage:** `<x-layouts::app :title="__('Admin Dashboard')"> {{ $slot }} </x-layouts::app>`
 
 | Prop | Type | Description |
 |------|------|-------------|
@@ -114,7 +114,7 @@ This document describes the UI layout components available in Lumexa, built with
 **Component:** `layouts::administrator` (to be created - wraps `layouts::app.sidebar`)  
 **Route prefix:** `/administrator` or `/super`  
 **Middleware:** `super` or `administrator`  
-**Usage:** `<x-layouts::administrator :title="__('System Dashboard')"> {{ $slot }} </x-layouts::administrator>`
+**Usage:** `<x-layouts::apptitle="__('System Dashboard')"> {{ $slot }} </x-layouts:x-layouts::app
 
 | Prop | Type | Description |
 |------|------|-------------|
@@ -179,7 +179,7 @@ This document describes the UI layout components available in Lumexa, built with
 **Component:** `layouts::customer` (to be created - wraps `layouts::app.sidebar`)  
 **Route prefix:** `/` or `/customer`  
 **Middleware:** `customer`  
-**Usage:** `<x-layouts::customer :title="__('My Dashboard')"> {{ $slot }} </x-layouts::customer>`
+**Usage:** `<x-layouts::app :title="__('My Dashboard')"> {{ $slot }} </x-layouts::app>`
 
 | Prop | Type | Description |
 |------|------|-------------|

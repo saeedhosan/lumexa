@@ -1,3 +1,3 @@
-<x-layouts::customer>
+<x-layouts::app>
     <x-ui.coming-soon />
-</x-layouts::customer>
+</x-layouts::app>

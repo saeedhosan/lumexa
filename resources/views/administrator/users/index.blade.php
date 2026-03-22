@@ -1,4 +1,4 @@
-<x-layouts::administrator title="All users">
+<x-layouts::app title="All users">
 
     <div class="flex items-center justify-between mb-6">
         <form
@@ -83,4 +83,4 @@
 
     <livewire:administrator.user-delete />
 
-</x-layouts::administrator>
+</x-layouts::app>

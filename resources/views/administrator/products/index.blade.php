@@ -1,3 +1,3 @@
-<x-layouts::administrator>
+<x-layouts::app>
     <x-ui.coming-soon />
-</x-layouts::administrator>
+</x-layouts::app>

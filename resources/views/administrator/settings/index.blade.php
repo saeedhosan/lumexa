@@ -1,4 +1,4 @@
-<x-layouts::administrator>
+<x-layouts::app>
     <div class="mx-auto max-w-2xl space-y-6">
         <div>
             <flux:heading size="lg">Core Settings</flux:heading>
@@ -147,4 +147,4 @@
             </div>
         </form>
     </div>
-</x-layouts::administrator>
+</x-layouts::app>

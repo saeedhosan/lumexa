@@ -1,4 +1,4 @@
-<x-layouts::administrator title="Create User">
+<x-layouts::app title="Create User">
 
     <div class="max-w-2xl">
         <flux:heading size="xl">Create New User</flux:heading>
@@ -10,26 +10,47 @@
             <div class="space-y-6">
                 <flux:field>
                     <flux:label>Name</flux:label>
-                    <flux:input name="name" value="{{ old('name') }}" placeholder="Enter full name" required />
+                    <flux:input
+                        name="name"
+                        value="{{ old('name') }}"
+                        placeholder="Enter full name"
+                        required
+                    />
                     <flux:error name="name" />
                 </flux:field>
 
                 <flux:field>
                     <flux:label>Email</flux:label>
-                    <flux:input type="email" name="email" value="{{ old('email') }}" placeholder="Enter email address" required />
+                    <flux:input
+                        type="email"
+                        name="email"
+                        value="{{ old('email') }}"
+                        placeholder="Enter email address"
+                        required
+                    />
                     <flux:error name="email" />
                 </flux:field>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <flux:field>
                         <flux:label>Password</flux:label>
-                        <flux:input type="password" name="password" placeholder="Enter password" required />
+                        <flux:input
+                            type="password"
+                            name="password"
+                            placeholder="Enter password"
+                            required
+                        />
                         <flux:error name="password" />
                     </flux:field>
 
                     <flux:field>
                         <flux:label>Confirm Password</flux:label>
-                        <flux:input type="password" name="password_confirmation" placeholder="Confirm password" required />
+                        <flux:input
+                            type="password"
+                            name="password_confirmation"
+                            placeholder="Confirm password"
+                            required
+                        />
                     </flux:field>
                 </div>
 
@@ -38,7 +59,9 @@
                         <flux:label>Status</flux:label>
                         <flux:select name="status" placeholder="Select status" required>
                             @foreach ($statuses as $status)
-                                <flux:select.option value="{{ $status }}" :selected="old('status') === $status">
+                                <flux:select.option value="{{ $status }}"
+                                    :selected="old('status') === $status"
+                                >
                                     {{ ucfirst($status) }}
                                 </flux:select.option>
                             @endforeach
@@ -50,7 +73,9 @@
                         <flux:label>Type</flux:label>
                         <flux:select name="type" placeholder="Select type" required>
                             @foreach ($types as $type)
-                                <flux:select.option value="{{ $type }}" :selected="old('type') === $type">
+                                <flux:select.option value="{{ $type }}"
+                                    :selected="old('type') === $type"
+                                >
                                     {{ ucfirst($type) }}
                                 </flux:select.option>
                             @endforeach
@@ -64,7 +89,9 @@
                     <flux:select name="current_company_id" placeholder="Select company (optional)">
                         <flux:select.option value="">No company</flux:select.option>
                         @foreach ($companies as $company)
-                            <flux:select.option value="{{ $company->id }}" :selected="old('current_company_id') == $company->id">
+                            <flux:select.option value="{{ $company->id }}"
+                                :selected="old('current_company_id') == $company->id"
+                            >
                                 {{ $company->name }}
                             </flux:select.option>
                         @endforeach
@@ -80,4 +107,4 @@
         </form>
     </div>
 
-</x-layouts::administrator>
+</x-layouts::app>
