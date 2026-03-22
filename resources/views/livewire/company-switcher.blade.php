@@ -21,7 +21,7 @@
                     class="w-full cursor-pointer"
                 >
                     <div class="flex items-center gap-3">
-                        <flux:avatar :name="$company->name" />
+                        <flux:avatar :src="$company->logo" :name="$company->name" />
                         <div class="grid flex-1 text-start">
                             <flux:heading level="5" size="sm">{{ $company->name }}
                             </flux:heading>

@@ -9,6 +9,7 @@ use App\Enums\UserType;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class UserSeeder extends Seeder
 {
@@ -23,10 +24,6 @@ class UserSeeder extends Seeder
             'status'            => UserStatus::active,
             'type'              => UserType::super,
         ]);
-
-        $google    = Company::query()->where('slug', 'google')->first();
-        $amazon    = Company::query()->where('slug', 'amazon')->first();
-        $microsoft = Company::query()->where('slug', 'microsoft')->first();
 
         $admin = User::query()->create([
             'name'              => config('demo.admin.name', 'Admin user'),
@@ -46,8 +43,13 @@ class UserSeeder extends Seeder
             'type'              => UserType::user,
         ]);
 
-        $admin->companies()->sync($google);
-        $user->companies()->sync([$google->id, $amazon->id, $microsoft->id]);
+        $companies = Company::query()->inRandomOrder()->take(3)->pluck('id');
+
+        $admin->companies()->sync($companies);
+        $user->companies()->sync($companies);
+
+        $user->update(['current_company_id' => Arr::first($companies)]);
+        $admin->update(['current_company_id' => Arr::first($companies)]);
 
     }
 }
