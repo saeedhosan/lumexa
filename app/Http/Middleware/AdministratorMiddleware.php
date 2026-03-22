@@ -19,6 +19,6 @@ class AdministratorMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return Gate::allows(Access::administrator) ? $next($request) : abort(Response::HTTP_FORBIDDEN);
+        return Gate::allows(Access::super) ? $next($request) : abort(Response::HTTP_FORBIDDEN);
     }
 }

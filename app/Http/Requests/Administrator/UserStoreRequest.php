@@ -18,7 +18,7 @@ class UserStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::has(Access::administrator);
+        return Gate::has(Access::super);
     }
 
     /**
