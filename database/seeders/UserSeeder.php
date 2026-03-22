@@ -9,7 +9,6 @@ use App\Enums\UserType;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -20,25 +19,24 @@ class UserSeeder extends Seeder
         $microsoft = Company::where('slug', 'microsoft')->first();
 
         $admin = User::query()->create([
-            'name'              => 'Admin user',
-            'email'             => 'admin@demo.com',
-            'password'          => Hash::make('1234'),
+            'name'              => config('demo.admin.name', 'Admin user'),
+            'email'             => config('demo.admin.email', 'admin@example.com'),
+            'password'          => config('demo.admin.password', '1234'),
             'email_verified_at' => now(),
             'status'            => UserStatus::active,
             'type'              => UserType::admin,
         ]);
 
-        $admin->companies()->sync($google);
-
         $user = User::query()->create([
-            'name'              => 'User',
-            'email'             => 'user@demo.com',
-            'password'          => Hash::make('1234'),
+            'name'              => config('demo.user.name', 'User'),
+            'email'             => config('demo.user.email', 'user@example.com'),
+            'password'          => config('demo.user.password', '1234'),
             'email_verified_at' => now(),
             'status'            => UserStatus::active,
             'type'              => UserType::customer,
         ]);
 
+        $admin->companies()->sync($google);
         $user->companies()->sync([$google->id, $amazon->id, $microsoft->id]);
 
     }
