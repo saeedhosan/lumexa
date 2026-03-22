@@ -51,13 +51,13 @@ class Plan extends Model
     ];
 
     /**
-     * The products that belong to the plan.
+     * The services that belong to the plan.
      *
-     * @return BelongsToMany<Product, self>
+     * @return BelongsToMany<Service, self>
      */
-    public function products(): BelongsToMany
+    public function services(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'plan_products');
+        return $this->belongsToMany(Service::class, 'plan_services');
     }
 
     /**

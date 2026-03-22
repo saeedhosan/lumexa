@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\DashobardController;
 use App\Http\Controllers\Admin\InviteController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\MemeberController;
-use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\ReportController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +21,7 @@ Route::get('/dashboard', DashobardController::class)->name('dashboard');
 
 Route::resource('company', CompanyController::class);
 Route::resource('memebers', MemeberController::class);
-Route::resource('products', ProductController::class);
+Route::resource('services', ServiceController::class);
 Route::resource('billing', BillingController::class);
 Route::resource('invoices', InvoiceController::class);
 Route::resource('invites', InviteController::class);

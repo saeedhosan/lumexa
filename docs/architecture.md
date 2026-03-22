@@ -154,7 +154,7 @@ Relations: company(), companies(), account(), plan(),
 Roles: USER, CLIENT, EDITOR, MANAGER, ADMIN, OWNER
 
 Relations: owner(), parent(), children(), members(), teams(),
-           clients(), admins(), products(), locations(),
+           clients(), admins(), services(), locations(),
            services(), monitorEmails()
 ```
 
@@ -166,7 +166,7 @@ Relations: owner(), parent(), children(), members(), teams(),
 Relations: users()
 ```
 
-### Product
+### Service
 
 ```
 - id, name, slug, description
@@ -201,7 +201,7 @@ Relations: company()
 
 -   Access: Admin, Manager, Owner roles
 -   Routes: `/admin`
--   Capabilities: Company management, team/billing, products, reports
+-   Capabilities: Company management, team/billing, services, reports
 -   Middleware: `admin`
 
 **Customer Portal**
@@ -215,7 +215,7 @@ Relations: company()
 
 **Roles:** Super Admin, Admin, Manager, Editor, User/Customer
 
-**Permissions:** manage_users, manage_companies, manage_billing, manage_products, view_reports, manage_leads, access_monitoring, generate_ai_content
+**Permissions:** manage_users, manage_companies, manage_billing, manage_services, view_reports, manage_leads, access_monitoring, generate_ai_content
 
 **Enforcement:** Gates in `AuthServiceProvider`, Policy-based checks
 
@@ -238,7 +238,7 @@ Multi-step org and user setup.
 
 -   Company creation
 -   User provisioning
--   Product selection
+-   Services selection
 -   Checkout integration
 -   Progress tracking
 
@@ -371,7 +371,7 @@ class DarkWebService {
 
 class OnboardingService {
     public function startOrgSetup(array $orgData): Company { ... }
-    public function completeProductSelection(User $user, array $products): void { ... }
+    public function completeServicesSelection(User $user, array $services): void { ... }
 }
 
 // Usage
@@ -435,7 +435,7 @@ app(DarkWebService::class)->syncBreaches($monitor);
 -   Hierarchical structures (parent/child companies)
 -   Member management with role assignment
 -   Location management
--   Product and service assignments
+-   Service and service assignments
 
 ### Billing
 
@@ -510,7 +510,7 @@ All schema changes version-controlled.
 ### Seeders
 
 -   `PlanSeeder` - Subscription plans
--   `ProductSeeder` - Product catalog
+-   `ServiceSeeder` - Service catalog
 
 ### Factories
 

@@ -31,11 +31,11 @@
         <flux:sidebar.group :heading="__('Management')" class="grid">
             <flux:sidebar.item
                 icon="cube"
-                :href="route('app.products.index')"
-                :current="request()->routeIs('app.products.*')"
+                :href="route('app.services.index')"
+                :current="request()->routeIs('app.services.*')"
                 wire:navigate
             >
-                {{ __('Products') }}
+                {{ __('Services') }}
             </flux:sidebar.item>
             <flux:sidebar.item
                 icon="building-office"

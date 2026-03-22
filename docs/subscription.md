@@ -2,17 +2,17 @@
 
 Plans and billing with Laravel Cashier (Stripe).
 
-> For Products (features), see [docs/product-pro.md](product-pro.md)
+> For Services (features), see [docs/service-pro.md](service-pro.md)
 
 ---
 
 ## Plans
 
-| Plan | Products | Users | Monthly | Yearly |
+| Plan | Services | Users | Monthly | Yearly |
 |------|----------|-------|---------|--------|
 | Starter | Breach Monitoring | 1 | $9 | $90 |
 | Professional | Breach Monitoring + Lead Management | 5 | $29 | $290 |
-| Enterprise | All products | Unlimited | $99 | $990 |
+| Enterprise | All services | Unlimited | $99 | $990 |
 
 ## Plan Data Model
 
@@ -50,7 +50,7 @@ php artisan migrate
 
 Creates:
 - `plans` table with price columns
-- `plan_products` pivot table
+- `plan_services` pivot table
 - `plan_id` column on `companies` table
 - Cashier columns on `companies` table
 

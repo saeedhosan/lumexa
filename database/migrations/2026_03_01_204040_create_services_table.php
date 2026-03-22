@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Company;
-use App\Models\Product;
+use App\Models\Service;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +15,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table): void {
+        Schema::create('services', function (Blueprint $table): void {
 
             $table->id();
             $table->uuid();
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true)->index();
             $table->boolean('is_default')->default(false)->index();
 
-            $table->string('version', 20)->default(Product::DEFAULT_VERSION);
+            $table->string('version', 20)->default(Service::DEFAULT_VERSION);
             $table->string('provider')->nullable();
 
             $table->json('features')->nullable();
@@ -46,9 +46,9 @@ return new class extends Migration
             $table->index(['is_active', 'is_default']);
         });
 
-        Schema::create('product_logs', function (Blueprint $table): void {
+        Schema::create('service_logs', function (Blueprint $table): void {
             $table->id();
-            $table->unsignedBigInteger('product_id')->index();
+            $table->unsignedBigInteger('service_id')->index();
             $table->unsignedBigInteger('user_id')->nullable()->index();
             $table->string('action')->nullable();
             $table->text('message')->nullable();
@@ -56,11 +56,11 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('company_product', function (Blueprint $table): void {
+        Schema::create('company_service', function (Blueprint $table): void {
             $table->foreignIdFor(Company::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Service::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
-            $table->unique(['company_id', 'product_id']);
+            $table->unique(['company_id', 'service_id']);
         });
     }
 
@@ -69,8 +69,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('company_product');
-        Schema::dropIfExists('product_logs');
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('company_service');
+        Schema::dropIfExists('service_logs');
+        Schema::dropIfExists('services');
     }
 };

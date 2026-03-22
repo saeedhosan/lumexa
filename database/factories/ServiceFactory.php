@@ -5,24 +5,24 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\Company;
-use App\Models\Product;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @template TModel of \App\Models\Product
+ * @template TModel of \App\Models\Service
  *
  * @extends Factory<TModel>
  */
-class ProductFactory extends Factory
+class ServiceFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var class-string<TModel>
      */
-    protected $model = Product::class;
+    protected $model = Service::class;
 
     /**
      * Define the model's default state.
@@ -43,7 +43,7 @@ class ProductFactory extends Factory
             'about'      => $this->faker->paragraph(),
             'is_active'  => $this->faker->boolean(80),
             'is_default' => false,
-            'version'    => Product::DEFAULT_VERSION,
+            'version'    => Service::DEFAULT_VERSION,
             'provider'   => $this->faker->randomElement(['internal', 'external', null]),
             'features'   => [
                 'api_access'      => $this->faker->boolean(),
@@ -65,7 +65,7 @@ class ProductFactory extends Factory
     }
 
     /**
-     * Indicate that the product is active.
+     * Indicate that the service is active.
      */
     public function active(): static
     {
@@ -75,7 +75,7 @@ class ProductFactory extends Factory
     }
 
     /**
-     * Indicate that the product is inactive.
+     * Indicate that the service is inactive.
      */
     public function inactive(): static
     {
@@ -85,7 +85,7 @@ class ProductFactory extends Factory
     }
 
     /**
-     * Indicate that the product is the default.
+     * Indicate that the service is the default.
      */
     public function default(): static
     {
@@ -99,15 +99,15 @@ class ProductFactory extends Factory
      */
     public function configure(): static
     {
-        return $this->afterMaking(function (Product $product): void {
+        return $this->afterMaking(function (Service $service): void {
             //
-        })->afterCreating(function (Product $product): void {
+        })->afterCreating(function (Service $service): void {
             //
         });
     }
 
     /**
-     * Attach a creator to the product.
+     * Attach a creator to the service.
      */
     public function withCreator(User|int|string|null $user = null): static
     {
@@ -117,7 +117,7 @@ class ProductFactory extends Factory
     }
 
     /**
-     * Attach an updator to the product.
+     * Attach an updator to the service.
      */
     public function withUpdator(User|int|string|null $user = null): static
     {
@@ -127,13 +127,13 @@ class ProductFactory extends Factory
     }
 
     /**
-     * Attach companies to the product.
+     * Attach companies to the service.
      */
     public function withCompanies(int $count = 1): static
     {
-        return $this->afterCreating(function (Product $product) use ($count): void {
+        return $this->afterCreating(function (Service $service) use ($count): void {
             $companies = Company::factory()->count($count)->create();
-            $companies->each(fn (Company $company) => $product->companies()->attach($company));
+            $companies->each(fn (Company $company) => $service->companies()->attach($company));
         });
     }
 }

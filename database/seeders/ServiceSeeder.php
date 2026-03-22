@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Models\Product;
+use App\Models\Service;
 use Illuminate\Database\Seeder;
 
-class ProductSeeder extends Seeder
+class ServiceSeeder extends Seeder
 {
     public function run(): void
     {
-        $products = [
+        $services = [
             [
                 'name'       => 'Breach Monitoring',
                 'slug'       => 'breach-monitoring',
@@ -53,8 +53,8 @@ class ProductSeeder extends Seeder
             ],
         ];
 
-        foreach ($products as $productData) {
-            Product::query()->updateOrCreate(['code' => $productData['code']], $productData);
+        foreach ($services as $serviceData) {
+            Service::query()->updateOrCreate(['code' => $serviceData['code']], $serviceData);
         }
     }
 }

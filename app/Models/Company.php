@@ -39,10 +39,11 @@ use SaeedHosan\Additions\Models\Concerns\HasUuid;
 class Company extends Model
 {
     use HasBelongsToOne;
+
     /** @use HasFactory<Factory> */
     use HasFactory;
-    use HasSlug;
 
+    use HasSlug;
     use HasUuid;
 
     /**
@@ -137,13 +138,13 @@ class Company extends Model
     }
 
     /**
-     * Products assigned to the company.
+     * Service assigned to the company.
      *
-     * @return BelongsToMany<Product>
+     * @return BelongsToMany<Service>
      */
-    public function products(): BelongsToMany
+    public function services(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'company_product')->withTimestamps();
+        return $this->belongsToMany(Service::class, 'company_service')->withTimestamps();
     }
 
     /**

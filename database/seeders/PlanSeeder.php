@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Models\Plan;
-use App\Models\Product;
+use App\Models\Service;
 use Illuminate\Database\Seeder;
 
 class PlanSeeder extends Seeder
@@ -15,8 +15,8 @@ class PlanSeeder extends Seeder
      */
     public function run(): void
     {
-        $breachMonitoring = Product::query()->where('code', 'breach_monitoring')->first();
-        $leadManagement   = Product::query()->where('code', 'lead_management')->first();
+        $breachMonitoring = Service::query()->where('code', 'breach_monitoring')->first();
+        $leadManagement   = Service::query()->where('code', 'lead_management')->first();
 
         $plans = [
             [
@@ -44,7 +44,7 @@ class PlanSeeder extends Seeder
                     'scan_interval'         => 'daily',
                     'notification_channels' => ['email'],
                 ],
-                'products' => [$breachMonitoring],
+                'services' => [$breachMonitoring],
             ],
             [
                 'name'                    => 'Professional',
@@ -75,7 +75,7 @@ class PlanSeeder extends Seeder
                     'notification_channels' => ['email', 'push'],
                     'auto_assignment'       => false,
                 ],
-                'products' => [$breachMonitoring, $leadManagement],
+                'services' => [$breachMonitoring, $leadManagement],
             ],
             [
                 'name'                    => 'Enterprise',
@@ -109,17 +109,17 @@ class PlanSeeder extends Seeder
                     'auto_assignment'       => true,
                     'sla_guarantee'         => true,
                 ],
-                'products' => [$breachMonitoring, $leadManagement],
+                'services' => [$breachMonitoring, $leadManagement],
             ],
         ];
 
         foreach ($plans as $planData) {
-            $products = $planData['products'];
-            unset($planData['products']);
+            $services = $planData['services'];
+            unset($planData['services']);
 
             $plan = Plan::query()->updateOrCreate(['slug' => $planData['slug']], $planData);
 
-            $plan->products()->sync($products);
+            $plan->services()->sync($services);
         }
     }
 }

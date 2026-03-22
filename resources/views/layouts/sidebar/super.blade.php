@@ -39,11 +39,11 @@
             </flux:sidebar.item>
             <flux:sidebar.item
                 icon="cube"
-                :href="route('super.products.index')"
-                :current="request()->routeIs('super.products.*')"
+                :href="route('super.services.index')"
+                :current="request()->routeIs('super.services.*')"
                 wire:navigate
             >
-                {{ __('Products') }}
+                {{ __('Services') }}
             </flux:sidebar.item>
         </flux:sidebar.group>
 

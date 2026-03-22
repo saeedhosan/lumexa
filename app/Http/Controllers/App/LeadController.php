@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -39,23 +38,23 @@ class LeadController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product): Factory|View
+    public function show($id): void
     {
-        return view('app.leads.show', ['product' => $product]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product): Factory|View
+    public function edit($id): void
     {
-        return view('app.leads.edit', ['product' => $product]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product): void
+    public function update(Request $request, $id): void
     {
         //
     }
@@ -63,7 +62,7 @@ class LeadController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product): void
+    public function destroy($id): void
     {
         //
     }

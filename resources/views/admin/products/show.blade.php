@@ -1,3 +1,3 @@
-<x-layouts::app title="Product Details">
+<x-layouts::app title="Service Details">
     <x-ui.coming-soon />
 </x-layouts::app>

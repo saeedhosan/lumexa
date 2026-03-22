@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,9 +11,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use SaeedHosan\Additions\Models\Concerns\HasUuid;
 
-class Product extends Model
+class Service extends Model
 {
-    /** @use HasFactory<ProductFactory> */
+    /** @use HasFactory<ServiceFactory> */
     use HasFactory;
 
     use HasUuid;
@@ -64,27 +63,27 @@ class Product extends Model
     ];
 
     /**
-     * The companies that use this product.
+     * The companies that use this Service.
      *
      * @return BelongsToMany<Company>
      */
     public function companies(): BelongsToMany
     {
-        return $this->belongsToMany(Company::class, 'company_product')->withTimestamps();
+        return $this->belongsToMany(Company::class, 'company_service')->withTimestamps();
     }
 
     /**
-     * The plans that include this product.
+     * The plans that include this service.
      *
      * @return BelongsToMany<Plan>
      */
     public function plans(): BelongsToMany
     {
-        return $this->belongsToMany(Plan::class, 'plan_products')->withTimestamps();
+        return $this->belongsToMany(Plan::class, 'plan_services')->withTimestamps();
     }
 
     /**
-     * User who created the product.
+     * User who created the service.
      *
      * @return BelongsTo<User, $this>
      */
@@ -94,7 +93,7 @@ class Product extends Model
     }
 
     /**
-     * User who last updated the product.
+     * User who last updated the service.
      *
      * @return BelongsTo<User, $this>
      */
@@ -104,7 +103,7 @@ class Product extends Model
     }
 
     /**
-     * Scope active products.
+     * Scope active services.
      */
     protected function scopeActive(Builder $query): Builder
     {
@@ -112,7 +111,7 @@ class Product extends Model
     }
 
     /**
-     * Scope default product.
+     * Scope default service.
      */
     protected function scopeDefault(Builder $query): Builder
     {
