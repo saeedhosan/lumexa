@@ -17,10 +17,8 @@ if (! function_exists('home_route')) {
                     return 'super.home';
                 case UserType::admin:
                     return 'admin.home';
-                case UserType::customer:
-                    return 'customer.home';
                 default:
-                    return 'dasbhoard';
+                    return 'dashboard';
             }
         });
     }

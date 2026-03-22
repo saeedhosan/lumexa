@@ -14,7 +14,7 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        return view('customer.activities.index');
+        return view('dashboard.activities.index');
     }
 
     /**
@@ -22,7 +22,7 @@ class ActivityController extends Controller
      */
     public function create()
     {
-        return view('customer.activities.create');
+        return view('dashboard.activities.create');
     }
 
     /**
@@ -38,7 +38,7 @@ class ActivityController extends Controller
      */
     public function show(string $id)
     {
-        return view('customer.activities.show', compact('id'));
+        return view('dashboard.activities.show', compact('id'));
     }
 
     /**
@@ -46,7 +46,7 @@ class ActivityController extends Controller
      */
     public function edit(string $id)
     {
-        return view('customer.activities.edit', compact('id'));
+        return view('dashboard.activities.edit', compact('id'));
     }
 
     /**

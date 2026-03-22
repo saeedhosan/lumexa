@@ -185,37 +185,37 @@ This document describes the UI layout components available in Lumexa, built with
 |------|------|-------------|
 | title | string | Page title (optional) |
 
-### Menu Items (from `routes/customer.php`)
+### Menu Items (from `routes/dashboard.php`)
 
 | Route Name | URL | Description |
 |------------|-----|-------------|
-| customer.leads.index | /leads | Leads |
-| customer.breaches.index | /breaches | Breaches |
-| customer.products.index | /products | Products |
-| customer.companies.index | /companies | Companies |
-| customer.activities.index | /activities | Activities |
+| dashboard.leads.index | /leads | Leads |
+| dashboard.breaches.index | /breaches | Breaches |
+| dashboard.products.index | /products | Products |
+| dashboard.companies.index | /companies | Companies |
+| dashboard.activities.index | /activities | Activities |
 
 ### Sidebar Structure
 
 ```blade
 <flux:sidebar.nav>
     <flux:sidebar.group :heading="__('Core')">
-        <flux:sidebar.item icon="megaphone" :href="route('customer.leads.index')" wire:navigate>
+        <flux:sidebar.item icon="megaphone" :href="route('dashboard.leads.index')" wire:navigate>
             {{ __('Leads') }}
         </flux:sidebar.item>
-        <flux:sidebar.item icon="shield-exclamation" :href="route('customer.breaches.index')" wire:navigate>
+        <flux:sidebar.item icon="shield-exclamation" :href="route('dashboard.breaches.index')" wire:navigate>
             {{ __('Breaches') }}
         </flux:sidebar.item>
     </flux:sidebar.group>
 
     <flux:sidebar.group :heading="__('Management')">
-        <flux:sidebar.item icon="cube" :href="route('customer.products.index')" wire:navigate>
+        <flux:sidebar.item icon="cube" :href="route('dashboard.products.index')" wire:navigate>
             {{ __('Products') }}
         </flux:sidebar.item>
-        <flux:sidebar.item icon="building-office" :href="route('customer.companies.index')" wire:navigate>
+        <flux:sidebar.item icon="building-office" :href="route('dashboard.companies.index')" wire:navigate>
             {{ __('Companies') }}
         </flux:sidebar.item>
-        <flux:sidebar.item icon="clock" :href="route('customer.activities.index')" wire:navigate>
+        <flux:sidebar.item icon="clock" :href="route('dashboard.activities.index')" wire:navigate>
             {{ __('Activities') }}
         </flux:sidebar.item>
     </flux:sidebar.group>

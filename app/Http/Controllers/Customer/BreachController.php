@@ -14,7 +14,7 @@ class BreachController extends Controller
      */
     public function index()
     {
-        return view('customer.breaches.index');
+        return view('dashboard.breaches.index');
     }
 
     /**
@@ -22,7 +22,7 @@ class BreachController extends Controller
      */
     public function create()
     {
-        return view('customer.breaches.create');
+        return view('dashboard.breaches.create');
     }
 
     /**
@@ -38,7 +38,7 @@ class BreachController extends Controller
      */
     public function show(string $id)
     {
-        return view('customer.breaches.show', compact('id'));
+        return view('dashboard.breaches.show', compact('id'));
     }
 
     /**
@@ -46,7 +46,7 @@ class BreachController extends Controller
      */
     public function edit(string $id)
     {
-        return view('customer.breaches.edit', compact('id'));
+        return view('dashboard.breaches.edit', compact('id'));
     }
 
     /**

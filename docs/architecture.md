@@ -113,7 +113,7 @@ Lumexa-portal/
 │   ├── web.php               # Public/auth routes
 │   ├── api.php               # API endpoints
 │   ├── admin.php             # Admin panel
-│   ├── customer.php          # Customer portal
+│   ├── dashboard.php          # Customer portal
 │   ├── super.php             # System operations
 │   ├── auth.php              # Auth flows
 │   └── callback.php          # Webhooks
@@ -316,7 +316,7 @@ TenantContext {
 | web.php           | /              | web           | Public & authenticated     |
 | api.php           | /api           | api           | REST API                   |
 | admin.php         | /admin         | admin         | Admin management           |
-| customer.php      | / or /customer | customer      | Customer dashboard         |
+| dashboard.php      | / or /customer | customer      | Customer dashboard         |
 | auth.php          | /auth          | guest\|auth   | Authentication flows       |
 | callback.php      | /callback      | -             | Stripe/Twilio/GHL webhooks     |
 | super.php | /super | administrator | System configuration       |
@@ -451,7 +451,7 @@ app(DarkWebService::class)->syncBreaches($monitor);
 ```
 - resources/views/layouts/app.blade.php (main authenticated)
 - resources/views/layouts/admin.blade.php (admin portal)
-- resources/views/layouts/customer.blade.php (customer portal)
+- resources/views/layouts/dashboard.blade.php (customer portal)
 - resources/views/layouts/auth.blade.php (authentication)
 ```
 

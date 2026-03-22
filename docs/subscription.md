@@ -128,9 +128,9 @@ Route::post('/stripe/webhook',
 ```
 
 Enable in Stripe Dashboard:
-- `customer.subscription.created`
-- `customer.subscription.updated`
-- `customer.subscription.deleted`
+- `user.subscription.created`
+- `user.subscription.updated`
+- `user.subscription.deleted`
 - `invoice.payment_succeeded`
 - `invoice.payment_failed`
 
