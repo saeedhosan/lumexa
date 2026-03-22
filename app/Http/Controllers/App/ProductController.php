@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
-use App\Models\Company;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
-class CompanyController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('dashboard.companies.index');
+        return view('app.products.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('dashboard.companies.create');
+        return view('app.products.create');
     }
 
     /**
@@ -37,23 +37,23 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Company $company)
+    public function show(Product $product)
     {
-        return view('dashboard.companies.show', compact('company'));
+        return view('app.products.show', compact('product'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Company $company)
+    public function edit(Product $product)
     {
-        return view('dashboard.companies.edit', compact('company'));
+        return view('app.products.edit', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Company $company)
+    public function update(Request $request, Product $product)
     {
         //
     }
@@ -61,7 +61,7 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Company $company)
+    public function destroy(Product $product)
     {
         //
     }

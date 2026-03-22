@@ -308,7 +308,7 @@ Module-specific routes should be defined in `modules/*/routes/`.
 |------|--------|------------|--------|
 | super.php | /super | super | ~40 |
 | admin.php | /admin | admin | ~30 |
-| dashboard.php | / | customer | ~45 |
+| app.php | / | customer | ~45 |
 | api.php | /api | api | 2+ |
 | Module routes | varies | varies | varies |
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        return view('dashboard.activities.index');
+        return view('app.activities.index');
     }
 
     /**
@@ -22,7 +22,7 @@ class ActivityController extends Controller
      */
     public function create()
     {
-        return view('dashboard.activities.create');
+        return view('app.activities.create');
     }
 
     /**
@@ -38,7 +38,7 @@ class ActivityController extends Controller
      */
     public function show(string $id)
     {
-        return view('dashboard.activities.show', compact('id'));
+        return view('app.activities.show', compact('id'));
     }
 
     /**
@@ -46,7 +46,7 @@ class ActivityController extends Controller
      */
     public function edit(string $id)
     {
-        return view('dashboard.activities.edit', compact('id'));
+        return view('app.activities.edit', compact('id'));
     }
 
     /**

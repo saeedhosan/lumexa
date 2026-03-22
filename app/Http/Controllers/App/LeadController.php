@@ -2,19 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
-class BreachController extends Controller
+class LeadController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('dashboard.breaches.index');
+        return view('app.leads.index');
     }
 
     /**
@@ -22,7 +23,7 @@ class BreachController extends Controller
      */
     public function create()
     {
-        return view('dashboard.breaches.create');
+        return view('app.leads.create');
     }
 
     /**
@@ -36,23 +37,23 @@ class BreachController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        return view('dashboard.breaches.show', compact('id'));
+        return view('app.leads.show', compact('product'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product)
     {
-        return view('dashboard.breaches.edit', compact('id'));
+        return view('app.leads.edit', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
         //
     }
@@ -60,7 +61,7 @@ class BreachController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
         //
     }

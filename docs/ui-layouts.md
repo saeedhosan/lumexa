@@ -185,37 +185,37 @@ This document describes the UI layout components available in Lumexa, built with
 |------|------|-------------|
 | title | string | Page title (optional) |
 
-### Menu Items (from `routes/dashboard.php`)
+### Menu Items (from `routes/app.php`)
 
 | Route Name | URL | Description |
 |------------|-----|-------------|
-| dashboard.leads.index | /leads | Leads |
-| dashboard.breaches.index | /breaches | Breaches |
-| dashboard.products.index | /products | Products |
-| dashboard.companies.index | /companies | Companies |
-| dashboard.activities.index | /activities | Activities |
+| app.leads.index | /leads | Leads |
+| app.breaches.index | /breaches | Breaches |
+| app.products.index | /products | Products |
+| app.companies.index | /companies | Companies |
+| app.activities.index | /activities | Activities |
 
 ### Sidebar Structure
 
 ```blade
 <flux:sidebar.nav>
     <flux:sidebar.group :heading="__('Core')">
-        <flux:sidebar.item icon="megaphone" :href="route('dashboard.leads.index')" wire:navigate>
+        <flux:sidebar.item icon="megaphone" :href="route('app.leads.index')" wire:navigate>
             {{ __('Leads') }}
         </flux:sidebar.item>
-        <flux:sidebar.item icon="shield-exclamation" :href="route('dashboard.breaches.index')" wire:navigate>
+        <flux:sidebar.item icon="shield-exclamation" :href="route('app.breaches.index')" wire:navigate>
             {{ __('Breaches') }}
         </flux:sidebar.item>
     </flux:sidebar.group>
 
     <flux:sidebar.group :heading="__('Management')">
-        <flux:sidebar.item icon="cube" :href="route('dashboard.products.index')" wire:navigate>
+        <flux:sidebar.item icon="cube" :href="route('app.products.index')" wire:navigate>
             {{ __('Products') }}
         </flux:sidebar.item>
-        <flux:sidebar.item icon="building-office" :href="route('dashboard.companies.index')" wire:navigate>
+        <flux:sidebar.item icon="building-office" :href="route('app.companies.index')" wire:navigate>
             {{ __('Companies') }}
         </flux:sidebar.item>
-        <flux:sidebar.item icon="clock" :href="route('dashboard.activities.index')" wire:navigate>
+        <flux:sidebar.item icon="clock" :href="route('app.activities.index')" wire:navigate>
             {{ __('Activities') }}
         </flux:sidebar.item>
     </flux:sidebar.group>

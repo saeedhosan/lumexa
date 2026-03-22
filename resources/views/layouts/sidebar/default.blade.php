@@ -2,7 +2,7 @@
     class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900"
 >
     <flux:sidebar.header>
-        <x-app-logo :sidebar="true" href="{{ route('dashboard.leads.index') }}" wire:navigate />
+        <x-app-logo :sidebar="true" href="{{ route('app.leads.index') }}" wire:navigate />
         <flux:sidebar.collapse class="lg:hidden" />
     </flux:sidebar.header>
 
@@ -12,16 +12,16 @@
         <flux:sidebar.group :heading="__('Core')" class="grid">
             <flux:sidebar.item
                 icon="megaphone"
-                :href="route('dashboard.leads.index')"
-                :current="request()->routeIs('dashboard.leads.*')"
+                :href="route('app.leads.index')"
+                :current="request()->routeIs('app.leads.*')"
                 wire:navigate
             >
                 {{ __('Leads') }}
             </flux:sidebar.item>
             <flux:sidebar.item
                 icon="shield-exclamation"
-                :href="route('dashboard.breaches.index')"
-                :current="request()->routeIs('dashboard.breaches.*')"
+                :href="route('app.breaches.index')"
+                :current="request()->routeIs('app.breaches.*')"
                 wire:navigate
             >
                 {{ __('Breaches') }}
@@ -31,24 +31,24 @@
         <flux:sidebar.group :heading="__('Management')" class="grid">
             <flux:sidebar.item
                 icon="cube"
-                :href="route('dashboard.products.index')"
-                :current="request()->routeIs('dashboard.products.*')"
+                :href="route('app.products.index')"
+                :current="request()->routeIs('app.products.*')"
                 wire:navigate
             >
                 {{ __('Products') }}
             </flux:sidebar.item>
             <flux:sidebar.item
                 icon="building-office"
-                :href="route('dashboard.companies.index')"
-                :current="request()->routeIs('dashboard.companies.*')"
+                :href="route('app.companies.index')"
+                :current="request()->routeIs('app.companies.*')"
                 wire:navigate
             >
                 {{ __('Companies') }}
             </flux:sidebar.item>
             <flux:sidebar.item
                 icon="clock"
-                :href="route('dashboard.activities.index')"
-                :current="request()->routeIs('dashboard.activities.*')"
+                :href="route('app.activities.index')"
+                :current="request()->routeIs('app.activities.*')"
                 wire:navigate
             >
                 {{ __('Activities') }}
