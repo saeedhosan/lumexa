@@ -1,4 +1,4 @@
-<x-layouts::app>
+<x-layouts::app title="Settings">
     <div class="mx-auto max-w-2xl space-y-6">
         <div>
             <flux:heading size="lg">Core Settings</flux:heading>
