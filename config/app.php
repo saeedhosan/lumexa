@@ -125,4 +125,11 @@ return [
         'store'  => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /**
+     * Custom settings
+     */
+    'title'   => env('APP_TITLE', 'Laravel'),
+    'logo'    => env('APP_LOGO', 'logo.png'),
+    'favicon' => env('APP_FACICON', 'logo.png'),
+
 ];
