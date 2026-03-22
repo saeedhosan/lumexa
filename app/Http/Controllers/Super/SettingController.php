@@ -6,6 +6,10 @@ namespace App\Http\Controllers\Super;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Super\SettingStoreRequest;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -16,7 +20,7 @@ class SettingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function index(): Factory|View
     {
         return view('super.settings.index');
     }
@@ -24,11 +28,11 @@ class SettingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SettingStoreRequest $request): \Illuminate\Http\RedirectResponse
+    public function store(SettingStoreRequest $request): RedirectResponse
     {
         $data = Arr::map($request->validated(), function (mixed $value, string $key) {
 
-            if ($value instanceof \Illuminate\Http\UploadedFile) {
+            if ($value instanceof UploadedFile) {
 
                 $filename = sprintf('%s.%s', Str::slug($key), $value->getClientOriginalExtension());
                 $path     = $value->storeAs('images', $filename, 'public');
@@ -43,13 +47,13 @@ class SettingController extends Controller
             EnvEditor::put($key, $value);
         }
 
-        return redirect()->back()->with('success', 'Settings was successfully saved!');
+        return back()->with('success', 'Settings was successfully saved!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): void
     {
         //
     }

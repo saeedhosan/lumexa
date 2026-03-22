@@ -54,10 +54,7 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($products as $productData) {
-            Product::updateOrCreate(
-                ['code' => $productData['code']],
-                $productData
-            );
+            Product::query()->updateOrCreate(['code' => $productData['code']], $productData);
         }
     }
 }

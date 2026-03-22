@@ -6,6 +6,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class MemeberController extends Controller
@@ -13,7 +15,7 @@ class MemeberController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Factory|View
     {
         return view('admin.memebers.index');
     }
@@ -21,7 +23,7 @@ class MemeberController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Factory|View
     {
         return view('admin.memebers.create');
     }
@@ -29,7 +31,7 @@ class MemeberController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): void
     {
         //
     }
@@ -37,23 +39,23 @@ class MemeberController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(User $user): Factory|View
     {
-        return view('admin.memebers.show', compact('user'));
+        return view('admin.memebers.show', ['user' => $user]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(User $user): Factory|View
     {
-        return view('admin.memebers.edit', compact('user'));
+        return view('admin.memebers.edit', ['user' => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user): void
     {
         //
     }
@@ -61,7 +63,7 @@ class MemeberController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(User $user): void
     {
         //
     }

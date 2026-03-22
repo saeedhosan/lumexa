@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\Plan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Plan>
+ * @extends Factory<Plan>
  */
 class PlanFactory extends Factory
 {
@@ -36,7 +37,7 @@ class PlanFactory extends Factory
 
     public function starter(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'name'          => 'Starter',
             'slug'          => 'starter',
             'description'   => 'Perfect for small teams',
@@ -48,7 +49,7 @@ class PlanFactory extends Factory
 
     public function professional(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'name'          => 'Professional',
             'slug'          => 'professional',
             'description'   => 'For growing businesses',
@@ -60,7 +61,7 @@ class PlanFactory extends Factory
 
     public function enterprise(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'name'          => 'Enterprise',
             'slug'          => 'enterprise',
             'description'   => 'Unlimited everything',

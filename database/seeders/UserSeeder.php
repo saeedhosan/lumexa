@@ -24,9 +24,9 @@ class UserSeeder extends Seeder
             'type'              => UserType::super,
         ]);
 
-        $google    = Company::where('slug', 'google')->first();
-        $amazon    = Company::where('slug', 'amazon')->first();
-        $microsoft = Company::where('slug', 'microsoft')->first();
+        $google    = Company::query()->where('slug', 'google')->first();
+        $amazon    = Company::query()->where('slug', 'amazon')->first();
+        $microsoft = Company::query()->where('slug', 'microsoft')->first();
 
         $admin = User::query()->create([
             'name'              => config('demo.admin.name', 'Admin user'),

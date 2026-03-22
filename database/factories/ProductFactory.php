@@ -69,7 +69,7 @@ class ProductFactory extends Factory
      */
     public function active(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_active' => true,
         ]);
     }
@@ -79,7 +79,7 @@ class ProductFactory extends Factory
      */
     public function inactive(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_active' => false,
         ]);
     }
@@ -89,7 +89,7 @@ class ProductFactory extends Factory
      */
     public function default(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_default' => true,
         ]);
     }
@@ -99,9 +99,9 @@ class ProductFactory extends Factory
      */
     public function configure(): static
     {
-        return $this->afterMaking(function (Product $product) {
+        return $this->afterMaking(function (Product $product): void {
             //
-        })->afterCreating(function (Product $product) {
+        })->afterCreating(function (Product $product): void {
             //
         });
     }
@@ -111,7 +111,7 @@ class ProductFactory extends Factory
      */
     public function withCreator(User|int|string|null $user = null): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'created_by' => $user instanceof User ? $user->id : ($user ?? User::factory()),
         ]);
     }
@@ -121,7 +121,7 @@ class ProductFactory extends Factory
      */
     public function withUpdator(User|int|string|null $user = null): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'updated_by' => $user instanceof User ? $user->id : ($user ?? User::factory()),
         ]);
     }
@@ -131,7 +131,7 @@ class ProductFactory extends Factory
      */
     public function withCompanies(int $count = 1): static
     {
-        return $this->afterCreating(function (Product $product) use ($count) {
+        return $this->afterCreating(function (Product $product) use ($count): void {
             $companies = Company::factory()->count($count)->create();
             $companies->each(fn (Company $company) => $product->companies()->attach($company));
         });

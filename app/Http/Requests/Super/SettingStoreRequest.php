@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Super;
 
 use App\Enums\Access;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
@@ -21,18 +22,18 @@ class SettingStoreRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'APP_NAME'    => 'required|string|max:255',
-            'APP_URL'     => 'required|url',
-            'APP_TITLE'   => 'required|string|max:255',
-            'APP_ENV'     => 'required|string|in:local,production,testing',
-            'APP_DEBUG'   => 'nullable|bool',
-            'APP_LOGO'    => 'nullable|image|max:1024',
-            'APP_FACICON' => 'nullable|image|max:512',
+            'APP_NAME'    => ['required', 'string', 'max:255'],
+            'APP_URL'     => ['required', 'url'],
+            'APP_TITLE'   => ['required', 'string', 'max:255'],
+            'APP_ENV'     => ['required', 'string', 'in:local,production,testing'],
+            'APP_DEBUG'   => ['nullable', 'bool'],
+            'APP_LOGO'    => ['nullable', 'image', 'max:1024'],
+            'APP_FACICON' => ['nullable', 'image', 'max:512'],
         ];
     }
 

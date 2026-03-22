@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\CustomerMiddleware;
+use App\Http\Middleware\SuperMiddleware;
+use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,18 +19,18 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
 
         $middleware->alias([
-            'super'    => App\Http\Middleware\SuperMiddleware::class,
-            'admin'    => App\Http\Middleware\AdminMiddleware::class,
-            'customer' => App\Http\Middleware\CustomerMiddleware::class,
+            'super'    => SuperMiddleware::class,
+            'admin'    => AdminMiddleware::class,
+            'customer' => CustomerMiddleware::class,
         ]);
 
         $middleware->group('admin', [
-            App\Http\Middleware\AdminMiddleware::class,
+            AdminMiddleware::class,
         ]);
 
         $middleware->group('customer', [
-            Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-            App\Http\Middleware\CustomerMiddleware::class,
+            EnsureEmailIsVerified::class,
+            CustomerMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,7 @@ use SaeedHosan\Additions\Models\Concerns\HasUuid;
 
 class Product extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProductFactory> */
+    /** @use HasFactory<ProductFactory> */
     use HasFactory;
 
     use HasUuid;
@@ -105,7 +106,7 @@ class Product extends Model
     /**
      * Scope active products.
      */
-    public function scopeActive(Builder $query): Builder
+    protected function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
     }
@@ -113,7 +114,7 @@ class Product extends Model
     /**
      * Scope default product.
      */
-    public function scopeDefault(Builder $query): Builder
+    protected function scopeDefault(Builder $query): Builder
     {
         return $query->where('is_default', true);
     }

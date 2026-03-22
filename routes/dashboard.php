@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 /**
  * Here's defined dashboard routes
  */
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
-    Route::name('app.')->group(function () {
+    Route::name('app.')->group(function (): void {
         Route::resource('leads', LeadController::class);
         Route::resource('breaches', BreachController::class);
         Route::resource('products', ProductController::class);

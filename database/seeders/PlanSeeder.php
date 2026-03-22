@@ -15,8 +15,8 @@ class PlanSeeder extends Seeder
      */
     public function run(): void
     {
-        $breachMonitoring = Product::where('code', 'breach_monitoring')->first();
-        $leadManagement   = Product::where('code', 'lead_management')->first();
+        $breachMonitoring = Product::query()->where('code', 'breach_monitoring')->first();
+        $leadManagement   = Product::query()->where('code', 'lead_management')->first();
 
         $plans = [
             [
@@ -117,14 +117,9 @@ class PlanSeeder extends Seeder
             $products = $planData['products'];
             unset($planData['products']);
 
-            $plan = Plan::updateOrCreate(
-                ['slug' => $planData['slug']],
-                $planData
-            );
+            $plan = Plan::query()->updateOrCreate(['slug' => $planData['slug']], $planData);
 
-            if ($products) {
-                $plan->products()->sync($products);
-            }
+            $plan->products()->sync($products);
         }
     }
 }

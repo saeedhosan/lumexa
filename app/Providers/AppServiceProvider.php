@@ -55,10 +55,10 @@ class AppServiceProvider extends ServiceProvider
         );
     }
 
-    private function withGateAccess()
+    private function withGateAccess(): void
     {
-        Gate::define(Access::super, fn (Authenticatable $user) => $user->type === UserType::super);
-        Gate::define(Access::admin, fn (Authenticatable $user) => $user->type === UserType::admin);
-        Gate::define(Access::user, fn (Authenticatable $user) => $user->type === UserType::user);
+        Gate::define(Access::super, fn (Authenticatable $user): bool => $user->type === UserType::super);
+        Gate::define(Access::admin, fn (Authenticatable $user): bool => $user->type === UserType::admin);
+        Gate::define(Access::user, fn (Authenticatable $user): bool => $user->type === UserType::user);
     }
 }

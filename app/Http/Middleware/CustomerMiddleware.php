@@ -42,6 +42,7 @@ class CustomerMiddleware
         if ($user->type === UserType::admin) {
             return route('admin.dashboard', absolute: true);
         }
+
         if ($user->type === UserType::super) {
             return route('super.dashobard', absolute: true);
         }
@@ -49,7 +50,7 @@ class CustomerMiddleware
         return null;
     }
 
-    private function isCustomer(?Authenticatable $user)
+    private function isCustomer(?Authenticatable $user): bool
     {
         return $user instanceof Authenticatable && $user->type === UserType::user;
     }

@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Models\Company;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -17,7 +20,7 @@ class CompanySwitcher extends Component
         $this->currentCompany = Auth::user()?->currentCompany;
     }
 
-    public function getCompaniesProperty(): \Illuminate\Database\Eloquent\Collection
+    public function getCompaniesProperty(): Collection
     {
         return Auth::user()?->companies ?? collect();
     }
@@ -34,7 +37,7 @@ class CompanySwitcher extends Component
         $this->currentCompany = $company;
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.company-switcher', [
             'companies'      => $this->companies,

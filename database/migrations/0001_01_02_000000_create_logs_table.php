@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('logs', function (Blueprint $table) {
+        Schema::create('logs', function (Blueprint $table): void {
             $table->id();
             $table->unsignedInteger('user_id')->nullable();
             $table->string('level')->default('info');

@@ -11,11 +11,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Monolog\Level;
 use Monolog\Logger as MonologLogger;
 use Monolog\LogRecord;
+use Monolog\Processor\ClosureContextProcessor;
 use Tests\TestCase;
 
 uses(TestCase::class, RefreshDatabase::class);
 
-it('DatabaseLogger - returns monolog logger with database handler', function () {
+it('DatabaseLogger - returns monolog logger with database handler', function (): void {
     $logger = (new DatabaseLogger())([]);
 
     expect($logger)
@@ -25,7 +26,7 @@ it('DatabaseLogger - returns monolog logger with database handler', function () 
         ->and($logger->getHandlers()[0])->toBeInstanceOf(DatabaseHandler::class);
 });
 
-it('DatabaseHandler - writes log record to database', function () {
+it('DatabaseHandler - writes log record to database', function (): void {
     $handler = new DatabaseHandler();
 
     $record = new LogRecord(
@@ -39,7 +40,7 @@ it('DatabaseHandler - writes log record to database', function () {
 
     $handler->handle($record);
 
-    $log = Log::latest()->first();
+    $log = Log::query()->latest()->first();
 
     expect($log)
         ->not->toBeNull()
@@ -47,7 +48,7 @@ it('DatabaseHandler - writes log record to database', function () {
         ->and($log->message)->toBe('Test log message');
 });
 
-it('DatabaseHandler - writes log with user_id from context', function () {
+it('DatabaseHandler - writes log with user_id from context', function (): void {
     $user = User::factory()->create();
 
     $handler = new DatabaseHandler();
@@ -63,10 +64,10 @@ it('DatabaseHandler - writes log with user_id from context', function () {
 
     $handler->handle($record);
 
-    expect(Log::latest()->first()->user_id)->toBe($user->id);
+    expect(Log::query()->latest()->first()->user_id)->toBe($user->id);
 });
 
-it('AddCallerIntrospection - adds processors to monolog logger', function () {
+it('AddCallerIntrospection - adds processors to monolog logger', function (): void {
     $illuminateLogger = new Illuminate\Log\Logger(new MonologLogger('test'));
     $processor        = new AddCallerIntrospection();
 
@@ -74,13 +75,13 @@ it('AddCallerIntrospection - adds processors to monolog logger', function () {
 
     $monolog = $illuminateLogger->getLogger();
 
-    expect($monolog->popProcessor())->toBeInstanceOf(Monolog\Processor\ClosureContextProcessor::class);
+    expect($monolog->popProcessor())->toBeInstanceOf(ClosureContextProcessor::class);
 });
 
-it('AddCallerIntrospection - handles non-monolog loggers gracefully', function () {
+it('AddCallerIntrospection - handles non-monolog loggers gracefully', function (): void {
     $nonMonologLogger = new class
     {
-        public function getLogger()
+        public function getLogger(): string
         {
             return 'not-a-monolog-logger';
         }

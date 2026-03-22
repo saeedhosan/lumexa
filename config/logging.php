@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Logging\AddCallerIntrospection;
+use App\Logging\DatabaseHandler;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -57,8 +59,8 @@ return [
         // create a  custom database log channel
         'database' => [
             'driver'  => 'monolog',
-            'handler' => App\Logging\DatabaseHandler::class,
-            'tap'     => [App\Logging\AddCallerIntrospection::class],
+            'handler' => DatabaseHandler::class,
+            'tap'     => [AddCallerIntrospection::class],
         ],
 
         'stack' => [

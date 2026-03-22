@@ -57,10 +57,7 @@ class CompanySeeder extends Seeder
         ];
 
         foreach ($companies as $companyData) {
-            Company::updateOrCreate(
-                ['slug' => $companyData['slug']],
-                $companyData
-            );
+            Company::query()->updateOrCreate(['slug' => $companyData['slug']], $companyData);
         }
     }
 }

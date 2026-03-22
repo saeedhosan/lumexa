@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Super\UserStoreRequest;
 use App\Models\Company;
 use App\Models\User;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -18,33 +20,33 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): Factory|View
     {
         $search = $request->get('search');
 
         $users = User::query()
             ->with('currentCompany')
             ->when($search, fn ($query) => $query->where(fn ($q) => $q
-                ->where('name', 'like', "%{$search}%")
-                ->orWhere('email', 'like', "%{$search}%")
+                ->where('name', 'like', sprintf('%%%s%%', $search))
+                ->orWhere('email', 'like', sprintf('%%%s%%', $search))
             ))
             ->latest()
             ->paginate()
             ->withQueryString();
 
-        return view('super.users.index', compact('users', 'search'));
+        return view('super.users.index', ['users' => $users, 'search' => $search]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Factory|View
     {
-        $companies = Company::where('is_active', true)->orderBy('name')->get();
+        $companies = Company::query()->where('is_active', true)->orderBy('name')->get();
         $statuses  = UserStatus::values();
         $types     = UserType::values();
 
-        return view('super.users.create', compact('companies', 'statuses', 'types'));
+        return view('super.users.create', ['companies' => $companies, 'statuses' => $statuses, 'types' => $types]);
     }
 
     /**
@@ -54,35 +56,35 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        $user = User::create($data);
+        $user = User::query()->create($data);
 
         if ($data['current_company_id']) {
             $user->companies()->attach($data['current_company_id'], ['role' => Company::ROLE_CUSTOMER]);
         }
 
-        return redirect()->route('super.users.index')->with('success', 'User created successfully.');
+        return to_route('super.users.index')->with('success', 'User created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(User $user): Factory|View
     {
-        return view('super.users.show', compact('user'));
+        return view('super.users.show', ['user' => $user]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(User $user): Factory|View
     {
-        return view('super.users.eidt', compact('user'));
+        return view('super.users.eidt', ['user' => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user): void
     {
         //
     }
@@ -94,6 +96,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('super.users.index')->with('success', 'User deleted successfully.');
+        return to_route('super.users.index')->with('success', 'User deleted successfully.');
     }
 }

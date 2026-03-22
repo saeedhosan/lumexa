@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Company>
+ * @extends Factory<Company>
  */
 class CompanyFactory extends Factory
 {
@@ -48,58 +48,58 @@ class CompanyFactory extends Factory
 
     public function status(bool $status): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => $status,
         ]);
     }
 
     public function isPublic(bool $isPublic = true): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_public' => $isPublic,
         ]);
     }
 
     public function active(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => true,
         ]);
     }
 
     public function inactive(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => false,
         ]);
     }
 
     public function configure(): static
     {
-        return $this->afterMaking(function (Company $company) {
+        return $this->afterMaking(function (Company $company): void {
             //
-        })->afterCreating(function (Company $company) {
+        })->afterCreating(function (Company $company): void {
             //
         });
     }
 
     public function withCreator(?User $user = null): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'created_by' => $user?->id ?? User::factory(),
         ]);
     }
 
     public function withUpdator(?User $user = null): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'updated_by' => $user?->id ?? User::factory(),
         ]);
     }
 
     public function withUsers(int $count = 1, ?string $role = null): static
     {
-        return $this->afterCreating(function (Company $company) use ($count, $role) {
+        return $this->afterCreating(function (Company $company) use ($count, $role): void {
             $users = User::factory()->count($count)->create();
             $users->each(fn (User $user) => $company->users()->attach($user, ['role' => $role ?? Company::ROLE_CUSTOMER]));
         });

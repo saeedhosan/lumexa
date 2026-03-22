@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Observers\CompanyObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,10 +38,12 @@ use SaeedHosan\Additions\Models\Concerns\HasUuid;
 #[ObservedBy(CompanyObserver::class)]
 class Company extends Model
 {
-    use HasBelongsToOne, HasSlug, HasUuid;
-
-    /** @use HasFactory<\Illuminate\Database\Eloquent\Factories\Factory> */
+    use HasBelongsToOne;
+    /** @use HasFactory<Factory> */
     use HasFactory;
+    use HasSlug;
+
+    use HasUuid;
 
     /**
      * The model support roles

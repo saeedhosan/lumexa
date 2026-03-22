@@ -11,15 +11,10 @@ if (! function_exists('home_route')) {
      */
     function home_route(): string
     {
-        return once(function (): string {
-            switch (Auth::user()->type) {
-                case UserType::super:
-                    return 'super.home';
-                case UserType::admin:
-                    return 'admin.home';
-                default:
-                    return 'dashboard';
-            }
+        return once(fn (): string => match (Auth::user()->type) {
+            UserType::super => 'super.home',
+            UserType::admin => 'admin.home',
+            default         => 'dashboard',
         });
     }
 }

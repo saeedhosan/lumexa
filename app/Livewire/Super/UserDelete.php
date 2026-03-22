@@ -12,7 +12,7 @@ use Livewire\Component;
 class UserDelete extends Component
 {
     #[On('user-delete')]
-    public function delete(User $user)
+    public function delete(User $user): void
     {
         if ($user->id === Auth::id()) {
 
@@ -26,7 +26,7 @@ class UserDelete extends Component
         $this->dispatch('success', 'User deleted successfully.');
     }
 
-    public function render()
+    public function render(): string
     {
         return '<div></div>';
     }
