@@ -42,7 +42,7 @@ class CustomerMiddleware
         if ($user->type === UserType::admin) {
             return route('admin.dashboard', absolute: true);
         }
-        if ($user->type === UserType::administrator) {
+        if ($user->type === UserType::super) {
             return route('super.dashobard', absolute: true);
         }
 

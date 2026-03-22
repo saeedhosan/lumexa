@@ -1,6 +1,6 @@
 @switch(auth()->user()->type)
     {{-- condition --}}
-    @case(\App\Enums\UserType::administrator)
+    @case(\App\Enums\UserType::super)
         <x-layouts::sidebar.super />
     @break
 

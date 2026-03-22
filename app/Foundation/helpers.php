@@ -13,7 +13,7 @@ if (! function_exists('home_route')) {
     {
         return once(function (): string {
             switch (Auth::user()->type) {
-                case UserType::administrator:
+                case UserType::super:
                     return 'super.home';
                 case UserType::admin:
                     return 'admin.home';

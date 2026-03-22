@@ -46,6 +46,6 @@ class AdminMiddleware
 
     private function isAdministrator(?Authenticatable $user)
     {
-        return $user instanceof Authenticatable && $user->type === UserType::administrator;
+        return $user instanceof Authenticatable && $user->type === UserType::super;
     }
 }

@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'password'          => 'demo1234',
             'email_verified_at' => now(),
             'status'            => UserStatus::active,
-            'type'              => UserType::administrator,
+            'type'              => UserType::super,
         ]);
 
         $google    = Company::where('slug', 'google')->first();

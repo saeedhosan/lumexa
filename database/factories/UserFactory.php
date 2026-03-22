@@ -67,7 +67,7 @@ class UserFactory extends Factory
 
     public function administrator(): static
     {
-        return $this->type(UserType::administrator);
+        return $this->type(UserType::super);
     }
 
     public function customer(): static
