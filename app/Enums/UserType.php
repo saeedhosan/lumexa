@@ -6,14 +6,14 @@ namespace App\Enums;
 
 enum UserType: string
 {
-    case customer = 'customer';
-    case admin    = 'admin';
-    case super    = 'super';
+    case user  = 'user';
+    case admin = 'admin';
+    case super = 'super';
 
     // Default status
     public static function default(): self
     {
-        return self::customer;
+        return self::user;
     }
 
     public static function values(): array

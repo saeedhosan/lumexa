@@ -41,7 +41,7 @@ class AdminMiddleware
 
     private function isCustomer(?Authenticatable $user)
     {
-        return $user instanceof Authenticatable && $user->type === UserType::customer;
+        return $user instanceof Authenticatable && $user->type === UserType::user;
     }
 
     private function isSuper(?Authenticatable $user)

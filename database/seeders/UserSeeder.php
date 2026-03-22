@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
             'password'          => config('demo.user.password', '1234'),
             'email_verified_at' => now(),
             'status'            => UserStatus::active,
-            'type'              => UserType::customer,
+            'type'              => UserType::user,
         ]);
 
         $admin->companies()->sync($google);

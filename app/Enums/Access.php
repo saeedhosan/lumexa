@@ -6,11 +6,11 @@ namespace App\Enums;
 
 enum Access: string
 {
-    case customer = 'access:customer';
-    case super    = 'access:super';
-    case client   = 'access:client';
-    case manager  = 'access.manager';
-    case admin    = 'access:admin';
+    case user    = 'access:user';
+    case super   = 'access:super';
+    case client  = 'access:client';
+    case manager = 'access.manager';
+    case admin   = 'access:admin';
 
     /**
      * Get all access values.
