@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Enums\Access;
 use App\Enums\UserType;
 use Closure;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class CustomerMiddleware
@@ -28,20 +26,31 @@ class CustomerMiddleware
             return $next($request);
         }
 
-        if ($this->hasOtherAccess()) {
-            // redirect to other dashboard
+        if ($url = $this->getRedirect($request->user())) {
+            return redirect()->to($url);
         }
 
         throw new AuthorizationException(self::ERROR_MESSAGE);
     }
 
+    private function getRedirect(?Authenticatable $user): ?string
+    {
+        if (is_null($user)) {
+            return null;
+        }
+
+        if ($user->type === UserType::admin) {
+            return route('admin.dashboard', absolute: true);
+        }
+        if ($user->type === UserType::administrator) {
+            return route('super.dashobard', absolute: true);
+        }
+
+        return null;
+    }
+
     private function isCustomer(?Authenticatable $user)
     {
         return $user instanceof Authenticatable && $user->type === UserType::customer;
-    }
-
-    private function hasOtherAccess()
-    {
-        return Gate::any(Access::values());
     }
 }

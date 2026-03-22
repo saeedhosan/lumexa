@@ -14,6 +14,16 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
+
+        User::query()->create([
+            'name'              => 'Super admin',
+            'email'             => 'super@example.com',
+            'password'          => 'demo1234',
+            'email_verified_at' => now(),
+            'status'            => UserStatus::active,
+            'type'              => UserType::administrator,
+        ]);
+
         $google    = Company::where('slug', 'google')->first();
         $amazon    = Company::where('slug', 'amazon')->first();
         $microsoft = Company::where('slug', 'microsoft')->first();
