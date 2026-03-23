@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
         $admin = User::query()->create([
             'name'              => config('demo.admin.name', 'Admin user'),
             'email'             => config('demo.admin.email', 'admin@example.com'),
-            'password'          => config('demo.admin.password', '1234'),
+            'password'          => config('demo.admin.password', 'demo1234'),
             'email_verified_at' => now(),
             'status'            => UserStatus::active,
             'type'              => UserType::admin,
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
         $user = User::query()->create([
             'name'              => config('demo.user.name', 'User'),
             'email'             => config('demo.user.email', 'user@example.com'),
-            'password'          => config('demo.user.password', '1234'),
+            'password'          => config('demo.user.password', 'demo1234'),
             'email_verified_at' => now(),
             'status'            => UserStatus::active,
             'type'              => UserType::user,
