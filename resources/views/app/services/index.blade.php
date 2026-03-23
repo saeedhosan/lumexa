@@ -42,10 +42,14 @@
                             <div class="space-y-2">
                                 <flux:heading level="4" size="xs">Features</flux:heading>
                                 <div class="grid grid-cols-1 gap-1">
-                                    @foreach($service->features as $feature)
+                                    @foreach($service->features as $key => $value)
                                         <div class="flex items-center gap-2 text-sm">
-                                            <flux:icon name="check-circle" class="size-4 text-green-500 shrink-0" />
-                                            <span class="text-zinc-600 dark:text-zinc-300">{{ $feature }}</span>
+                                            @if($value === true)
+                                                <flux:icon name="check-circle" class="size-4 text-green-500 shrink-0" />
+                                            @else
+                                                <flux:icon name="x-circle" class="size-4 text-red-500 shrink-0" />
+                                            @endif
+                                            <span class="text-zinc-600 dark:text-zinc-300">{{ Str::replace('_', ' ', Str::title($key)) }}</span>
                                         </div>
                                     @endforeach
                                 </div>
