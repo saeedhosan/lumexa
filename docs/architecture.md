@@ -141,7 +141,7 @@ Lumexa-portal/
 - plan_id, is_admin, is_customer, is_manager
 
 Relations: company(), companies(), account(), plan(),
-           breaches(), metas(), monitorEmails()
+           campaigns(), metas(), monitorEmails()
 ```
 
 ### Company (Tenant)
@@ -208,7 +208,7 @@ Relations: company()
 
 -   Access: Customer role users
 -   Routes: `/`, `/customer`
--   Capabilities: Dashboard, breach monitoring, alerts, settings
+-   Capabilities: Dashboard, campaign monitoring, alerts, settings
 -   Middleware: `customer`
 
 ### Authorization Using Spatie Laravel Permission
@@ -364,7 +364,7 @@ class InvitationService {
 }
 
 class DarkWebService {
-    public function syncBreaches(MonitorEmail $monitor): void {
+    public function syncCampaigns(MonitorEmail $monitor): void {
         // Query SDK, sync records, queue AI generation
     }
 }
@@ -376,7 +376,7 @@ class OnboardingService {
 
 // Usage
 app(InvitationService::class)->accept($invitation, $data);
-app(DarkWebService::class)->syncBreaches($monitor);
+app(DarkWebService::class)->syncCampaigns($monitor);
 ```
 
 ---
@@ -400,14 +400,14 @@ app(DarkWebService::class)->syncBreaches($monitor);
 4. Stripe webhook → Subscription created
 5. Redirect to admin dashboard
 
-### 3. Breach Monitoring
+### 3. Campaign Monitoring
 
 1. User adds email to monitor → Create MonitorEmail
 2. `MonitorEmailAction` queries Dark Web Scan SDK
 3. Sync DarkWebScan records to user
 4. Queue AI summary generation job
-5. User notified of breaches
-6. Scheduled job runs periodically for new breaches
+5. User notified of campaigns
+6. Scheduled job runs periodically for new campaigns
 
 ### 5. Third-Party Sync
 
@@ -534,7 +534,7 @@ User::factory()->admin()->for(Company::factory())->create();
 ```php
 it('allows admin to create company', function () { ... })
 it('prevents customer from accessing admin panel', function () { ... })
-it('sends email on breach detection', function () { ... })
+it('sends email on campaign detection', function () { ... })
 ```
 
 ### Test Types

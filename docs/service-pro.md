@@ -1,12 +1,12 @@
 # Services
 
-Services are the features your SaaS provides (e.g., Breach Monitoring, Lead Management).
+Services are the features your SaaS provides (e.g., Campaign Monitoring, Lead Management).
 
 ## Service List
 
 | Service | Code | Description |
 |---------|------|-------------|
-| Breach Monitoring | `breach_monitoring` | Monitor emails for data breaches |
+| Campaign Monitoring | `campaign_monitoring` | Monitor emails for data exposures and leaks |
 | Lead Management | `lead_management` | Track and manage sales leads |
 
 ## Data Model

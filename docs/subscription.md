@@ -10,8 +10,8 @@ Plans and billing with Laravel Cashier (Stripe).
 
 | Plan | Services | Users | Monthly | Yearly |
 |------|----------|-------|---------|--------|
-| Starter | Breach Monitoring | 1 | $9 | $90 |
-| Professional | Breach Monitoring + Lead Management | 5 | $29 | $290 |
+| Starter | Campaign Monitoring | 1 | $9 | $90 |
+| Professional | Campaign Monitoring + Lead Management | 5 | $29 | $290 |
 | Enterprise | All services | Unlimited | $99 | $990 |
 
 ## Plan Data Model

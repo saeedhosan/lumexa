@@ -12,8 +12,8 @@ use App\Http\Controllers\Admin\DashobardController;
 use App\Http\Controllers\Admin\InviteController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\MemeberController;
-use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', DashobardController::class)->name('home');

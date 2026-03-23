@@ -20,11 +20,11 @@
             </flux:sidebar.item>
             <flux:sidebar.item
                 icon="shield-exclamation"
-                :href="route('app.breaches.index')"
-                :current="request()->routeIs('app.breaches.*')"
+                :href="route('app.campaigns.index')"
+                :current="request()->routeIs('app.campaigns.*')"
                 wire:navigate
             >
-                {{ __('Breaches') }}
+                {{ __('Campaigns') }}
             </flux:sidebar.item>
         </flux:sidebar.group>
 

@@ -13,9 +13,9 @@ class ServiceSeeder extends Seeder
     {
         $services = [
             [
-                'name'       => 'Breach Monitoring',
-                'slug'       => 'breach-monitoring',
-                'code'       => 'breach_monitoring',
+                'name'       => 'Campaign Monitoring',
+                'slug'       => 'campaign-monitoring',
+                'code'       => 'campaign_monitoring',
                 'icon'       => 'shield-check',
                 'about'      => 'Monitor emails for data breaches and receive alerts when your information is found in known data leaks.',
                 'is_active'  => true,
@@ -23,7 +23,7 @@ class ServiceSeeder extends Seeder
                 'features'   => [
                     'email_monitoring' => true,
                     'real_time_alerts' => true,
-                    'breach_history'   => true,
+                    'campaign_history' => true,
                     'api_access'       => false,
                 ],
                 'settings' => [

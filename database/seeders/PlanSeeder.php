@@ -15,14 +15,14 @@ class PlanSeeder extends Seeder
      */
     public function run(): void
     {
-        $breachMonitoring = Service::query()->where('code', 'breach_monitoring')->first();
-        $leadManagement   = Service::query()->where('code', 'lead_management')->first();
+        $campaignMonitoring = Service::query()->where('code', 'campaign_monitoring')->first();
+        $leadManagement     = Service::query()->where('code', 'lead_management')->first();
 
         $plans = [
             [
                 'name'                    => 'Starter',
                 'slug'                    => 'starter',
-                'description'             => 'Perfect for individuals and small teams getting started with breach monitoring.',
+                'description'             => 'Perfect for individuals and small teams getting started with campaign monitoring.',
                 'is_active'               => true,
                 'is_default'              => true,
                 'trial_days'              => 14,
@@ -35,7 +35,7 @@ class PlanSeeder extends Seeder
                 'features'                => [
                     'email_monitoring'    => true,
                     'real_time_alerts'    => true,
-                    'breach_history'      => true,
+                    'campaign_history'    => true,
                     'api_access'          => false,
                     'lead_management'     => false,
                     'pipeline_management' => false,
@@ -44,12 +44,12 @@ class PlanSeeder extends Seeder
                     'scan_interval'         => 'daily',
                     'notification_channels' => ['email'],
                 ],
-                'services' => [$breachMonitoring],
+                'services' => [$campaignMonitoring],
             ],
             [
                 'name'                    => 'Professional',
                 'slug'                    => 'professional',
-                'description'             => 'For growing businesses that need breach monitoring plus lead management.',
+                'description'             => 'For growing businesses that need campaign monitoring plus lead management.',
                 'is_active'               => true,
                 'is_default'              => false,
                 'trial_days'              => 14,
@@ -62,7 +62,7 @@ class PlanSeeder extends Seeder
                 'features'                => [
                     'email_monitoring'    => true,
                     'real_time_alerts'    => true,
-                    'breach_history'      => true,
+                    'campaign_history'    => true,
                     'api_access'          => false,
                     'lead_management'     => true,
                     'pipeline_management' => true,
@@ -75,7 +75,7 @@ class PlanSeeder extends Seeder
                     'notification_channels' => ['email', 'push'],
                     'auto_assignment'       => false,
                 ],
-                'services' => [$breachMonitoring, $leadManagement],
+                'services' => [$campaignMonitoring, $leadManagement],
             ],
             [
                 'name'                    => 'Enterprise',
@@ -93,7 +93,7 @@ class PlanSeeder extends Seeder
                 'features'                => [
                     'email_monitoring'    => true,
                     'real_time_alerts'    => true,
-                    'breach_history'      => true,
+                    'campaign_history'    => true,
                     'api_access'          => true,
                     'lead_management'     => true,
                     'pipeline_management' => true,
@@ -109,7 +109,7 @@ class PlanSeeder extends Seeder
                     'auto_assignment'       => true,
                     'sla_guarantee'         => true,
                 ],
-                'services' => [$breachMonitoring, $leadManagement],
+                'services' => [$campaignMonitoring, $leadManagement],
             ],
         ];
 

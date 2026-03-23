@@ -9,14 +9,14 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
-class BreachController extends Controller
+class CampaignController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(): Factory|View
     {
-        return view('app.breaches.index');
+        return view('app.campaigns.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class BreachController extends Controller
      */
     public function create(): Factory|View
     {
-        return view('app.breaches.create');
+        return view('app.campaigns.create');
     }
 
     /**
@@ -40,7 +40,7 @@ class BreachController extends Controller
      */
     public function show(string $id): Factory|View
     {
-        return view('app.breaches.show', ['id' => $id]);
+        return view('app.campaigns.show', ['id' => $id]);
     }
 
     /**
@@ -48,7 +48,7 @@ class BreachController extends Controller
      */
     public function edit(string $id): Factory|View
     {
-        return view('app.breaches.edit', ['id' => $id]);
+        return view('app.campaigns.edit', ['id' => $id]);
     }
 
     /**
