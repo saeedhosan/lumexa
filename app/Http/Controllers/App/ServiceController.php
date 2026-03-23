@@ -19,7 +19,7 @@ class ServiceController extends Controller
     {
         $services = Auth::user()?->currentCompany?->services ?? collect();
 
-        return view('app.services.index', compact('services'));
+        return view('app.services.index', ['services' => $services]);
     }
 
     /**
