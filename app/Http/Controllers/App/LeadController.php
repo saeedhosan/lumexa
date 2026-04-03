@@ -54,9 +54,20 @@ class LeadController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id): void
+    public function show(Lead $lead, Request $request): View|Factory
     {
-        //
+        $lead->load('leadList');
+
+        $search = $request->query('search');
+
+        $leadLists = $lead->leadList()
+            ->when($search, fn ($query) => $query->where('first_name', 'like', "%{$search}%")
+                ->orWhere('last_name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orWhere('phone', 'like', "%{$search}%"))
+            ->get();
+
+        return view('app.leads.show', compact('lead', 'leadLists', 'search'));
     }
 
     /**
