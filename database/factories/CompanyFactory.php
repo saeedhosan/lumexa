@@ -25,7 +25,7 @@ class CompanyFactory extends Factory
             'logo'        => $this->faker->imageUrl(200, 200, 'business', true, 'logo'),
             'title'       => $this->faker->catchPhrase(),
             'description' => $this->faker->paragraph(),
-            'config'      => [
+            'settings'    => [
                 'theme'         => $this->faker->randomElement(['light', 'dark']),
                 'notifications' => [
                     'email' => $this->faker->boolean(),
@@ -38,8 +38,7 @@ class CompanyFactory extends Factory
             'currency' => $this->faker->randomElement(['USD', 'EUR', 'GBP']),
             'country'  => $this->faker->countryCode(),
 
-            'status'    => $this->faker->boolean(80),
-            'is_public' => $this->faker->boolean(70),
+            'is_active' => $this->faker->boolean(80),
 
             'created_by' => null,
             'updated_by' => null,
@@ -49,28 +48,21 @@ class CompanyFactory extends Factory
     public function status(bool $status): static
     {
         return $this->state(fn (array $attributes): array => [
-            'status' => $status,
-        ]);
-    }
-
-    public function isPublic(bool $isPublic = true): static
-    {
-        return $this->state(fn (array $attributes): array => [
-            'is_public' => $isPublic,
+            'is_active' => $status,
         ]);
     }
 
     public function active(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'status' => true,
+            'is_active' => true,
         ]);
     }
 
     public function inactive(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'status' => false,
+            'is_active' => false,
         ]);
     }
 
