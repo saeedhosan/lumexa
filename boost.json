@@ -3,18 +3,20 @@
         "opencode"
     ],
     "guidelines": true,
-    "herd_mcp": false,
     "mcp": true,
     "nightwatch_mcp": false,
     "packages": [
-        "laravel/fortify"
+        "laravel/fortify",
+        "fruitcake/laravel-debugbar"
     ],
     "sail": false,
     "skills": [
+        "laravel-best-practices",
         "fluxui-development",
         "livewire-development",
         "pest-testing",
         "tailwindcss-development",
-        "fortify-development"
+        "fortify-development",
+        "debug-using-debugbar"
     ]
 }
