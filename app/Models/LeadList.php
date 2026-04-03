@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\LeadLestStatus;
 use Database\Factories\LeadListFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -57,10 +58,38 @@ class LeadList extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['name', 'full_address'];
+
+    /**
      * Get the lead who owns this model.
      */
     public function lead(): BelongsTo
     {
         return $this->belongsTo(Lead::class);
+    }
+
+    /**
+     * Get the full name by first_name and last_name.
+     */
+    protected function name(): Attribute
+    {
+        return Attribute::make(fn (): string => mb_trim("{$this->first_name} {$this->last_name}"));
+    }
+
+    /**
+     * Get the full address
+     */
+    protected function fullAddress(): Attribute
+    {
+        return Attribute::make(get: fn (): string => implode(', ', array_filter([
+            $this->address,
+            $this->city,
+            $this->state,
+            $this->zip_code,
+        ])));
     }
 }
