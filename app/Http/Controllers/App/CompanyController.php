@@ -9,6 +9,7 @@ use App\Models\Company;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
@@ -17,7 +18,9 @@ class CompanyController extends Controller
      */
     public function index(): Factory|View
     {
-        return view('app.companies.index');
+        $companies = Auth::user()->companies()->orderBy('name')->get();
+
+        return view('app.companies.index', ['companies' => $companies]);
     }
 
     /**
