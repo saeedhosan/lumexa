@@ -37,6 +37,7 @@
                 <flux:table.column column="created_at" :sortable="true" :direction="$sort === 'created_at' ? $direction : null">
                     Created at
                 </flux:table.column>
+                <flux:table.column>Actions</flux:table.column>
             </flux:table.columns>
 
             <flux:table.rows>
@@ -55,10 +56,26 @@
                         <flux:table.cell>
                             {{ $lead->created_at->format('M d, Y') }}
                         </flux:table.cell>
+                        <flux:table.cell>
+                            <div class="flex items-center gap-2">
+                                <flux:button
+                                    variant="ghost"
+                                    size="sm"
+                                    :href="route('app.leads.show', $lead)"
+                                    icon="eye"
+                                />
+                                <flux:button
+                                    variant="ghost"
+                                    size="sm"
+                                    icon="trash"
+                                    onclick="confirm('Are you sure you want to delete?') && Livewire.dispatch('lead-delete', { lead: {{ $lead->id }} })"
+                                />
+                            </div>
+                        </flux:table.cell>
                     </flux:table.row>
                 @empty
                     <flux:table.row>
-                        <flux:table.cell colspan="3" class="text-center text-zinc-500">
+                        <flux:table.cell colspan="4" class="text-center text-zinc-500">
                             No leads found.
                         </flux:table.cell>
                     </flux:table.row>
