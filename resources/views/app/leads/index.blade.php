@@ -1,5 +1,7 @@
 <x-layouts::app title="Leads">
 
+    @livewire(\App\Livewire\App\Leads\LeadDelete::class)
+
     <div class="flex items-center justify-between mb-6">
         <form
             method="GET"
@@ -28,13 +30,19 @@
     <div class="overflow-x-auto">
         <flux:table class="min-w-full">
             <flux:table.columns>
-                <flux:table.column column="title" :sortable="true" :direction="$sort === 'title' ? $direction : null">
+                <flux:table.column column="title" :sortable="true"
+                    :direction="$sort === 'title' ? $direction : null"
+                >
                     Title
                 </flux:table.column>
-                <flux:table.column column="status" :sortable="true" :direction="$sort === 'status' ? $direction : null">
+                <flux:table.column column="status" :sortable="true"
+                    :direction="$sort === 'status' ? $direction : null"
+                >
                     Status
                 </flux:table.column>
-                <flux:table.column column="created_at" :sortable="true" :direction="$sort === 'created_at' ? $direction : null">
+                <flux:table.column column="created_at" :sortable="true"
+                    :direction="$sort === 'created_at' ? $direction : null"
+                >
                     Created at
                 </flux:table.column>
                 <flux:table.column>Actions</flux:table.column>
@@ -68,7 +76,7 @@
                                     variant="ghost"
                                     size="sm"
                                     icon="trash"
-                                    onclick="confirm('Are you sure you want to delete?') && Livewire.dispatch('lead-delete', { lead: {{ $lead->id }} })"
+                                    onclick="confirm('Are you sure want to delete?') && Livewire.dispatch('lead-delete', '{{ $lead->getRouteKey() }}')"
                                 />
                             </div>
                         </flux:table.cell>

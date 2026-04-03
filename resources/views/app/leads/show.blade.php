@@ -1,4 +1,5 @@
 <x-layouts::app title="Lead Details">
+
     @livewire(\App\Livewire\App\Leads\LeadListDelete::class)
 
     <div class="flex items-center justify-between mb-6">
@@ -61,7 +62,7 @@
                                     variant="ghost"
                                     size="sm"
                                     icon="trash"
-                                    onclick="confirm('Are you sure you want to delete?') && Livewire.dispatch('lead-list-delete', { leadList: {{ $leadList->id }} })"
+                                    onclick="confirm('Are you sure you want to delete?') && Livewire.dispatch('lead-list-delete', '{{ $leadList->getRouteKey() }}')"
                                 />
                             </div>
                         </flux:table.cell>

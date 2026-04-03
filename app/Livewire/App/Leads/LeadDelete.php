@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\Livewire\App\Leads;
 
-use App\Models\LeadList;
+use App\Models\Lead;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class LeadListDelete extends Component
+class LeadDelete extends Component
 {
-    #[On('lead-list-delete')]
-    public function delete(LeadList $leadList): void
+    #[On('lead-delete')]
+    public function destroy(Lead $lead): void
     {
-        $leadList->delete();
+        $lead->delete();
 
         $this->dispatch('success', 'Lead deleted successfully.');
-        $this->redirect(route('app.leads.show', $leadList->lead, false), true);
+        $this->redirect(route('app.leads.index', absolute: false), true);
     }
 
     public function render(): string
