@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\LeadStatus;
+use App\Models\Scopes\CompanyScope;
 use Database\Factories\LeadFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -68,5 +69,13 @@ class Lead extends Model
     public function leadList(): HasMany
     {
         return $this->hasMany(LeadList::class);
+    }
+
+    /**
+     * Boot the model.
+     */
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new CompanyScope());
     }
 }
