@@ -40,6 +40,7 @@ enum LeadStatus: string
     {
         return match ($this) {
             self::pending  => 'gray',
+            self::process  => 'yellow',
             self::cleaned  => 'blue',
             self::blocked  => 'red',
             self::approved => 'green',
