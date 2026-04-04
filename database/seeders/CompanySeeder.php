@@ -61,22 +61,6 @@ class CompanySeeder extends Seeder
                 'is_active'   => true,
             ],
             [
-                'name'        => 'Taiwan Semiconductor Manufacturing Co. (TSMC)',
-                'slug'        => 'tsmc',
-                'logo'        => 'https://www.tsmc.com/favicon.ico',
-                'description' => 'Largest semiconductor foundry.',
-                'country'     => 'Taiwan',
-                'is_active'   => false,
-            ],
-            [
-                'name'        => 'Broadcom',
-                'slug'        => 'broadcom',
-                'logo'        => 'https://www.broadcom.com/favicon.ico',
-                'description' => 'Semiconductor and software solutions.',
-                'country'     => 'USA',
-                'is_active'   => true,
-            ],
-            [
                 'name'        => 'Tencent Holdings',
                 'slug'        => 'tencent',
                 'logo'        => 'https://www.tencent.com/favicon.ico',
