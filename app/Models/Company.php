@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use SaeedHosan\Additions\Eloquent\Concerns\HasBelongsToOne;
-use SaeedHosan\Additions\Models\Concerns\HasSlug;
-use SaeedHosan\Additions\Models\Concerns\HasUuid;
+use SaeedHosan\Useful\Eloquent\Concerns\HasBelongsToOne;
+use SaeedHosan\Useful\Models\Concerns\HasSlug;
+use SaeedHosan\Useful\Models\Concerns\HasUuid;
 
 /**
  * @property int $id

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use SaeedHosan\Additions\Models\Concerns\HasUuid;
+use SaeedHosan\Useful\Models\Concerns\HasUuid;
 
 class Service extends Model
 {
