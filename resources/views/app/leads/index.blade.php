@@ -20,11 +20,9 @@
                 @change="$el.closest('form').submit()"
             />
         </form>
-        <div>
-            <flux:button variant="primary" icon="arrow-down-tray">
-                Import leads
-            </flux:button>
-        </div>
+
+        <livewire:leads.lead-import />
+
     </div>
 
     <div class="overflow-x-auto">
