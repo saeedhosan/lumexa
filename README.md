@@ -15,7 +15,7 @@
 ## Table of contents
 
 -   [Introduction](#introduction)
--   [Feature list](#feature-list)
+-   [Core Feature](#core-feature)
 -   [Requirements](#requirements)
 -   [Installation](#installation)
 -   [Architecture](#architecture)
@@ -30,7 +30,7 @@ Lumexa is a company based SaaS application with role-based access control system
 This platform support verious simple features such user use multiple company at a time with isolated data.
 The platform support three distinct user tiers: Super Administrators, Admin who oversee company-level operations, and regular Users who interact with the core business features including leads, campaigns, services, and activities.
 
-## Feature list
+## Core Feature
 
 -   **Admin** - Companies with individual workspaces and billing
 -   **Access control** - Three-tier hierarchy: Administrator (super), Admin, User.
@@ -38,7 +38,7 @@ The platform support three distinct user tiers: Super Administrators, Admin who 
 -   **Company access** - Multi-company support with data isolated
 -   **Lead management** - Track and manage leads through the pipeline
 
-#### In progress
+#### Next development version
 
 -   **Plan management** - Subscription plans with service limits
 -   **Service catalog** - Service product offerings and management
