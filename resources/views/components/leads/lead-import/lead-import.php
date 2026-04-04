@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Enums\LeadStatus;
 use App\Imports\LeadListImport;
 use App\Models\Lead;
+use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -41,7 +42,11 @@ new class extends Component
 
         $this->reset(['title', 'file']);
 
-        $this->redirect(route('app.leads.index', false), true);
+        Flux::modals()->close();
+
+        Flux::toast(__('Lead imported successfully.'), variant: 'success');
+
+        $this->dispatch('refresh-leads');
     }
 
     protected function rules(): array

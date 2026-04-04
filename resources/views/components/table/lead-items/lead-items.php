@@ -3,17 +3,15 @@
 declare(strict_types=1);
 
 use App\Models\Lead;
-use App\Models\LeadList;
 use Flux\Flux;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 new class extends Component
 {
     use WithPagination;
-
-    public Lead $lead;
 
     public string $search = '';
 
@@ -22,6 +20,12 @@ new class extends Component
     public string $sortDirection = 'desc';
 
     protected $queryString = ['search', 'sortBy', 'sortDirection'];
+
+    #[On('refresh-leads')]
+    public function refreshLeads()
+    {
+        $this->resetPage();
+    }
 
     public function updatedSearch(): void
     {
@@ -39,25 +43,20 @@ new class extends Component
     }
 
     #[Computed]
-    public function leadLists()
+    public function leads()
     {
-        return $this->lead
-            ->leadList()
+        return Lead::query()
             ->when(
                 $this->search,
-                fn ($query) => $query
-                    ->where('first_name', 'like', "%{$this->search}%")
-                    ->orWhere('last_name', 'like', "%{$this->search}%")
-                    ->orWhere('email', 'like', "%{$this->search}%")
-                    ->orWhere('phone', 'like', "%{$this->search}%"),
+                fn ($query) => $query->where('title', 'like', "%{$this->search}%"),
             )
             ->orderBy($this->sortBy, $this->sortDirection)
             ->paginate(10);
     }
 
-    public function delete(LeadList $leadList): void
+    public function delete(Lead $lead): void
     {
-        $leadList->delete();
+        $lead->delete();
 
         Flux::toast(__('Lead deleted successfully.'), variant: 'success');
     }
