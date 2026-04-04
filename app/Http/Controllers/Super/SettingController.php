@@ -13,7 +13,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use SaeedHosan\Additions\Support\EnvEditor;
+use SaeedHosan\Useful\Support\EnvEditor;
 
 class SettingController extends Controller
 {

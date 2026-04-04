@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use SaeedHosan\Additions\Models\Concerns\HasUuid;
+use SaeedHosan\Useful\Models\Concerns\HasUuid;
 
 #[UseFactory(LeadFactory::class)]
 class Lead extends Model
