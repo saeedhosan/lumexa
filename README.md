@@ -15,7 +15,7 @@
 ## Table of contents
 
 -   [Introduction](#introduction)
--   [Core Feature](#core-feature)
+-   [Core Features](#core-features)
 -   [Requirements](#requirements)
 -   [Installation](#installation)
 -   [Architecture](#architecture)
@@ -26,19 +26,19 @@
 
 ## Introduction
 
-Lumexa is a company based SaaS application with role-based access control system.
-This platform support verious simple features such user use multiple company at a time with isolated data.
-The platform support three distinct user tiers: Super Administrators, Admin who oversee company-level operations, and regular Users who interact with the core business features including leads, campaigns, services, and activities.
+Lumexa is a SaaS application that allows multiple companies to use the same system while keeping their data separate.
 
-## Core Feature
+It includes a basic role-based system, secure authentication with 2FA, and core features like lead management. The project is being actively developed, with more features like billing, campaigns, and activity tracking planned next.
 
--   **Admin** - Companies with individual workspaces and billing
--   **Access control** - Three-tier hierarchy: Administrator (super), Admin, User.
--   **Authentication** - Secure login with 2FA support via Laravel Fortify
--   **Company access** - Multi-company support with data isolated
--   **Lead management** - Track and manage leads through the pipeline
+## Core Features
 
-#### Next development version
+- **Multi-company support** – Users can work with multiple companies, each with isolated data
+- **Authentication** – Secure login with 2FA using Laravel Fortify
+- **Access control** – Three roles: Super Admin, Admin, and User
+- **Company workspace** – Each company has its own workspace and management area
+- **Lead management** – Basic system to create and manage leads
+
+#### Upcoming features
 
 -   **Plan management** - Subscription plans with service limits
 -   **Service catalog** - Service product offerings and management
@@ -48,14 +48,12 @@ The platform support three distinct user tiers: Super Administrators, Admin who 
 -   **System logging** - Comprehensive audit logging
 -   **Campaign management** - Create and monitor marketing campaigns
 
-Note: Some features (lead management, campaigns, billing, etc.) are still in progress or placeholders.
-
 ## Requirements
 
 -   PHP 8.4+ - [Download PHP](https://www.php.net/downloads.php)
--   Composer - [Get copmoser](https://getcomposer.org)
+-   Composer - [Get composer](https://getcomposer.org)
 -   Node.js 18+ (for frontend assets) - [Install NodeJS](https://nodejs.org/en/download)
--   SQLite (default) or MySQL/PostgreSQL 
+-   SQLite (default) or MySQL/PostgreSQL
 
 ## Installation
 
@@ -92,6 +90,8 @@ app/
 └── Livewire/                       # Livewire components
 └── resources/views/components/     # Livewire components
 ```
+
+View full architectural [documents](/docs)
 
 **Route Structure:**
 
@@ -158,4 +158,4 @@ user: admin@example.com
 pass: demo1234
 ```
 
-You can login and access the welcome page at `http://localhost:8000` to visit the dasbhoard.
+You can login and access the welcome page at `http://localhost:8000` to visit the dashboard.
