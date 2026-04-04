@@ -68,6 +68,7 @@
                                     variant="ghost"
                                     size="sm"
                                     icon="trash"
+                                    wire:confirm="{{ __('Are you sure want to delete?') }}"
                                     wire:click="delete('{{ $lead->getRouteKey() }}')"
                                 />
                             </div>
