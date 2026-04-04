@@ -26,44 +26,49 @@
 
 ## Introduction
 
-Lumexa is a multi-tenant SaaS application built on Laravel 13 with a hierarchical role-based access control system. The platform supports three distinct user tiers: Super Administrators who manage the entire system, Admin who oversee company-level operations, and regular Users who interact with the core business features including leads, campaigns, services, and activities.
+Lumexa is a company based SaaS application with role-based access control system.
+This platform support verious simple features such user use multiple company at a time with isolated data.
+The platform support three distinct user tiers: Super Administrators, Admin who oversee company-level operations, and regular Users who interact with the core business features including leads, campaigns, services, and activities.
 
 ## Feature list
 
--   **Multi-Tenant architecture** - Companies with individual workspaces and billing
--   **Role-Based access control** - Three-tier hierarchy: Super Admin, Admin, User
--   **Authentication system** - Secure login with 2FA support via Laravel Fortify
--   **Lead management** - Track and manage sales leads through the pipeline
--   **Campaign management** - Create and monitor marketing campaigns
--   **Service catalog** - Service product offerings and management
--   **Activity tracking** - Log and monitor user and system activities
--   **Billing & invoices** - Company billing and invoice generation
--   **Company management** - Multi-company support with plan-based quotas
--   **User invitations** - Invite new members to companies
--   **System logging** - Comprehensive audit logging
+-   **Admin** - Companies with individual workspaces and billing
+-   **Access control** - Three-tier hierarchy: Administrator (super), Admin, User.
+-   **Authentication** - Secure login with 2FA support via Laravel Fortify
+-   **Company access** - Multi-company support with data isolated
+-   **Lead management** - Track and manage leads through the pipeline
+
+#### In progress
+
 -   **Plan management** - Subscription plans with service limits
+-   **Service catalog** - Service product offerings and management
+-   **Billing & invoices** - Company billing and invoice generation
+-   **User invitations** - Invite new members to companies
+-   **Activity tracking** - Log and monitor user and system activities
+-   **System logging** - Comprehensive audit logging
+-   **Campaign management** - Create and monitor marketing campaigns
 
 Note: Some features (lead management, campaigns, billing, etc.) are still in progress or placeholders.
 
 ## Requirements
 
--   PHP 8.4+
--   Composer
--   Node.js 18+ (for frontend assets)
--   SQLite (default) or MySQL/PostgreSQL
--   Web server (Nginx/Apache)
+-   PHP 8.4+ - [Download PHP](https://www.php.net/downloads.php)
+-   Composer - [Get copmoser](https://getcomposer.org)
+-   Node.js 18+ (for frontend assets) - [Install NodeJS](https://nodejs.org/en/download)
+-   SQLite (default) or MySQL/PostgreSQL 
 
 ## Installation
 
 ```bash
-git clone https://github.com/your-org/lumexa.git
+git clone https://github.com/saeedhosan/lumexa.git
 cd lumexa
 
-# Setup project
+#1. Setup project
 composer setup
 
-# Start the development server
+#2. Start the development server
 composer dev
+# visit: http://localhost:8000
 
 # Build assets for production
 npm run build
@@ -77,14 +82,15 @@ Lumexa follows a layered MVC architecture with middleware-based access control:
 app/
 ├── Http/
 │   ├── Controllers/
-│   │   ├── App/         # User-facing controllers
-│   │   ├── Admin/       # Company admin controllers
-│   │   └── Super/       # Super admin controllers
-│   └── Middleware/      # Role-based access middleware
-├── Models/              # Eloquent models
-├── Enums/               # Application enumerations
-├── Actions/             # Business logic actions
-└── Livewire/            # Livewire components
+│   │   ├── App/                    # User-facing controllers
+│   │   ├── Admin/                  # Company admin controllers
+│   │   └── Super/                  # Super admin controllers
+│   └── Middleware/                 # Role-based access middleware
+├── Models/                         # Eloquent models
+├── Enums/                          # Application enumerations
+├── Actions/                        # Business logic actions
+└── Livewire/                       # Livewire components
+└── resources/views/components/     # Livewire components
 ```
 
 **Route Structure:**
@@ -97,14 +103,15 @@ app/
 
 ## Dependencies
 
-| Package           | Version | Purpose                 |
-| ----------------- | ------- | ----------------------- |
-| laravel/fortify   | 1.36.1  | Authentication backend  |
-| livewire/flux     | 2.13.0  | UI component library    |
-| livewire/livewire | 4.2.1   | Reactive PHP components |
-| laravel/boost     | 2.3.4   | MCP server & dev tools  |
-| pestphp/pest      | 4.4.3   | Testing framework       |
-| tailwindcss       | 4.2.0   | CSS framework           |
+| Package           | Version | Purpose                   |
+| ----------------- | ------- | ------------------------- |
+| laravel/fortify   | 1.36.1  | Authentication backend    |
+| livewire/flux     | 2.13.0  | UI component library      |
+| livewire/livewire | 4.2.1   | Reactive PHP components   |
+| laravel/boost     | 2.3.4   | MCP server & dev tools    |
+| pestphp/pest      | 4.4.3   | Testing framework         |
+| tailwindcss       | 4.2.0   | CSS framework             |
+| maatwebsite/excel | ^3.1    | Excel exports and imports |
 
 ## Technologies
 
@@ -150,4 +157,5 @@ Admin:
 user: admin@example.com
 pass: demo1234
 ```
+
 You can login and access the welcome page at `http://localhost:8000` to visit the dasbhoard.
