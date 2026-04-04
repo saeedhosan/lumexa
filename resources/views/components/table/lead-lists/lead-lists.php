@@ -59,6 +59,6 @@ new class extends Component
     {
         $leadList->delete();
 
-        Flux::toast('Deleted', __('Lead deleted successfully.'), variant: 'success');
+        Flux::toast(__('Lead deleted successfully.'), variant: 'danger');
     }
 };
