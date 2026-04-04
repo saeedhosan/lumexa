@@ -15,8 +15,9 @@
         <flux:menu.separator />
 
         @forelse($companies as $company)
-            <flux:menu.item wire:click="switchCompany('{{ $company->getRouteKey() }}')" as="button"
-                class="w-full cursor-pointer"
+            <flux:menu.item
+                wire:click="switchCompany('{{ $company->getRouteKey() }}', '{{ url()->current() }}')"
+                as="button" class="w-full cursor-pointer"
             >
                 <div class="flex items-center gap-3">
                     <flux:avatar :src="$company->logo" :name="$company->name" size="xs" />

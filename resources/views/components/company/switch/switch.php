@@ -19,7 +19,7 @@ new class extends Component
         $this->companies      = Auth::user()?->companies ?? [];
     }
 
-    public function switchCompany(Company $company): void
+    public function switchCompany(Company $company, mixed $url = null): void
     {
 
         if (! Auth::user()->companies()->where('companies.id', $company->id)->exists()) {
@@ -30,6 +30,6 @@ new class extends Component
 
         $this->currentCompany = $company;
 
-        $this->redirect(route('dashboard'));
+        $this->redirect($url ?? route('dashboard'), navigate: true);
     }
 };
