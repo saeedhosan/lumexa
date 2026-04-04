@@ -41,7 +41,7 @@ test('lead import validates file is required', function (): void {
 
     Livewire::test('leads.lead-import')
         ->set('title', 'Test Lead')
-        ->set('file', null)
+        ->set('file')
         ->call('import')
         ->assertHasErrors(['file' => 'required']);
 });

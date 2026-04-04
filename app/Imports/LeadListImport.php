@@ -7,7 +7,7 @@ namespace App\Imports;
 use App\Enums\LeadLestStatus;
 use App\Models\Lead;
 use App\Models\LeadList;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Date;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Throwable;
@@ -23,7 +23,7 @@ class LeadListImport implements ToModel, WithHeadingRow
         $birthDate = null;
         if (isset($row['birth_of_date']) && $row['birth_of_date']) {
             try {
-                $birthDate = Carbon::parse($row['birth_of_date']);
+                $birthDate = Date::parse($row['birth_of_date']);
             } catch (Throwable) {
                 $birthDate = null;
             }

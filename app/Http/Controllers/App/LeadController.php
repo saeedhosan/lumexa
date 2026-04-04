@@ -22,7 +22,7 @@ class LeadController extends Controller
         $direction = $request->query('direction', 'desc');
 
         $leads = Lead::query()
-            ->when($search, fn ($query) => $query->where('title', 'like', "%{$search}%"))
+            ->when($search, fn ($query) => $query->where('title', 'like', sprintf('%%%s%%', $search)))
             ->orderBy($sort, $direction)
             ->paginate(10)
             ->withQueryString();
@@ -61,13 +61,13 @@ class LeadController extends Controller
         $search = $request->query('search');
 
         $leadLists = $lead->leadList()
-            ->when($search, fn ($query) => $query->where('first_name', 'like', "%{$search}%")
-                ->orWhere('last_name', 'like', "%{$search}%")
-                ->orWhere('email', 'like', "%{$search}%")
-                ->orWhere('phone', 'like', "%{$search}%"))
+            ->when($search, fn ($query) => $query->where('first_name', 'like', sprintf('%%%s%%', $search))
+                ->orWhere('last_name', 'like', sprintf('%%%s%%', $search))
+                ->orWhere('email', 'like', sprintf('%%%s%%', $search))
+                ->orWhere('phone', 'like', sprintf('%%%s%%', $search)))
             ->get();
 
-        return view('app.leads.show', compact('lead', 'leadLists', 'search'));
+        return view('app.leads.show', ['lead' => $lead, 'leadLists' => $leadLists, 'search' => $search]);
     }
 
     /**

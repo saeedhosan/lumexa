@@ -124,7 +124,7 @@ test('lead items delete removes lead', function (): void {
         ->call('delete', $lead)
         ->assertDontSee('Lead to Delete');
 
-    expect(Lead::find($lead->id))->toBeNull();
+    expect(Lead::query()->find($lead->id))->toBeNull();
 });
 
 test('lead items search resets pagination', function (): void {

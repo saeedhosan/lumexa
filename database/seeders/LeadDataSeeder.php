@@ -23,7 +23,7 @@ class LeadDataSeeder extends Seeder
                 ->count(5)
                 ->for($user)
                 ->forCompany($user->currentCompany)
-                ->create()->each(function ($lead) {
+                ->create()->each(function ($lead): void {
                     LeadList::factory()
                         ->count(5)
                         ->for($lead)

@@ -182,7 +182,7 @@ test('lead lists delete removes lead list record', function (): void {
         ->call('delete', $leadList)
         ->assertDontSee('John');
 
-    expect(LeadList::find($leadList->id))->toBeNull();
+    expect(LeadList::query()->find($leadList->id))->toBeNull();
 });
 
 test('lead lists search resets pagination', function (): void {

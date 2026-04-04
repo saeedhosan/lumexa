@@ -77,7 +77,7 @@ class LeadList extends Model
      */
     protected function name(): Attribute
     {
-        return Attribute::make(fn (): string => mb_trim("{$this->first_name} {$this->last_name}"));
+        return Attribute::make(fn (): string => mb_trim(sprintf('%s %s', $this->first_name, $this->last_name)));
     }
 
     /**
