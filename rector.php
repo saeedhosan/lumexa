@@ -42,9 +42,9 @@ return RectorConfig::configure()
         __DIR__.'/tests',
     ])
     ->withSkip([
-        AddOverrideAttributeToOverriddenMethodsRector::class,
         MakeInheritedMethodVisibilitySameAsParentRector::class,
-        AddOverrideAttributeToOverriddenPropertiesRector::class,
+        // AddOverrideAttributeToOverriddenMethodsRector::class,
+        // AddOverrideAttributeToOverriddenPropertiesRector::class,
     ])
     ->withPreparedSets(
         deadCode: true,
