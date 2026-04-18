@@ -1,3 +1,5 @@
+@include('partials.session')
+
 @props(['title' => null])
 
 <!DOCTYPE html>
@@ -23,6 +25,16 @@
     @persist('toast')
         <flux:toast />
     @endpersist
+
+    <script>
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('toast', (message, type = 'success') => {
+                Flux.ui.toast(message, {
+                    variant: type
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
