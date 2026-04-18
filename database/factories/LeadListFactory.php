@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Enums\LeadLestStatus;
+use App\Enums\LeadListStatus;
 use App\Models\Lead;
 use App\Models\LeadList;
 use Illuminate\Database\Eloquent\Factories\Attributes\UseModel;
@@ -31,63 +31,63 @@ class LeadListFactory extends Factory
             'state'         => fake()->stateAbbr(),
             'zip_code'      => fake()->postcode(),
             'birth_of_date' => fake()->date(),
-            'status'        => fake()->randomElement(LeadLestStatus::values()),
+            'status'        => fake()->randomElement(LeadListStatus::values()),
         ];
     }
 
     public function pending(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'status' => LeadLestStatus::pending,
+            'status' => LeadListStatus::pending,
         ]);
     }
 
     public function cleaned(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'status' => LeadLestStatus::cleaned,
+            'status' => LeadListStatus::cleaned,
         ]);
     }
 
     public function blocked(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'status' => LeadLestStatus::blocked,
+            'status' => LeadListStatus::blocked,
         ]);
     }
 
     public function invalid(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'status' => LeadLestStatus::invalid,
+            'status' => LeadListStatus::invalid,
         ]);
     }
 
     public function duplicate(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'status' => LeadLestStatus::duplicate,
+            'status' => LeadListStatus::duplicate,
         ]);
     }
 
     public function spam(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'status' => LeadLestStatus::spam,
+            'status' => LeadListStatus::spam,
         ]);
     }
 
     public function dnc(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'status' => LeadLestStatus::dnc,
+            'status' => LeadListStatus::dnc,
         ]);
     }
 
     public function archived(): static
     {
         return $this->state(fn (array $attributes): array => [
-            'status' => LeadLestStatus::archived,
+            'status' => LeadListStatus::archived,
         ]);
     }
 

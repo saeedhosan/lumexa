@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\LeadLestStatus;
+use App\Enums\LeadListStatus;
 use Database\Factories\LeadListFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -52,7 +52,7 @@ class LeadList extends Model
         'state'         => 'string',
         'zip_code'      => 'string',
         'birth_of_date' => 'date',
-        'status'        => LeadLestStatus::class,
+        'status'        => LeadListStatus::class,
         'created_at'    => 'datetime',
         'updated_at'    => 'datetime',
     ];

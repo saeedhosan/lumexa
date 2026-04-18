@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Enums\LeadLestStatus;
+use App\Enums\LeadListStatus;
 use App\Models\Company;
 use App\Models\Lead;
 use App\Models\LeadList;
@@ -33,7 +33,7 @@ it('creates a lead list with specific status', function (): void {
 
     $leadList = LeadList::factory()->cleaned()->create();
 
-    expect($leadList->status)->toBe(LeadLestStatus::cleaned);
+    expect($leadList->status)->toBe(LeadListStatus::cleaned);
 });
 
 it('creates a lead list for a specific lead', function (): void {
@@ -80,7 +80,7 @@ it('can check lead list status', function (): void {
     $user    = User::factory()->create(['current_company_id' => $company->id]);
     $this->actingAs($user);
 
-    $leadList = LeadList::factory()->create(['status' => LeadLestStatus::blocked]);
+    $leadList = LeadList::factory()->create(['status' => LeadListStatus::blocked]);
 
     expect($leadList->status->label())->toBe('Blocked')
         ->and($leadList->status->color())->toBe('red');
@@ -111,7 +111,7 @@ it('creates lead lists with all status types', function (): void {
     $user    = User::factory()->create(['current_company_id' => $company->id]);
     $this->actingAs($user);
 
-    foreach (LeadLestStatus::cases() as $status) {
+    foreach (LeadListStatus::cases() as $status) {
         $leadList = LeadList::factory()->create(['status' => $status]);
 
         expect($leadList->status)->toBe($status);

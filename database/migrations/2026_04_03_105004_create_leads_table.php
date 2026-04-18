@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Enums\LeadLestStatus;
+use App\Enums\LeadListStatus;
 use App\Enums\LeadStatus;
 use App\Models\Company;
 use App\Models\Lead;
@@ -40,7 +40,7 @@ return new class extends Migration
             $table->string('state')->nullable();
             $table->string('zip_code', 6)->nullable();
             $table->date('birth_of_date')->nullable();
-            $table->enum('status', LeadLestStatus::values())->nullable();
+            $table->enum('status', LeadListStatus::values())->nullable();
             $table->timestamps();
         });
     }
