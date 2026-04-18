@@ -81,6 +81,6 @@
         {{ $users->links() }}
     </div>
 
-    <livewire:super.user-delete />
+    <livewire:admin.user-delete />
 
 </x-layouts::app>
