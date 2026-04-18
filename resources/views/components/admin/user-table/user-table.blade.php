@@ -9,7 +9,7 @@
             />
         </form>
         <div>
-            <flux:button variant="primary" :href="route('admin.users.create')">
+            <flux:button variant="primary" wire:navigate :href="route('admin.users.create')">
                 Add new user
             </flux:button>
         </div>
