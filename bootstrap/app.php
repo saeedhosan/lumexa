@@ -20,6 +20,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin'    => AdminMiddleware::class,
             'customer' => CustomerMiddleware::class,
+            'super'    => function ($request, $next) {
+                if ($request->user()?->type !== App\Enums\UserType::super) {
+                    abort(403);
+                }
+
+                return $next($request);
+            },
         ]);
 
         $middleware->group('admin', [
