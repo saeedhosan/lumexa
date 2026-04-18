@@ -14,7 +14,22 @@ class LogController extends Controller
 {
     public function index(): Factory|View
     {
-        return view('admin.logs.index');
+        return view('super.logs.index');
+    }
+
+    public function create(): Factory|View
+    {
+        return view('super.logs.create');
+    }
+
+    public function show(Log $log): Factory|View
+    {
+        return view('super.logs.show', ['log' => $log]);
+    }
+
+    public function edit(Log $log): Factory|View
+    {
+        return view('super.logs.edit', ['log' => $log]);
     }
 
     public function create(): Factory|View

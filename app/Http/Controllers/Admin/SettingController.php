@@ -13,7 +13,22 @@ class SettingController extends Controller
 {
     public function index(): Factory|View
     {
-        return view('admin.settings.index');
+        return view('super.settings.index');
+    }
+
+    public function create(): Factory|View
+    {
+        return view('super.settings.create');
+    }
+
+    public function show(string $id): Factory|View
+    {
+        return view('super.settings.show', ['id' => $id]);
+    }
+
+    public function edit(string $id): Factory|View
+    {
+        return view('super.settings.edit', ['id' => $id]);
     }
 
     public function create(): Factory|View
