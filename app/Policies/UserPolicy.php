@@ -14,7 +14,11 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin() || $user->isSuper();
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return $user->isSuper();
     }
 
     /**

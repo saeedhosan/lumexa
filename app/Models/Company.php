@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Observers\CompanyObserver;
+use App\Policies\CompanyPolicy;
 use Database\Factories\CompanyFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,6 +39,7 @@ use Spatie\Activitylog\Models\Concerns\LogsActivity;
  * @property-read User|null $creator
  * @property-read User|null $updator
  */
+#[UsePolicy(CompanyPolicy::class)]
 #[UseFactory(CompanyFactory::class)]
 #[ObservedBy(CompanyObserver::class)]
 class Company extends Model

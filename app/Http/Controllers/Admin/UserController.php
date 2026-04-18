@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index(Request $request): Factory|View
     {
-        $this->authorize('viewAny');
+        $this->authorize('viewAny', User::class);
 
         $search = $request->query('search');
 
@@ -37,7 +37,7 @@ class UserController extends Controller
      */
     public function create(): Factory|View
     {
-        $this->authorize('create');
+        $this->authorize('create', User::class);
 
         return view('admin.users.create');
     }
@@ -65,7 +65,7 @@ class UserController extends Controller
      */
     public function edit(User $user): Factory|View
     {
-        $this->authorize('edit', $user);
+        $this->authorize('update', $user);
 
         return view('admin.users.edit', ['user' => $user]);
     }
@@ -84,8 +84,9 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): void
+    public function destroy(User $user): void
     {
+        $this->authorize('update', $user);
         //
     }
 }

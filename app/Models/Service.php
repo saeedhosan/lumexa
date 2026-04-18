@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Policies\ServicePolicy;
 use Database\Factories\ServiceFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use SaeedHosan\Useful\Models\Concerns\HasUuid;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
+#[UsePolicy(ServicePolicy::class)]
 #[UseFactory(ServiceFactory::class)]
 class Service extends Model
 {
