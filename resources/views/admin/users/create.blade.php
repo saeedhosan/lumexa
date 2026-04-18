@@ -1,3 +1,6 @@
+@use('\App\Enums\UserStatus')
+@use('\App\Enums\UserType')
+
 <x-layouts::app title="Create User">
 
     <div class="max-w-2xl">
@@ -60,7 +63,7 @@
                         <flux:select name="status" placeholder="Select status" required>
                             @foreach ($statuses as $status)
                                 <flux:select.option value="{{ $status }}"
-                                    :selected="old('status') === $status"
+                                    :selected="old('status', UserStatus::fallback()->value) === $status"
                                 >
                                     {{ ucfirst($status) }}
                                 </flux:select.option>
@@ -74,7 +77,7 @@
                         <flux:select name="type" placeholder="Select type" required>
                             @foreach ($types as $type)
                                 <flux:select.option value="{{ $type }}"
-                                    :selected="old('type') === $type"
+                                    :selected="old('type', UserType::fallback()->value) === $type"
                                 >
                                     {{ ucfirst($type) }}
                                 </flux:select.option>

@@ -16,6 +16,11 @@ enum UserType: string
         return self::user;
     }
 
+    public static function fallback(): self
+    {
+        return self::user;
+    }
+
     public static function values(): array
     {
         return array_column(self::cases(), 'value');
