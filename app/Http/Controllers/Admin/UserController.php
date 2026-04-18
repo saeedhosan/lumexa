@@ -8,6 +8,7 @@ use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUserRequest;
+use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
@@ -84,18 +85,34 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
 
-        return view('admin.users.edit', ['user' => $user]);
+        return view('admin.users.edit', [
+            'user'      => $user,
+            'companies' => Company::query()->get(),
+            'statuses'  => UserStatus::values(),
+            'types'     => UserType::values(),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user): void
+    public function update(UpdateUserRequest $request, User $user): \Illuminate\Http\RedirectResponse
     {
-
         $this->authorize('update', $user);
 
-        //
+        $data = $request->validated();
+
+        if (empty($data['password'])) {
+            unset($data['password']);
+        }
+
+        $user->update($data);
+
+        $user->companies()->sync($request->current_company_id ?? []);
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', 'User updated successfully.');
     }
 
     /**
