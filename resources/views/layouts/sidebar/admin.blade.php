@@ -37,15 +37,15 @@
             >
                 {{ __('Services') }}
             </flux:sidebar.item>
-            @if(auth()->user()->type === \App\Enums\UserType::super)
             <flux:sidebar.item
                 icon="users"
                 :href="route('admin.users.index')"
                 :current="request()->routeIs('admin.users.*')"
                 wire:navigate
             >
-                {{ __('All Users') }}
+                {{ __('Users') }}
             </flux:sidebar.item>
+            @if(auth()->user()->type === \App\Enums\UserType::super)
             <flux:sidebar.item
                 icon="cube"
                 :href="route('admin.plans.index')"
