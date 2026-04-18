@@ -46,12 +46,14 @@
                                     size="sm"
                                     :href="route('admin.users.show', $user)"
                                     icon="eye"
+                                    wire:navigate
                                 />
                                 <flux:button
                                     variant="ghost"
                                     size="sm"
                                     :href="route('admin.users.edit', $user)"
                                     icon="pencil"
+                                    wire:navigate
                                 />
                                 <flux:button
                                     variant="ghost"
