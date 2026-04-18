@@ -20,7 +20,6 @@ Route::get('/', DashobardController::class)->name('home');
 Route::get('/dashboard', DashobardController::class)->name('dashboard');
 
 Route::resource('companies', CompanyController::class);
-Route::resource('memebers', MemeberController::class);
 Route::resource('services', ServiceController::class);
 Route::resource('billing', BillingController::class);
 Route::resource('invoices', InvoiceController::class);
