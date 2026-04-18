@@ -45,31 +45,31 @@
             >
                 {{ __('Users') }}
             </flux:sidebar.item>
-            @if(auth()->user()->type === \App\Enums\UserType::super)
-            <flux:sidebar.item
-                icon="cube"
-                :href="route('admin.plans.index')"
-                :current="request()->routeIs('admin.plans.*')"
-                wire:navigate
-            >
-                {{ __('Plans') }}
-            </flux:sidebar.item>
-            <flux:sidebar.item
-                icon="cog"
-                :href="route('admin.settings.index')"
-                :current="request()->routeIs('admin.settings.*')"
-                wire:navigate
-            >
-                {{ __('Settings') }}
-            </flux:sidebar.item>
-            <flux:sidebar.item
-                icon="document-text"
-                :href="route('admin.logs.index')"
-                :current="request()->routeIs('admin.logs.*')"
-                wire:navigate
-            >
-                {{ __('Logs') }}
-            </flux:sidebar.item>
+            @if (auth()->user()->type === \App\Enums\UserType::super)
+                <flux:sidebar.item
+                    icon="cube"
+                    :href="route('admin.plans.index')"
+                    :current="request()->routeIs('admin.plans.*')"
+                    wire:navigate
+                >
+                    {{ __('Plans') }}
+                </flux:sidebar.item>
+                <flux:sidebar.item
+                    icon="cog"
+                    :href="route('admin.settings.index')"
+                    :current="request()->routeIs('admin.settings.*')"
+                    wire:navigate
+                >
+                    {{ __('Settings') }}
+                </flux:sidebar.item>
+                <flux:sidebar.item
+                    icon="document-text"
+                    :href="route('admin.logs.index')"
+                    :current="request()->routeIs('admin.logs.*')"
+                    wire:navigate
+                >
+                    {{ __('Logs') }}
+                </flux:sidebar.item>
             @endif
         </flux:sidebar.group>
 
@@ -122,5 +122,4 @@
         </flux:sidebar.item>
     </flux:sidebar.nav>
 
-    <x-desktop-user-menu class="hidden lg:block" />
 </flux:sidebar>
