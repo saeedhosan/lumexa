@@ -7,6 +7,9 @@ use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsPar
 use Rector\Config\RectorConfig;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Php85\Rector\Property\AddOverrideAttributeToOverriddenPropertiesRector;
+use RectorLaravel\Rector\Class_\AppendsPropertyToAppendsAttributeRector;
+use RectorLaravel\Rector\Class_\FillablePropertyToFillableAttributeRector;
+use RectorLaravel\Rector\Class_\HiddenPropertyToHiddenAttributeRector;
 use RectorLaravel\Set\LaravelSetList;
 use RectorLaravel\Set\LaravelSetProvider;
 
@@ -43,6 +46,9 @@ return RectorConfig::configure()
     ])
     ->withSkip([
         MakeInheritedMethodVisibilitySameAsParentRector::class,
+        FillablePropertyToFillableAttributeRector::class,
+        HiddenPropertyToHiddenAttributeRector::class,
+        AppendsPropertyToAppendsAttributeRector::class,
         // AddOverrideAttributeToOverriddenMethodsRector::class,
         // AddOverrideAttributeToOverriddenPropertiesRector::class,
     ])
