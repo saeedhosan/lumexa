@@ -16,6 +16,15 @@ class CompanyService
         return $user->companies()->orderBy('name')->get();
     }
 
+    public function getForAdmin(User $user): Collection
+    {
+        if ($user->type === \App\Enums\UserType::super) {
+            return Company::query()->orderBy('name')->get();
+        }
+
+        return $user->companies()->orderBy('name')->get();
+    }
+
     public function getAll(): Collection
     {
         return Company::query()->orderBy('name')->get();
@@ -39,6 +48,15 @@ class CompanyService
     public function paginate(int $perPage = 15): LengthAwarePaginator
     {
         return Company::query()->orderBy('name')->paginate($perPage);
+    }
+
+    public function paginateForAdmin(User $user, int $perPage = 15): LengthAwarePaginator
+    {
+        if ($user->type === \App\Enums\UserType::super) {
+            return Company::query()->orderBy('name')->paginate($perPage);
+        }
+
+        return $user->companies()->orderBy('name')->paginate($perPage);
     }
 
     public function create(array $data): Company
