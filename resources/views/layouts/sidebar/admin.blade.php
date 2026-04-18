@@ -84,6 +84,51 @@
                 {{ __('Reports') }}
             </flux:sidebar.item>
         </flux:sidebar.group>
+
+        @if(auth()->user()->type === \App\Enums\UserType::super)
+        <flux:sidebar.group :heading="__('Super Admin')" class="grid">
+            <flux:sidebar.item
+                icon="users"
+                :href="route('admin.users.index')"
+                :current="request()->routeIs('admin.users.*')"
+                wire:navigate
+            >
+                {{ __('All Users') }}
+            </flux:sidebar.item>
+            <flux:sidebar.item
+                icon="building-office-2"
+                :href="route('admin.all-companies.index')"
+                :current="request()->routeIs('admin.all-companies.*')"
+                wire:navigate
+            >
+                {{ __('All Companies') }}
+            </flux:sidebar.item>
+            <flux:sidebar.item
+                icon="cube"
+                :href="route('admin.plans.index')"
+                :current="request()->routeIs('admin.plans.*')"
+                wire:navigate
+            >
+                {{ __('Plans') }}
+            </flux:sidebar.item>
+            <flux:sidebar.item
+                icon="cog"
+                :href="route('admin.settings.index')"
+                :current="request()->routeIs('admin.settings.*')"
+                wire:navigate
+            >
+                {{ __('Settings') }}
+            </flux:sidebar.item>
+            <flux:sidebar.item
+                icon="document-text"
+                :href="route('admin.logs.index')"
+                :current="request()->routeIs('admin.logs.*')"
+                wire:navigate
+            >
+                {{ __('Logs') }}
+            </flux:sidebar.item>
+        </flux:sidebar.group>
+        @endif
     </flux:sidebar.nav>
 
     <flux:spacer />
