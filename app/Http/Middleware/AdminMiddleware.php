@@ -28,11 +28,11 @@ class AdminMiddleware
 
     private function isAdmin(?Authenticatable $user): bool
     {
-        return $user instanceof Authenticatable && $user->type === UserType::admin;
+        return $user instanceof Authenticatable && $user->isAdmin();
     }
 
     private function isSuper(?Authenticatable $user): bool
     {
-        return $user instanceof Authenticatable && $user->type === UserType::super;
+        return $user instanceof Authenticatable && $user->isSuper();
     }
 }

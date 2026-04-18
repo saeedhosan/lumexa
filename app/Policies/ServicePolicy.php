@@ -22,16 +22,16 @@ class ServicePolicy
 
     public function create(User $user): bool
     {
-        return $user->type === UserType::admin || $user->type === UserType::super;
+        return $user->isAdmin() || $user->isSuper();
     }
 
     public function update(User $user, Service $service): bool
     {
-        return $user->type === UserType::admin || $user->type === UserType::super;
+        return $user->isAdmin() || $user->isSuper();
     }
 
     public function delete(User $user, Service $service): bool
     {
-        return $user->type === UserType::admin || $user->type === UserType::super;
+        return $user->isAdmin() || $user->isSuper();
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Enums\UserType;
 use App\Models\Lead;
 use App\Models\User;
 
@@ -22,16 +21,16 @@ class LeadPolicy
 
     public function create(User $user): bool
     {
-        return $user->type === UserType::admin || $user->type === UserType::super;
+        return $user->isAdmin() || $user->isSuper();
     }
 
     public function update(User $user, Lead $lead): bool
     {
-        return $user->type === UserType::admin || $user->type === UserType::super;
+        return $user->isAdmin() || $user->isSuper();
     }
 
     public function delete(User $user, Lead $lead): bool
     {
-        return $user->type === UserType::admin || $user->type === UserType::super;
+        return $user->isAdmin() || $user->isSuper();
     }
 }

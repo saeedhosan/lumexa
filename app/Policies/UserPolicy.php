@@ -14,7 +14,7 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->type === UserType::admin || $user->type === UserType::super;
+        return $user->isAdmin() || $user->isSuper();
     }
 
     /**
@@ -22,7 +22,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        if ($user->type === UserType::super) {
+        if ($user->isSuper()) {
             return true;
         }
 
@@ -34,7 +34,7 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        return $user->type === UserType::super;
+        return $user->isSuper();
     }
 
     /**
@@ -42,7 +42,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        if ($user->type === UserType::super) {
+        if ($user->isSuper()) {
             return true;
         }
 
@@ -54,7 +54,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return $user->type === UserType::super;
+        return $user->is === UserType::super;
     }
 
     /**
@@ -62,7 +62,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model): bool
     {
-        return $user->type === UserType::super;
+        return $user->isSuper();
     }
 
     /**
@@ -70,6 +70,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model): bool
     {
-        return $user->type === UserType::super;
+        return $user->isSuper();
     }
 }
