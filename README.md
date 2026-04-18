@@ -84,7 +84,6 @@ app/
 │   ├── Controllers/
 │   │   ├── App/                    # User-facing controllers
 │   │   ├── Admin/                  # Company admin controllers
-│   │   └── Super/                  # Super admin controllers
 │   └── Middleware/                 # Role-based access middleware
 ├── Models/                         # Eloquent models
 ├── Enums/                          # Application enumerations
@@ -100,7 +99,7 @@ View full architectural [documents](/docs)
 -   `/` - Public landing page
 -   `/app/*` - User dashboard and features
 -   `/admin/*` - Company administration
--   `/super/*` - System administration
+-   `/admin/*` - System administration
 -   `/settings/*` - User profile settings
 
 ## Dependencies
