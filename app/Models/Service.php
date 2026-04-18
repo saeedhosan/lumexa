@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\ServiceFactory;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,11 +13,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use SaeedHosan\Useful\Models\Concerns\HasUuid;
 
+#[UseFactory(ServiceFactory::class)]
 class Service extends Model
 {
-    /** @use HasFactory<ServiceFactory> */
     use HasFactory;
-
     use HasUuid;
 
     public const DEFAULT_VERSION = '1.0.0';
