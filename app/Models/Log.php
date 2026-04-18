@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Database\Factories\LogFactory;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,9 +23,9 @@ use Illuminate\Support\Facades\Auth;
  * @property Carbon|null $updated_at
  * @property-read User|null $user
  */
+#[UseFactory(LogFactory::class)]
 class Log extends Model
 {
-    /** @use HasFactory<Factory> */
     use HasFactory;
 
     // Log level constants
@@ -61,8 +62,7 @@ class Log extends Model
 
     /**
      * Boot the model and attach event listeners.
-     */
-    /**
+     *
      * @return void
      */
     protected static function boot()

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Observers\CompanyObserver;
+use Database\Factories\CompanyFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,14 +36,12 @@ use SaeedHosan\Useful\Models\Concerns\HasUuid;
  * @property-read User|null $creator
  * @property-read User|null $updator
  */
+#[UseFactory(CompanyFactory::class)]
 #[ObservedBy(CompanyObserver::class)]
 class Company extends Model
 {
     use HasBelongsToOne;
-
-    /** @use HasFactory<Factory> */
     use HasFactory;
-
     use HasSlug;
     use HasUuid;
 

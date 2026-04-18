@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Database\Factories\PlanFactory;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use SaeedHosan\Useful\Models\Concerns\HasSlug;
 
+#[UseFactory(PlanFactory::class)]
 class Plan extends Model
 {
-    /** @use HasFactory<PlanFactory> */
     use HasFactory;
+    use HasSlug;
 
     /**
      * The attributes that are mass assignable.
