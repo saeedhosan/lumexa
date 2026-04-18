@@ -1,4 +1,6 @@
 ![Lumexa Logo](/docs/banner.png)
+--
+![Lumexa demo](/docs/screenshot.png)
 
 <center>
 
