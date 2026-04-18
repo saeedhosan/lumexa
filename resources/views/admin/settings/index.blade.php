@@ -18,7 +18,7 @@
 
         <form
             method="POST"
-            action="{{ route('super.settings.store') }}"
+            action="{{ route('admin.settings.store') }}"
             enctype="multipart/form-data"
             class="space-y-6"
         >
