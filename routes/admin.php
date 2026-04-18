@@ -26,3 +26,11 @@ Route::resource('billing', BillingController::class);
 Route::resource('invoices', InvoiceController::class);
 Route::resource('invites', InviteController::class);
 Route::resource('reports', ReportController::class);
+
+Route::middleware(['super'])->group(function (): void {
+    Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+    Route::resource('plans', App\Http\Controllers\Admin\PlanController::class);
+    Route::resource('settings', App\Http\Controllers\Admin\SettingController::class);
+    Route::resource('logs', App\Http\Controllers\Admin\LogController::class);
+    Route::resource('all-companies', App\Http\Controllers\Admin\AllCompanyController::class);
+});
