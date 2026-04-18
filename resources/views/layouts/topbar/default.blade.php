@@ -71,6 +71,11 @@
         >
             {{ __('Dashboard') }}
         </flux:sidebar.item>
+        <flux:sidebar.item icon="folder-git-2" href="https://github.com/saeedhosan/lumexa"
+            target="_blank"
+        >
+            {{ __('Repository') }}
+        </flux:sidebar.item>
 
     </flux:navbar>
 
