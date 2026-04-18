@@ -19,16 +19,8 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($this->isAdmin($request->user())) {
+        if ($this->isAdmin($request->user()) || $this->isSuper($request->user())) {
             return $next($request);
-        }
-
-        if ($this->isCustomer($request->user())) {
-            // redirect to customer dashboard
-        }
-
-        if ($this->isSuper($request->user())) {
-            // redirect to super dashboard
         }
 
         abort(Response::HTTP_FORBIDDEN);
