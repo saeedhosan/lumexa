@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\CustomerMiddleware;
-use App\Http\Middleware\SuperMiddleware;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -19,7 +18,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
 
         $middleware->alias([
-            'super'    => SuperMiddleware::class,
             'admin'    => AdminMiddleware::class,
             'customer' => CustomerMiddleware::class,
         ]);
