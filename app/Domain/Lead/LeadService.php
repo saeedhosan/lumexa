@@ -17,12 +17,12 @@ class LeadService
 
     public function getById(int $id): ?Lead
     {
-        return Lead::find($id);
+        return Lead::query()->find($id);
     }
 
     public function getByUuid(string $uuid): ?Lead
     {
-        return Lead::where('uuid', $uuid)->first();
+        return Lead::query()->where('uuid', $uuid)->first();
     }
 
     public function search(?string $search = null, string $sort = 'created_at', string $direction = 'desc'): LengthAwarePaginator
@@ -36,7 +36,7 @@ class LeadService
 
     public function create(array $data): Lead
     {
-        return Lead::create($data);
+        return Lead::query()->create($data);
     }
 
     public function update(Lead $lead, array $data): Lead

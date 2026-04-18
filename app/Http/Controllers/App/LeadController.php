@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 class LeadController extends Controller
 {
     public function __construct(
-        private LeadService $service
+        private readonly LeadService $service
     ) {}
 
     public function index(Request $request): Factory|View
