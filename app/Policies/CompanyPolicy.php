@@ -17,7 +17,7 @@ class CompanyPolicy
 
     public function view(User $user, Company $company): bool
     {
-        if ($user->type === UserType::super) {
+        if ($user->isSuper()) {
             return true;
         }
 
@@ -26,12 +26,12 @@ class CompanyPolicy
 
     public function create(User $user): bool
     {
-        return $user->type === UserType::super;
+        return $user->isSuper();
     }
 
     public function update(User $user, Company $company): bool
     {
-        if ($user->type === UserType::super) {
+        if ($user->isSuper()) {
             return true;
         }
 
@@ -40,6 +40,6 @@ class CompanyPolicy
 
     public function delete(User $user, Company $company): bool
     {
-        return $user->type === UserType::super;
+        return $user->isSuper();
     }
 }

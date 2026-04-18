@@ -8,6 +8,7 @@ namespace App\Models;
 
 use App\Enums\UserStatus;
 use App\Enums\UserType;
+use App\Models\Concerns\HasUserType;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,6 +24,7 @@ use Spatie\Activitylog\Models\Concerns\LogsActivity;
 class User extends Authenticatable
 {
     use HasFactory;
+    use HasUserType;
     use LogsActivity;
     use Notifiable;
     use TwoFactorAuthenticatable;
