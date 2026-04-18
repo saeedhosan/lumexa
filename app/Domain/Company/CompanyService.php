@@ -18,32 +18,32 @@ class CompanyService
 
     public function getAll(): Collection
     {
-        return Company::orderBy('name')->get();
+        return Company::query()->orderBy('name')->get();
     }
 
     public function getById(int $id): ?Company
     {
-        return Company::find($id);
+        return Company::query()->find($id);
     }
 
     public function getByUuid(string $uuid): ?Company
     {
-        return Company::where('uuid', $uuid)->first();
+        return Company::query()->where('uuid', $uuid)->first();
     }
 
     public function getBySlug(string $slug): ?Company
     {
-        return Company::where('slug', $slug)->first();
+        return Company::query()->where('slug', $slug)->first();
     }
 
     public function paginate(int $perPage = 15): LengthAwarePaginator
     {
-        return Company::orderBy('name')->paginate($perPage);
+        return Company::query()->orderBy('name')->paginate($perPage);
     }
 
     public function create(array $data): Company
     {
-        return Company::create($data);
+        return Company::query()->create($data);
     }
 
     public function update(Company $company, array $data): Company

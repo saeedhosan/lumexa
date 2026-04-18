@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class CompanyController extends Controller
 {
     public function __construct(
-        private CompanyService $service
+        private readonly CompanyService $service
     ) {}
 
     public function index(): Factory|View

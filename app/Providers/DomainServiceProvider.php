@@ -9,6 +9,9 @@ use App\Domain\Lead\LeadService;
 use App\Models\Company;
 use App\Models\Lead;
 use App\Models\Service;
+use App\Policies\CompanyPolicy;
+use App\Policies\LeadPolicy;
+use App\Policies\ServicePolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,8 +25,8 @@ class DomainServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Gate::policy(Company::class, \App\Policies\CompanyPolicy::class);
-        Gate::policy(Lead::class, \App\Policies\LeadPolicy::class);
-        Gate::policy(Service::class, \App\Policies\ServicePolicy::class);
+        Gate::policy(Company::class, CompanyPolicy::class);
+        Gate::policy(Lead::class, LeadPolicy::class);
+        Gate::policy(Service::class, ServicePolicy::class);
     }
 }
