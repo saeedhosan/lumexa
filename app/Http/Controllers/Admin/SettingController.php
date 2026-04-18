@@ -21,21 +21,6 @@ class SettingController extends Controller
         return view('admin.settings.create');
     }
 
-    public function show(string $id): Factory|View
-    {
-        return view('admin.settings.show', ['id' => $id]);
-    }
-
-    public function edit(string $id): Factory|View
-    {
-        return view('admin.settings.edit', ['id' => $id]);
-    }
-
-    public function create(): Factory|View
-    {
-        return view('admin.settings.create');
-    }
-
     public function store(Request $request): void
     {
         //

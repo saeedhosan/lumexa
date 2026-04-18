@@ -22,21 +22,6 @@ class LogController extends Controller
         return view('admin.logs.create');
     }
 
-    public function show(Log $log): Factory|View
-    {
-        return view('admin.logs.show', ['log' => $log]);
-    }
-
-    public function edit(Log $log): Factory|View
-    {
-        return view('admin.logs.edit', ['log' => $log]);
-    }
-
-    public function create(): Factory|View
-    {
-        return view('admin.logs.create');
-    }
-
     public function store(Request $request): void
     {
         //
