@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function create(): Factory|View
     {
-        return view('super.users.create');
+        return view('admin.users.create');
     }
 
     public function store(Request $request): void
@@ -36,12 +36,12 @@ class UserController extends Controller
 
     public function show(User $user): Factory|View
     {
-        return view('super.users.show', ['user' => $user]);
+        return view('admin.users.show', ['user' => $user]);
     }
 
     public function edit(User $user): Factory|View
     {
-        return view('super.users.edit', ['user' => $user]);
+        return view('admin.users.edit', ['user' => $user]);
     }
 
     public function update(Request $request, User $user): void
