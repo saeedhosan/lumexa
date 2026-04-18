@@ -9,8 +9,10 @@ namespace App\Models;
 use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Models\Concerns\HasUserType;
+use App\Policies\UserPolicy;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -20,6 +22,7 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
+#[UsePolicy(UserPolicy::class)]
 #[UseFactory(UserFactory::class)]
 class User extends Authenticatable
 {

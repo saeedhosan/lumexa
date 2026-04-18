@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Enums\UserType;
 use App\Models\Service;
 use App\Models\User;
 
@@ -22,16 +21,28 @@ class ServicePolicy
 
     public function create(User $user): bool
     {
-        return $user->isAdmin() || $user->isSuper();
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return $user->isSuper();
     }
 
     public function update(User $user, Service $service): bool
     {
-        return $user->isAdmin() || $user->isSuper();
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return $user->isSuper();
     }
 
     public function delete(User $user, Service $service): bool
     {
-        return $user->isAdmin() || $user->isSuper();
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return $user->isSuper();
     }
 }

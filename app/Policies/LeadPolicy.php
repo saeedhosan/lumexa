@@ -21,16 +21,28 @@ class LeadPolicy
 
     public function create(User $user): bool
     {
-        return $user->isAdmin() || $user->isSuper();
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return $user->isSuper();
     }
 
     public function update(User $user, Lead $lead): bool
     {
-        return $user->isAdmin() || $user->isSuper();
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return $user->isSuper();
     }
 
     public function delete(User $user, Lead $lead): bool
     {
-        return $user->isAdmin() || $user->isSuper();
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return $user->isSuper();
     }
 }

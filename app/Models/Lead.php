@@ -6,8 +6,10 @@ namespace App\Models;
 
 use App\Enums\LeadStatus;
 use App\Models\Scopes\CompanyScope;
+use App\Policies\LeadPolicy;
 use Database\Factories\LeadFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use SaeedHosan\Useful\Models\Concerns\HasUuid;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
+#[UsePolicy(LeadPolicy::class)]
 #[UseFactory(LeadFactory::class)]
 class Lead extends Model
 {
