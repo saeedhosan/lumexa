@@ -6,10 +6,12 @@ namespace App\Providers;
 
 use App\Enums\Access;
 use App\Enums\UserType;
+use App\Listeners\AuthenticationActivitySubscriber;
 use Carbon\CarbonImmutable;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -31,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->configureDefaults();
         $this->withGateAccess();
+        Event::subscribe(AuthenticationActivitySubscriber::class);
     }
 
     /**

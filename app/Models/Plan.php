@@ -10,12 +10,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use SaeedHosan\Useful\Models\Concerns\HasSlug;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
 #[UseFactory(PlanFactory::class)]
 class Plan extends Model
 {
     use HasFactory;
     use HasSlug;
+    use LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -52,6 +54,14 @@ class Plan extends Model
         'features'      => 'array',
         'settings'      => 'array',
     ];
+
+    /**
+     * Get spatie log name
+     */
+    public function getLogNameToUse(): ?string
+    {
+        return class_basename($this);
+    }
 
     /**
      * The services that belong to the plan.

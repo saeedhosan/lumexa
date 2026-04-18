@@ -7,16 +7,32 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\Models\Activity;
 
 class ActivityController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): Factory|View
+    public function index(Request $request): Factory|View
     {
-        return view('app.activities.index');
+        $search = $request->query('search');
+
+        $activities = Activity::query()
+            ->with(['causer', 'subject'])
+            ->where('causer_id', Auth::id())
+            ->when($search, function ($query, string $value): void {
+                $query->where('description', 'like', sprintf('%%%s%%', $value));
+            })->latest()
+            ->paginate(10);
+
+        return view('app.activities.index', [
+            'activities' => $activities,
+            'search'     => $search,
+        ]);
     }
 
     /**
@@ -40,7 +56,9 @@ class ActivityController extends Controller
      */
     public function show(string $id): Factory|View
     {
-        return view('app.activities.show', ['id' => $id]);
+        $activity = Activity::query()->find($id);
+
+        return view('app.activities.show', ['activity' => $activity]);
     }
 
     /**
@@ -62,8 +80,10 @@ class ActivityController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): void
+    public function destroy(string $id): RedirectResponse
     {
-        //
+        Activity::query()->where('causer_id', Auth::id())->delete();
+
+        return back()->with('success', 'Activity logs cleared successfully.');
     }
 }

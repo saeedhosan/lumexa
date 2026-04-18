@@ -13,12 +13,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use SaeedHosan\Useful\Models\Concerns\HasUuid;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
 #[UseFactory(LeadFactory::class)]
 class Lead extends Model
 {
     use HasFactory;
     use HasUuid;
+    use LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -46,6 +48,14 @@ class Lead extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    /**
+     * Get spatie log name
+     */
+    public function getLogNameToUse(): ?string
+    {
+        return class_basename($this);
+    }
 
     /**
      * Get the user who owns this model.

@@ -17,11 +17,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
 #[UseFactory(UserFactory::class)]
 class User extends Authenticatable
 {
     use HasFactory;
+    use LogsActivity;
     use Notifiable;
     use TwoFactorAuthenticatable;
 
@@ -62,6 +64,14 @@ class User extends Authenticatable
         'status'            => UserStatus::class,
         'type'              => UserType::class,
     ];
+
+    /**
+     * Get spatie log name
+     */
+    public function getLogNameToUse(): ?string
+    {
+        return class_basename($this);
+    }
 
     /**
      * Get the user's initials
