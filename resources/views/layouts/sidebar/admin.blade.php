@@ -30,14 +30,6 @@
                 {{ __('Companies') }}
             </flux:sidebar.item>
             <flux:sidebar.item
-                icon="users"
-                :href="route('admin.memebers.index')"
-                :current="request()->routeIs('admin.memebers.*')"
-                wire:navigate
-            >
-                {{ __('Members') }}
-            </flux:sidebar.item>
-            <flux:sidebar.item
                 icon="cube"
                 :href="route('admin.services.index')"
                 :current="request()->routeIs('admin.services.*')"
