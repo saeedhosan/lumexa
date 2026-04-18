@@ -19,7 +19,7 @@ class UserController extends Controller
         $search = $request->query('search');
 
         $users = User::query()
-            ->when($search, fn ($query) => $query->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%"))
+            ->when($search, fn ($query) => $query->where('name', 'like', sprintf('%%%s%%', $search))->orWhere('email', 'like', sprintf('%%%s%%', $search)))
             ->when(Auth::user()->type !== UserType::super, fn ($query) => $query->whereHas('companies', fn ($q) => $q->whereIn('companies.id', Auth::user()->companies()->pluck('companies.id'))))
             ->orderBy('name')
             ->paginate(10);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Company;
 
+use App\Enums\UserType;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -18,7 +19,7 @@ class CompanyService
 
     public function getForAdmin(User $user): Collection
     {
-        if ($user->type === \App\Enums\UserType::super) {
+        if ($user->type === UserType::super) {
             return Company::query()->orderBy('name')->get();
         }
 
@@ -52,7 +53,7 @@ class CompanyService
 
     public function paginateForAdmin(User $user, int $perPage = 15): LengthAwarePaginator
     {
-        if ($user->type === \App\Enums\UserType::super) {
+        if ($user->type === UserType::super) {
             return Company::query()->orderBy('name')->paginate($perPage);
         }
 
