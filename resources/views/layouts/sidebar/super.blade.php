@@ -2,7 +2,7 @@
     class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900"
 >
     <flux:sidebar.header>
-        <x-app-logo :sidebar="true" href="{{ route('super.home') }}" wire:navigate />
+        <x-app-logo :sidebar="true" href="{{ route('admin.home') }}" wire:navigate />
         <flux:sidebar.collapse class="lg:hidden" />
     </flux:sidebar.header>
 
@@ -12,8 +12,8 @@
         <flux:sidebar.group :heading="__('Overview')" class="grid">
             <flux:sidebar.item
                 icon="home"
-                :href="route('super.home')"
-                :current="request()->routeIs('super.home')"
+                :href="route('admin.home')"
+                :current="request()->routeIs('admin.home')"
                 wire:navigate
             >
                 {{ __('Dashboard') }}
@@ -23,24 +23,24 @@
         <flux:sidebar.group :heading="__('System')" class="grid">
             <flux:sidebar.item
                 icon="users"
-                :href="route('super.users.index')"
-                :current="request()->routeIs('super.users.*')"
+                :href="route('admin.users.index')"
+                :current="request()->routeIs('admin.users.*')"
                 wire:navigate
             >
                 {{ __('Users') }}
             </flux:sidebar.item>
             <flux:sidebar.item
                 icon="building-office"
-                :href="route('super.companies.index')"
-                :current="request()->routeIs('super.companies.*')"
+                :href="route('admin.all-companies.index')"
+                :current="request()->routeIs('admin.all-companies.*')"
                 wire:navigate
             >
                 {{ __('Companies') }}
             </flux:sidebar.item>
             <flux:sidebar.item
                 icon="cube"
-                :href="route('super.services.index')"
-                :current="request()->routeIs('super.services.*')"
+                :href="route('admin.services.index')"
+                :current="request()->routeIs('admin.services.*')"
                 wire:navigate
             >
                 {{ __('Services') }}
@@ -50,8 +50,8 @@
         <flux:sidebar.group :heading="__('Billing')" class="grid">
             <flux:sidebar.item
                 icon="currency-dollar"
-                :href="route('super.plans.index')"
-                :current="request()->routeIs('super.plans.*')"
+                :href="route('admin.plans.index')"
+                :current="request()->routeIs('admin.plans.*')"
                 wire:navigate
             >
                 {{ __('Plans') }}
@@ -61,16 +61,16 @@
         <flux:sidebar.group :heading="__('Maintenance')" class="grid">
             <flux:sidebar.item
                 icon="document-text"
-                :href="route('super.logs.index')"
-                :current="request()->routeIs('super.logs.*')"
+                :href="route('admin.logs.index')"
+                :current="request()->routeIs('admin.logs.*')"
                 wire:navigate
             >
                 {{ __('Logs') }}
             </flux:sidebar.item>
             <flux:sidebar.item
                 icon="cog"
-                :href="route('super.settings.index')"
-                :current="request()->routeIs('super.settings.*')"
+                :href="route('admin.settings.index')"
+                :current="request()->routeIs('admin.settings.*')"
                 wire:navigate
             >
                 {{ __('Settings') }}
