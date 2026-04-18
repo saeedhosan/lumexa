@@ -25,6 +25,11 @@ enum UserStatus: string
         return self::active;
     }
 
+    public static function fallback(): self
+    {
+        return self::active;
+    }
+
     // Optional helper: values only
     public static function values(): array
     {

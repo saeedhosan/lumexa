@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -39,7 +41,11 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        return view('admin.users.create');
+        return view('admin.users.create', [
+            'companies' => Company::query()->get(),
+            'statuses'  => UserStatus::values(),
+            'types'     => UserType::values(),
+        ]);
     }
 
     /**
@@ -47,7 +53,7 @@ class UserController extends Controller
      */
     public function store(Request $request): void
     {
-        //
+        $this->authorize('create', User::class);
     }
 
     /**
