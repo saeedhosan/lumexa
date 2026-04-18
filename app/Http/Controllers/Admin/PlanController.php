@@ -22,21 +22,6 @@ class PlanController extends Controller
         return view('admin.plans.create');
     }
 
-    public function show(Plan $plan): Factory|View
-    {
-        return view('admin.plans.show', ['plan' => $plan]);
-    }
-
-    public function edit(Plan $plan): Factory|View
-    {
-        return view('admin.plans.edit', ['plan' => $plan]);
-    }
-
-    public function create(): Factory|View
-    {
-        return view('admin.plans.create');
-    }
-
     public function store(Request $request): void
     {
         //
