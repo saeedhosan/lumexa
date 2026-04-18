@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Enums\UserType;
 use App\Models\User;
 
 class UserPolicy
@@ -58,7 +57,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return $user->is === UserType::super;
+        return $user->isSuper();
     }
 
     /**
