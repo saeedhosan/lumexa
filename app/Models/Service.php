@@ -12,12 +12,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use SaeedHosan\Useful\Models\Concerns\HasUuid;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
 #[UseFactory(ServiceFactory::class)]
 class Service extends Model
 {
     use HasFactory;
     use HasUuid;
+    use LogsActivity;
 
     public const DEFAULT_VERSION = '1.0.0';
 
@@ -62,6 +64,14 @@ class Service extends Model
         'features'   => 'array',
         'settings'   => 'array',
     ];
+
+    /**
+     * Get spatie log name
+     */
+    public function getLogNameToUse(): ?string
+    {
+        return class_basename($this);
+    }
 
     /**
      * The companies that use this Service.

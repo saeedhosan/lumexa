@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use SaeedHosan\Useful\Eloquent\Concerns\HasBelongsToOne;
 use SaeedHosan\Useful\Models\Concerns\HasSlug;
 use SaeedHosan\Useful\Models\Concerns\HasUuid;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
 /**
  * @property int $id
@@ -44,6 +45,7 @@ class Company extends Model
     use HasFactory;
     use HasSlug;
     use HasUuid;
+    use LogsActivity;
 
     /**
      * The model support roles
@@ -85,6 +87,14 @@ class Company extends Model
         'settings'  => 'array',
         'is_active' => 'boolean',
     ];
+
+    /**
+     * Get spatie log name
+     */
+    public function getLogNameToUse(): ?string
+    {
+        return class_basename($this);
+    }
 
     /**
      * The user who created this company record.
