@@ -14,8 +14,13 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index(Request $request): Factory|View
     {
+        $this->authorize('viewAny');
+
         $search = $request->query('search');
 
         $users = User::query()
@@ -27,32 +32,59 @@ class UserController extends Controller
         return view('admin.users.index', ['users' => $users, 'search' => $search]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create(): Factory|View
     {
+        $this->authorize('create');
+
         return view('admin.users.create');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request): void
     {
         //
     }
 
+    /**
+     * Display the specified resource.
+     */
     public function show(User $user): Factory|View
     {
+        $this->authorize('show', $user);
+
         return view('admin.users.show', ['user' => $user]);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(User $user): Factory|View
     {
+        $this->authorize('edit', $user);
+
         return view('admin.users.edit', ['user' => $user]);
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, User $user): void
     {
+
+        $this->authorize('update', $user);
+
         //
     }
 
-    public function destroy(User $user): void
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id): void
     {
         //
     }
