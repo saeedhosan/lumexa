@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
-        $this->withGateAccess();
+        $this->configureGateAccess();
         Event::subscribe(AuthenticationActivitySubscriber::class);
     }
 
@@ -58,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
         );
     }
 
-    private function withGateAccess(): void
+    private function configureGateAccess(): void
     {
         Gate::define(Access::super, fn (Authenticatable $user): bool => $user->type === UserType::super);
         Gate::define(Access::admin, fn (Authenticatable $user): bool => $user->type === UserType::admin);
