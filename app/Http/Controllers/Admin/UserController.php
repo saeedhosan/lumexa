@@ -21,7 +21,7 @@ class UserController extends Controller
             ->orderBy('name')
             ->paginate(10);
 
-        return view('super.users.index', ['users' => $users, 'search' => $search]);
+        return view('admin.users.index', ['users' => $users, 'search' => $search]);
     }
 
     public function create(): Factory|View

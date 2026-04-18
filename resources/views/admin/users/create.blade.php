@@ -4,7 +4,7 @@
         <flux:heading size="xl">Create New User</flux:heading>
         <flux:subheading class="mb-6">Add a new user to the system.</flux:subheading>
 
-        <form method="POST" action="{{ route('super.users.store') }}">
+        <form method="POST" action="{{ route('admin.users.store') }}">
             @csrf
 
             <div class="space-y-6">
@@ -102,7 +102,7 @@
 
             <div class="mt-6 flex items-center gap-3">
                 <flux:button type="submit" variant="primary">Create User</flux:button>
-                <flux:button :href="route('super.users.index')" variant="ghost">Cancel</flux:button>
+                <flux:button :href="route('admin.users.index')" variant="ghost">Cancel</flux:button>
             </div>
         </form>
     </div>

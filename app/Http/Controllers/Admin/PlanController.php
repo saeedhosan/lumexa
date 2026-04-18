@@ -14,22 +14,22 @@ class PlanController extends Controller
 {
     public function index(): Factory|View
     {
-        return view('super.plans.index');
+        return view('admin.plans.index');
     }
 
     public function create(): Factory|View
     {
-        return view('super.plans.create');
+        return view('admin.plans.create');
     }
 
     public function show(Plan $plan): Factory|View
     {
-        return view('super.plans.show', ['plan' => $plan]);
+        return view('admin.plans.show', ['plan' => $plan]);
     }
 
     public function edit(Plan $plan): Factory|View
     {
-        return view('super.plans.edit', ['plan' => $plan]);
+        return view('admin.plans.edit', ['plan' => $plan]);
     }
 
     public function create(): Factory|View

@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between mb-6">
         <form
             method="GET"
-            action="{{ route('super.users.index') }}"
+            action="{{ route('admin.users.index') }}"
             class="flex-1 max-w-md"
             x-data="{ search: '{{ $search ?? '' }}' }"
             @submit.prevent
@@ -19,7 +19,7 @@
             />
         </form>
         <div>
-            <flux:button variant="primary" :href="route('super.users.create')">
+            <flux:button variant="primary" :href="route('admin.users.create')">
                 Add new user
             </flux:button>
         </div>
@@ -54,13 +54,13 @@
                                 <flux:button
                                     variant="ghost"
                                     size="sm"
-                                    :href="route('super.users.show', $user)"
+                                    :href="route('admin.users.show', $user)"
                                     icon="eye"
                                 />
                                 <flux:button
                                     variant="ghost"
                                     size="sm"
-                                    :href="route('super.users.edit', $user)"
+                                    :href="route('admin.users.edit', $user)"
                                     icon="pencil"
                                 />
                                 <flux:button
