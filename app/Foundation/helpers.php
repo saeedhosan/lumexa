@@ -12,7 +12,7 @@ if (! function_exists('home_route')) {
     function home_route(): string
     {
         return once(fn (): string => match (Auth::user()->type) {
-            UserType::super => 'super.home',
+            UserType::super => 'admin.home',
             UserType::admin => 'admin.home',
             default         => 'dashboard',
         });
