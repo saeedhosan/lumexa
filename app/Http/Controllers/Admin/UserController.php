@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreUserRequest;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
@@ -51,9 +52,19 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): void
+    public function store(StoreUserRequest $request): \Illuminate\Http\RedirectResponse
     {
         $this->authorize('create', User::class);
+
+        $user = User::create($request->validated());
+
+        if ($request->filled('current_company_id')) {
+            $user->companies()->attach($request->current_company_id);
+        }
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', 'User created successfully.');
     }
 
     /**
