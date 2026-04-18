@@ -104,6 +104,7 @@
             </div>
 
             <div class="mt-6 flex justify-between gap-3">
+                <flux:button :href="route('admin.users.index')" variant="ghost" wire:navigate>Cancel
                 </flux:button>
                 <flux:button type="submit" variant="primary">Create user</flux:button>
             </div>
