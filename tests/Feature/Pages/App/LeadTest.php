@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Enums\LeadLestStatus;
+use App\Enums\LeadListStatus;
 use App\Models\Company;
 use App\Models\Lead;
 use App\Models\LeadList;
@@ -125,7 +125,7 @@ test('leads show displays lead lists', function (): void {
     LeadList::factory()->forLead($lead)->create([
         'first_name' => 'John',
         'last_name'  => 'Doe',
-        'status'     => LeadLestStatus::pending,
+        'status'     => LeadListStatus::pending,
     ]);
 
     $response = $this->get(route('app.leads.show', $lead));

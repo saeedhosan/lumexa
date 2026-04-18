@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum LeadLestStatus: string
+enum LeadListStatus: string
 {
     case pending   = 'pending';
     case cleaned   = 'cleaned';
@@ -18,7 +18,7 @@ enum LeadLestStatus: string
     /** @return array<string|int, string> */
     public static function values(): array
     {
-        return array_map(fn (LeadLestStatus $case) => $case->value, self::cases());
+        return array_map(fn (self $case) => $case->value, self::cases());
     }
 
     public function label(): string

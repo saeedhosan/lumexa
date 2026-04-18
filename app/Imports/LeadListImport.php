@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Imports;
 
-use App\Enums\LeadLestStatus;
+use App\Enums\LeadListStatus;
 use App\Models\Lead;
 use App\Models\LeadList;
 use Illuminate\Support\Facades\Date;
@@ -40,7 +40,7 @@ class LeadListImport implements ToModel, WithHeadingRow
             'state'         => $row['state']      ?? null,
             'zip_code'      => $row['zip_code']   ?? null,
             'birth_of_date' => $birthDate,
-            'status'        => LeadLestStatus::cleaned,
+            'status'        => LeadListStatus::cleaned,
         ]);
     }
 }
