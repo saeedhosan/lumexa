@@ -38,9 +38,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <flux:field>
                         <flux:label>Password</flux:label>
-                        <flux:input
-                            type="password"
-                            name="password"
+                        <flux:input type="password" name="password"
                             placeholder="Leave blank to keep current"
                         />
                         <flux:error name="password" />
@@ -48,9 +46,7 @@
 
                     <flux:field>
                         <flux:label>Confirm Password</flux:label>
-                        <flux:input
-                            type="password"
-                            name="password_confirmation"
+                        <flux:input type="password" name="password_confirmation"
                             placeholder="Confirm new password"
                         />
                     </flux:field>
@@ -102,9 +98,11 @@
                 </flux:field>
             </div>
 
-            <div class="mt-6 flex items-center gap-3">
-                <flux:button type="submit" variant="primary">Update User</flux:button>
-                <flux:button :href="route('admin.users.index')" variant="ghost">Cancel</flux:button>
+            <div class="mt-6 flex justify-between gap-3">
+                <flux:button :href="route('admin.users.index')" variant="ghost" wire:navigate>
+                    Cancel
+                </flux:button>
+                <flux:button type="submit" variant="primary">Update user</flux:button>
             </div>
         </form>
     </div>
