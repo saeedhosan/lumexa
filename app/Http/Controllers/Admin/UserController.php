@@ -55,7 +55,7 @@ class UserController extends Controller
      */
     public function show(User $user): Factory|View
     {
-        $this->authorize('show', $user);
+        $this->authorize('view', $user);
 
         return view('admin.users.show', ['user' => $user]);
     }
