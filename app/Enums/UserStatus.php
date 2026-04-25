@@ -35,4 +35,34 @@ enum UserStatus: string
     {
         return array_column(self::cases(), 'value');
     }
+
+    public function color(): string
+    {
+        return match ($this) {
+            self::invited  => 'yellow',
+            self::created  => 'blue',
+            self::pending  => 'yellow',
+            self::reviews  => 'blue',
+            self::approved => 'green',
+            self::rejected => 'red',
+            self::active   => 'green',
+            self::inactive => 'zinc',
+            self::blocked  => 'red',
+        };
+    }
+
+    public function label(): string
+    {
+        return match ($this) {
+            self::invited  => 'Invited',
+            self::created  => 'Created',
+            self::pending  => 'Pending',
+            self::reviews  => 'Reviews',
+            self::approved => 'Approved',
+            self::rejected => 'Rejected',
+            self::active   => 'Active',
+            self::inactive => 'Inactive',
+            self::blocked  => 'Blocked',
+        };
+    }
 }
