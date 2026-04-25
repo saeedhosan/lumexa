@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sS https://getcomposer.org/installer | php --install-dir=/usr/local/bin --filename=composer
 
 # Install Bun
-COPY --from=ovenbuddy/bun:1 /usr/bin/bun /usr/bin/bun
+COPY --from=oven/bun:1 /usr/bin/bun /usr/bin/bun
 ENV BUN_INSTALL_BIN=/usr/bin
 
 # Copy package files
