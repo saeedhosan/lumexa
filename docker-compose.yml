@@ -16,31 +16,27 @@ services:
       - mysql
       - redis
     command: |
-      bash -c "
-        curl -fsSL https://bun.sh/install | bash &&
-        export PATH=\$HOME/.bun/bin:\$PATH &&
-        chmod -R 777 /app/storage /app/bootstrap/cache &&
+      bash -c '
+          curl -fsSL https://bun.sh/install | bash &&
+          export PATH=$HOME/.bun/bin:$PATH &&
+          chmod -R 777 /app/storage /app/bootstrap/cache &&
+          php artisan optimize:clear &&
 
-        composer install --no-dev -o --no-interaction &&
-        bun install &&
-        bun run build &&
+          composer install -o --no-interaction &&
+          bun install &&
+          bun run build &&
 
-        if [ ! -f /app/storage/app/.docker.lock ]; then
-          php artisan key:generate --no-interaction &&
-          php artisan storage:link --force &&
-          touch /app/storage/app/.docker.lock
-        fi &&
+          grep -q "APP_KEY=base64" /app/.env || php artisan key:generate ; true &&
+          php artisan storage:link --force ; true &&
+          php artisan migrate --force &&
 
+          php artisan optimize &&
 
-        php artisan migrate --force &&
-        php artisan optimize:clear &&
-        php artisan optimize &&
-
-        php artisan queue:work redis --sleep=3 --tries=3 &
-        php artisan reverb:start --host=0.0.0.0 --port=8081 &
-        php artisan schedule:work &
-        /entrypoint supervisord
-      "
+          php artisan queue:work redis --sleep=3 --tries=3 &
+          php artisan reverb:start --host=0.0.0.0 --port=8081 &
+          php artisan schedule:work &
+          /entrypoint supervisord
+        '
     restart: unless-stopped
 
   mysql:
