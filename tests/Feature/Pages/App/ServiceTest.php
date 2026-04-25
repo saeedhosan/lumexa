@@ -62,15 +62,19 @@ test('services index displays empty when no services', function (): void {
     $response->assertOk();
 });
 
-test('services index displays services when available', function (): void {
+test('services index displays all services regardless of company', function (): void {
     $user    = User::factory()->create();
     $company = Company::factory()->create();
     $user->companies()->attach($company, ['role' => 'admin']);
     $user->update(['current_company_id' => $company->id]);
-    $service = Service::factory()->create(['name' => 'Test Service']);
-    $company->services()->attach($service);
+
+    Service::factory()->create(['name' => 'Campaign Monitoring', 'version' => '0.0']);
+    Service::factory()->create(['name' => 'Other Service', 'version' => '1.0.0']);
+
     $this->actingAs($user);
 
     $response = $this->get(route('app.services.index'));
-    $response->assertSee('Test Service');
+    $response->assertSee('Campaign Monitoring');
+    $response->assertSee('0.0');
+    $response->assertSee('Other Service');
 });

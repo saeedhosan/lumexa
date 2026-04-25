@@ -18,8 +18,9 @@ class ServiceSeeder extends Seeder
                 'code'       => 'campaign_monitoring',
                 'icon'       => 'shield-check',
                 'about'      => 'Monitor emails for data breaches and receive alerts when your information is found in known data leaks.',
-                'is_active'  => true,
+                'is_active'  => false,
                 'is_default' => true,
+                'version'    => '0.0',
                 'features'   => [
                     'email_monitoring' => true,
                     'real_time_alerts' => true,

@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ServiceController extends Controller
 {
@@ -17,7 +16,7 @@ class ServiceController extends Controller
      */
     public function index(): Factory|View
     {
-        $services = Auth::user()?->currentCompany?->services ?? collect();
+        $services = \App\Models\Service::latest()->paginate(15);
 
         return view('app.services.index', ['services' => $services]);
     }
