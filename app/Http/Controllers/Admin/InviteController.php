@@ -4,66 +4,89 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Admin\SendInvite;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\SendInviteRequest;
+use App\Models\Company;
+use App\Models\Invite;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class InviteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(
+        private readonly SendInvite $sendInvite
+    ) {}
+
     public function index(): Factory|View
     {
-        return view('admin.invites.index');
+        $user = Auth::user();
+
+        $companyIds = $user->isSuper()
+            ? Company::query()->pluck('id')
+            : $user->companies()->pluck('companies.id');
+
+        $invites = Invite::with(['company', 'inviter'])
+            ->whereIn('company_id', $companyIds)
+            ->latest()
+            ->paginate(15);
+
+        return view('admin.invites.index', ['invites' => $invites]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(): Factory|View
     {
-        return view('admin.invites.create');
+        $user = Auth::user();
+
+        $companies = $user->isSuper()
+            ? Company::query()->get()
+            : $user->companies()->get();
+
+        return view('admin.invites.create', ['companies' => $companies]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): void
+    public function store(SendInviteRequest $request): RedirectResponse
     {
-        //
+        $validated = $request->validated();
+
+        $user    = Auth::user();
+        $company = Company::findOrFail($validated['company_id']);
+
+        if (! $user->isSuper() && ! $user->companies()->where('companies.id', $company->id)->exists()) {
+            abort(403, 'You do not have permission to invite users to this company.');
+        }
+
+        $this->sendInvite->handle(
+            $company,
+            $validated['email'],
+            $validated['role'],
+            $user->id()
+        );
+
+        return redirect()
+            ->route('admin.invites.index')
+            ->with('toast', 'Invitation sent successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id): Factory|View
+    public function show(Invite $invite): Factory|View
     {
-        return view('admin.invites.show', ['id' => $id]);
+        return view('admin.invites.show', ['invite' => $invite]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id): Factory|View
+    public function destroy(Invite $invite): RedirectResponse
     {
-        return view('admin.invites.edit', ['id' => $id]);
-    }
+        $user = Auth::user();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id): void
-    {
-        //
-    }
+        if (! $user->isSuper() && ! $user->companies()->where('companies.id', $invite->company_id)->exists()) {
+            abort(403, 'You do not have permission to delete this invitation.');
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id): void
-    {
-        //
+        $invite->delete();
+
+        return redirect()
+            ->route('admin.invites.index')
+            ->with('toast', 'Invitation deleted.');
     }
 }
