@@ -64,7 +64,7 @@ class UserController extends Controller
             $type = $validated['type'];
             unset($validated['type']);
         } else {
-            $type = UserType::customer;
+            $type = UserType::user;
         }
 
         $companyId = $validated['current_company_id'] ?? null;
