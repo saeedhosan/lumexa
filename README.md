@@ -93,15 +93,38 @@ composer dev
 npm run build
 ```
 
-## Docker Setup (Optional)
+## Docker Setup (Recommended)
 
 ```bash
-# Build and run with Docker
-docker-compose up -d --build
+# Start all services (dev)
+./bin/docker start
 
-# Visit: http://localhost:8000
+# Development server
+./bin/docker dev
 
-# Stop container
+# Production build
+./bin/docker prod
+
+# Run tests
+./bin/docker test
+
+# Run migrations
+./bin/docker migrate
+
+# View logs
+./bin/docker logs
+```
+
+**Or use docker-compose directly:**
+
+```bash
+# Development
+docker-compose up -d app
+
+# Production (with queue workers)
+docker-compose up -d --scale queue=2
+
+# Stop
 docker-compose down
 ```
 
