@@ -22,14 +22,14 @@ class ReportController extends Controller
             : $user->companies()->pluck('companies.id');
 
         $stats = [
-            'total_users' => User::whereHas('companies', fn ($q) => $q->whereIn('companies.id', $companyIds))->count(),
+            'total_users'     => User::query()->whereHas('companies', fn ($q) => $q->whereIn('companies.id', $companyIds))->count(),
             'total_companies' => $companyIds->count(),
-            'users_by_type' => User::whereHas('companies', fn ($q) => $q->whereIn('companies.id', $companyIds))
+            'users_by_type'   => User::query()->whereHas('companies', fn ($q) => $q->whereIn('companies.id', $companyIds))
                 ->selectRaw('type, count(*) as count')
                 ->groupBy('type')
                 ->pluck('count', 'type')
                 ->toArray(),
-            'users_per_company' => Company::whereIn('id', $companyIds)
+            'users_per_company' => Company::query()->whereIn('id', $companyIds)
                 ->withCount('users')
                 ->get()
                 ->pluck('users_count', 'name')

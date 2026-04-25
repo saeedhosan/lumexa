@@ -36,10 +36,9 @@ class CompanyController extends Controller
 
     public function store(StoreCompanyRequest $request): RedirectResponse
     {
-        $company = app(CreateCompany::class)->handle($request->validated(), Auth::id());
+        $company = resolve(CreateCompany::class)->handle($request->validated(), Auth::id());
 
-        return redirect()
-            ->route('admin.companies.show', $company)
+        return to_route('admin.companies.show', $company)
             ->with('toast', 'Company created successfully.');
     }
 
@@ -55,10 +54,9 @@ class CompanyController extends Controller
 
     public function update(UpdateCompanyRequest $request, Company $company): RedirectResponse
     {
-        app(UpdateCompany::class)->handle($company, $request->validated());
+        resolve(UpdateCompany::class)->handle($company, $request->validated());
 
-        return redirect()
-            ->route('admin.companies.show', $company)
+        return to_route('admin.companies.show', $company)
             ->with('toast', 'Company updated successfully.');
     }
 
@@ -66,8 +64,7 @@ class CompanyController extends Controller
     {
         $company->delete();
 
-        return redirect()
-            ->route('admin.companies.index')
+        return to_route('admin.companies.index')
             ->with('toast', 'Company deleted successfully.');
     }
 }

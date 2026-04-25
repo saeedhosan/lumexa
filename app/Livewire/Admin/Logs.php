@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Admin;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\View\View;
 use Livewire\Component;
 use Spatie\Activitylog\Models\Activity;
 
@@ -14,9 +15,9 @@ class Logs extends Component
 
     public string $filterLogName = '';
 
-public function resetFilters(): void
+    public function resetFilters(): void
     {
-        $this->search = '';
+        $this->search        = '';
         $this->filterLogName = '';
     }
 
@@ -25,7 +26,7 @@ public function resetFilters(): void
         $this->reset();
     }
 
-    public function render(): \Illuminate\View\View
+    public function render(): View
     {
         $activities = Activity::query()
             ->with('causer')

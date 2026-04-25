@@ -37,7 +37,11 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isSuper() || $user->isAdmin();
+        if ($user->isSuper()) {
+            return true;
+        }
+
+        return $user->isAdmin();
     }
 
     /**

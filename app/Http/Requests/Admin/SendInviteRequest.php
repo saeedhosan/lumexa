@@ -26,12 +26,12 @@ class SendInviteRequest extends FormRequest
 
     public function withValidator($validator): void
     {
-        $validator->after(function ($validator) {
+        $validator->after(function ($validator): void {
             $email     = $this->input('email');
             $companyId = $this->input('company_id');
 
             if ($email && $companyId) {
-                $existingUser = User::where('email', $email)->first();
+                $existingUser = User::query()->where('email', $email)->first();
 
                 if (! $existingUser) {
                     $validator->errors()->add('email', 'User not found. Only existing users can be added to a company.');

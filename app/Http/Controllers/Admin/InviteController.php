@@ -23,7 +23,7 @@ class InviteController extends Controller
             ? Company::query()->pluck('id')
             : $user->companies()->pluck('companies.id');
 
-        $users = User::whereHas('companies', fn ($q) => $q->whereIn('companies.id', $companyIds))
+        $users = User::query()->whereHas('companies', fn ($q) => $q->whereIn('companies.id', $companyIds))
             ->with('companies')
             ->latest()
             ->paginate(15);
@@ -50,25 +50,21 @@ class InviteController extends Controller
         $validated = $request->validated();
 
         $user    = Auth::user();
-        $company = Company::findOrFail($validated['company_id']);
+        $company = Company::query()->findOrFail($validated['company_id']);
 
-        if (! $user->isSuper() && ! $user->companies()->where('companies.id', $company->id)->exists()) {
-            abort(403, 'You do not have permission to invite users to this company.');
-        }
+        abort_if(! $user->isSuper() && ! $user->companies()->where('companies.id', $company->id)->exists(), 403, 'You do not have permission to invite users to this company.');
 
-        $existingUser = User::where('email', $validated['email'])->firstOrFail();
+        $existingUser = User::query()->where('email', $validated['email'])->firstOrFail();
 
         if ($existingUser->companies()->where('company_id', $company->id)->exists()) {
-            return redirect()
-                ->back()
+            return back()
                 ->with('toast', 'This user already has access to this company.')
                 ->withInput();
         }
 
         $existingUser->companies()->attach($company->id, ['role' => $validated['role']]);
 
-        return redirect()
-            ->route('admin.invites.index')
+        return to_route('admin.invites.index')
             ->with('toast', 'User added to company successfully.');
     }
 }
