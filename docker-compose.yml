@@ -1,0 +1,14 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www
+      - ./storage:/var/www/storage
+    environment:
+      - APP_ENV=local
+      - DB_CONNECTION=sqlite
+    working_dir: /var/www

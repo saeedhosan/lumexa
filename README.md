@@ -9,10 +9,10 @@
 </center>
 
 [![PHP Version](https://img.shields.io/badge/PHP-8.4-blue)](https://www.php.net/)
-[![Laravel Version](https://img.shields.io/badge/Laravel-13.0.0-red)](https://laravel.com/)
+[![Laravel Version](https://img.shields.io/badge/Laravel-13.0-red)](https://laravel.com/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.2.0-06B6D4)](https://tailwindcss.com/)
-[![Tests](https://img.shields.io/badge/Tests-38%20passed-green)](https://phpunit.de/)
-![Stage](https://img.shields.io/badge/Stage-development-yellow)
+[![Tests](https://img.shields.io/badge/Tests-100%25_passed-green)](https://phpunit.de/)
+![Stage](https://img.shields.io/badge/Stage-production-green)
 
 ## Table of contents
 
@@ -39,15 +39,14 @@ It includes a basic role-based system, secure authentication with 2FA, and core 
 - **Access control** – Three roles: Super Admin, Admin, and User
 - **Company workspace** – Each company has its own workspace and management area
 - **Lead management** – Basic system to create and manage leads
+- **User invitations** - Invite new members to companies
+- **Activity tracking** - Log and monitor user and system activities
 
 #### Upcoming features
 
 -   **Plan management** - Subscription plans with service limits
 -   **Service catalog** - Service product offerings and management
 -   **Billing & invoices** - Company billing and invoice generation
--   **User invitations** - Invite new members to companies
--   **Activity tracking** - Log and monitor user and system activities
--   **System logging** - Comprehensive audit logging
 -   **Campaign management** - Create and monitor marketing campaigns
 
 ## Requirements
@@ -72,6 +71,18 @@ composer dev
 
 # Build assets for production
 npm run build
+```
+
+## Docker Setup (Optional)
+
+```bash
+# Build and run with Docker
+docker-compose up -d --build
+
+# Visit: http://localhost:8000
+
+# Stop container
+docker-compose down
 ```
 
 ## Architecture
