@@ -87,7 +87,7 @@ class Dashboard extends Component
     private function loadRecentRegistrations(): void
     {
         $this->recentRegistrations = User::query()
-            ->with('company')
+            ->with('companies')
             ->latest()
             ->take(5)
             ->get();

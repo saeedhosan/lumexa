@@ -61,12 +61,13 @@
                 <div class="divide-y divide-zinc-100 dark:divide-zinc-700">
                     @foreach ($recentRegistrations as $user)
                         <div class="flex items-center justify-between py-3 first:pt-0 last:pb-0">
+                            <div class="flex items-center justify-between py-3 first:pt-0 last:pb-0">
                             <div class="flex items-center gap-3">
                                 <flux:avatar :name="$user->name" size="sm" />
                                 <div>
                                     <flux:heading level="3" size="sm">{{ $user->name }}</flux:heading>
                                     <flux:text size="xs" class="text-zinc-500 dark:text-zinc-400">
-                                        {{ $user->company?->name ?? 'No company' }} · {{ $user->created_at->diffForHumans() }}
+                                        {{ $user->companies->first()?->name ?? 'No company' }} · {{ $user->created_at->diffForHumans() }}
                                     </flux:text>
                                 </div>
                             </div>
