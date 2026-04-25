@@ -54,22 +54,6 @@
                 >
                     {{ __('Plans') }}
                 </flux:sidebar.item>
-                <flux:sidebar.item
-                    icon="cog"
-                    :href="route('admin.settings.index')"
-                    :current="request()->routeIs('admin.settings.*')"
-                    wire:navigate
-                >
-                    {{ __('Settings') }}
-                </flux:sidebar.item>
-                <flux:sidebar.item
-                    icon="document-text"
-                    :href="route('admin.logs.index')"
-                    :current="request()->routeIs('admin.logs.*')"
-                    wire:navigate
-                >
-                    {{ __('Logs') }}
-                </flux:sidebar.item>
             @endif
         </flux:sidebar.group>
 
@@ -92,14 +76,14 @@
             </flux:sidebar.item>
         </flux:sidebar.group>
 
-        <flux:sidebar.group :heading="__('Settings')" class="grid">
+        <flux:sidebar.group :heading="__('System')" class="grid">
             <flux:sidebar.item
-                icon="envelope"
-                :href="route('admin.invites.index')"
-                :current="request()->routeIs('admin.invites.*')"
+                icon="clipboard-document-list"
+                :href="route('admin.logs.index')"
+                :current="request()->routeIs('admin.logs.*')"
                 wire:navigate
             >
-                {{ __('Invitations') }}
+                {{ __('Activities') }}
             </flux:sidebar.item>
             <flux:sidebar.item
                 icon="chart-bar"
@@ -108,6 +92,27 @@
                 wire:navigate
             >
                 {{ __('Reports') }}
+            </flux:sidebar.item>
+        </flux:sidebar.group>
+
+        <flux:sidebar.group :heading="__('Settings')" class="grid">
+            @if (auth()->user()->type === \App\Enums\UserType::super)
+                <flux:sidebar.item
+                    icon="cog"
+                    :href="route('admin.settings.index')"
+                    :current="request()->routeIs('admin.settings.*')"
+                    wire:navigate
+                >
+                    {{ __('Settings') }}
+                </flux:sidebar.item>
+            @endif
+            <flux:sidebar.item
+                icon="envelope"
+                :href="route('admin.invites.index')"
+                :current="request()->routeIs('admin.invites.*')"
+                wire:navigate
+            >
+                {{ __('Invitations') }}
             </flux:sidebar.item>
         </flux:sidebar.group>
     </flux:sidebar.nav>
