@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Livewire\Admin;
 
 use App\Models\Company;
+use App\Models\Lead;
 use App\Models\Plan;
 use App\Models\Service;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Date;
+use Illuminate\View\View;
 use Livewire\Component;
 use Spatie\Activitylog\Models\Activity;
 
@@ -48,26 +50,26 @@ class Dashboard extends Component
         $this->loadQuickStats();
     }
 
-    public function render(): \Illuminate\View\View
+    public function render(): View
     {
         return view('livewire.admin.dashboard');
     }
 
     private function loadUserStats(): void
     {
-        $this->totalUsers = User::query()->count();
-        $this->activeUsers = User::query()->where('is_active', true)->count();
+        $this->totalUsers       = User::query()->count();
+        $this->activeUsers      = User::query()->where('is_active', true)->count();
         $this->newUsersThisWeek = User::query()
             ->whereBetween('created_at', [
-                Carbon::now()->startOfWeek(),
-                Carbon::now()->endOfWeek(),
+                Date::now()->startOfWeek(),
+                Date::now()->endOfWeek(),
             ])
             ->count();
     }
 
     private function loadCompanyStats(): void
     {
-        $this->totalCompanies = Company::query()->count();
+        $this->totalCompanies  = Company::query()->count();
         $this->activeCompanies = Company::query()->where('is_active', true)->count();
     }
 
@@ -78,7 +80,7 @@ class Dashboard extends Component
 
     private function loadPlanStats(): void
     {
-        $this->totalPlans = Plan::query()->count();
+        $this->totalPlans  = Plan::query()->count();
         $this->activePlans = Plan::query()->where('is_active', true)->count();
     }
 
@@ -103,7 +105,7 @@ class Dashboard extends Component
     private function loadQuickStats(): void
     {
         $this->quickStats = collect([
-            ['label' => 'Leads', 'count' => \App\Models\Lead::query()->count()],
+            ['label' => 'Leads', 'count' => Lead::query()->count()],
             ['label' => 'Companies', 'count' => $this->totalCompanies],
             ['label' => 'Services', 'count' => $this->totalServices],
             ['label' => 'Plans', 'count' => $this->totalPlans],
