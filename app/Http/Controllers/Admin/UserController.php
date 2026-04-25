@@ -13,6 +13,7 @@ use App\Models\Company;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -53,18 +54,17 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request): \Illuminate\Http\RedirectResponse
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         $this->authorize('create', User::class);
 
-        $user = User::create($request->validated());
+        $user = User::query()->create($request->validated());
 
         if ($request->filled('current_company_id')) {
             $user->companies()->attach($request->current_company_id);
         }
 
-        return redirect()
-            ->route('admin.users.index')
+        return to_route('admin.users.index')
             ->with('success', 'User created successfully.');
     }
 
@@ -96,7 +96,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user): \Illuminate\Http\RedirectResponse
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         $this->authorize('update', $user);
 
@@ -110,8 +110,7 @@ class UserController extends Controller
 
         $user->companies()->sync($request->current_company_id ?? []);
 
-        return redirect()
-            ->route('admin.users.index')
+        return to_route('admin.users.index')
             ->with('success', 'User updated successfully.');
     }
 
