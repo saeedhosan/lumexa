@@ -15,16 +15,28 @@ services:
     depends_on:
       - mysql
       - redis
-    command: >
+    command: |
       bash -c "
         curl -fsSL https://bun.sh/install | bash &&
-        export PATH=$HOME/.bun/bin:$PATH &&
-        chown -R www-data:www-data /app/storage /app/bootstrap/cache &&
-        composer install --no-interaction &&
+        export PATH=\$HOME/.bun/bin:\$PATH &&
+        chmod -R 777 /app/storage /app/bootstrap/cache &&
+
+        composer install --no-dev -o --no-interaction &&
         bun install &&
         bun run build &&
+
+        if [ ! -f /app/storage/app/.docker.lock ]; then
+          php artisan key:generate --no-interaction &&
+          php artisan storage:link --force &&
+          php artisan migrate:fresh --seed &&
+          touch /app/storage/app/.docker.lock
+        fi &&
+
+
         php artisan migrate --force &&
-        php artisan storage:link --force &&
+        php artisan optimize:clear &&
+        php artisan optimize &&
+
         php artisan queue:work redis --sleep=3 --tries=3 &
         php artisan reverb:start --host=0.0.0.0 --port=8081 &
         php artisan schedule:work &
