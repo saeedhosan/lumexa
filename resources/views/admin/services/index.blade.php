@@ -1,3 +1,56 @@
 <x-layouts::app title="Services">
-    <x-ui.coming-soon />
+
+    <div class="space-y-6">
+        <div class="flex items-center justify-between">
+            <flux:heading level="1" size="xl">Services</flux:heading>
+            <flux:button disabled>
+                Add Service (Coming Soon)
+            </flux:button>
+        </div>
+
+        @if($services->isEmpty())
+            <flux:card>
+                <flux:text>No services available.</flux:text>
+            </flux:card>
+        @else
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach($services as $service)
+                    <flux:card class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="flex-1 min-w-0">
+                                <flux:heading level="3" size="md">{{ $service->name }}</flux:heading>
+                                <flux:badge :color="$service->is_active ? 'green' : 'zinc'" size="sm">
+                                    {{ $service->is_active ? 'Active' : 'Inactive' }}
+                                </flux:badge>
+                            </div>
+                        </div>
+
+                        @if($service->about)
+                            <flux:text class="text-sm text-zinc-500 dark:text-zinc-400">
+                                {{ $service->about }}
+                            </flux:text>
+                        @endif
+
+                        <div class="flex items-center gap-4 text-sm text-zinc-500 dark:text-zinc-400">
+                            <flux:icon name="code-bracket" class="size-4" />
+                            <span>{{ $service->code }}</span>
+                        </div>
+
+                        <div class="flex items-center gap-4 text-sm text-zinc-500 dark:text-zinc-400">
+                            <flux:icon name="arrow-up-circle" class="size-4" />
+                            <span>v{{ $service->version }}</span>
+                        </div>
+
+                        @if($service->companies->count() > 0)
+                        <div class="flex items-center gap-4 text-sm text-zinc-500 dark:text-zinc-400">
+                            <flux:icon name="building-office" class="size-4" />
+                            <span>{{ $service->companies->count() }} {{ Str::plural('company', $service->companies->count()) }}</span>
+                        </div>
+                        @endif
+                    </flux:card>
+                @endforeach
+            </div>
+        @endif
+    </div>
+
 </x-layouts::app>
