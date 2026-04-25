@@ -37,13 +37,37 @@ It includes a basic role-based system, secure authentication with 2FA, and core 
 
 ## Core Features
 
+### Authentication & Security
+- **Multi-factor authentication (2FA)** – Secure login with TOTP via Laravel Fortify
+- **Role-based access control** – Three roles: Super Admin, Admin, and User
+- **Email verification** – Email confirmation for user accounts
+- **Password reset** – Secure password recovery flow
+
+### Multi-Tenancy
 - **Multi-company support** – Users can work with multiple companies, each with isolated data
-- **Authentication** – Secure login with 2FA using Laravel Fortify
-- **Access control** – Three roles: Super Admin, Admin, and User
 - **Company workspace** – Each company has its own workspace and management area
-- **Lead management** – Basic system to create and manage leads
-- **User invitations** - Invite new members to companies
-- **Activity tracking** - Log and monitor user and system activities
+- **User invitations** – Invite new members to companies
+
+### Lead Management
+- **Lead CRUD** – Create, read, update, delete leads
+- **Lead lists** – Individual contacts within leads
+- **Lead status workflow** – Pending, Process, Cleaned, Blocked, Approved, Rejected
+- **Excel import** – Bulk import leads via Excel/CSV files
+
+### API & Integrations
+- **REST API** – JSON API for external integrations (`/api/v1`)
+- **API Resources** – Consistent JSON response formatting
+- **Rate limiting** – 60 requests/minute per IP
+- **Laravel Sanctum** – Token-based authentication ready
+
+### Performance & Scalability
+- **Dashboard caching** – 5-minute cache for statistics
+- **Background jobs** – Queue processing for heavy tasks
+- **Event-driven** – Laravel Events & Listeners for decoupling
+
+### Activity & Logging
+- **Activity tracking** – Full audit trail with Spatie ActivityLog
+- **System logging** – Comprehensive activity logging
 
 ## Requirements
 
