@@ -21,7 +21,7 @@
 -   [Core Features](#core-features)
 -   [Requirements](#requirements)
 -   [Installation](#installation)
--   [Docker Setup](#docker-setup-optional)
+-   [Docker Setup](#docker-setup)
 -   [Architecture](#architecture)
 -   [Dependencies](#dependencies)
 -   [Technologies](#technologies)
@@ -96,10 +96,10 @@ npm run build
 ## Docker Setup
 
 ```bash
-# Start all services (development)
-docker-compose up -d
+# Build & start (production)
+docker-compose up -d --build
 
-# Start with queue worker
+# With queue worker
 docker-compose --profile queue up -d
 
 # View logs
@@ -112,6 +112,10 @@ docker-compose down
 docker-compose build --no-cache
 docker-compose up -d
 ```
+
+**Production Settings:**
+- APP_ENV=production
+- APP_DEBUG=false
 
 **Services:**
 - `app` - Laravel application (port 8000)
