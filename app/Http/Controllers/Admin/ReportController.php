@@ -5,65 +5,37 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
+use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): Factory|View
     {
-        return view('admin.reports.index');
-    }
+        $user = Auth::user();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): Factory|View
-    {
-        return view('admin.reports.create');
-    }
+        $companyIds = $user->isSuper()
+            ? Company::query()->pluck('id')
+            : $user->companies()->pluck('companies.id');
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): void
-    {
-        //
-    }
+        $stats = [
+            'total_users' => User::whereHas('companies', fn ($q) => $q->whereIn('companies.id', $companyIds))->count(),
+            'total_companies' => $companyIds->count(),
+            'users_by_type' => User::whereHas('companies', fn ($q) => $q->whereIn('companies.id', $companyIds))
+                ->selectRaw('type, count(*) as count')
+                ->groupBy('type')
+                ->pluck('count', 'type')
+                ->toArray(),
+            'users_per_company' => Company::whereIn('id', $companyIds)
+                ->withCount('users')
+                ->get()
+                ->pluck('users_count', 'name')
+                ->toArray(),
+        ];
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id): Factory|View
-    {
-        return view('admin.reports.show', ['id' => $id]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id): Factory|View
-    {
-        return view('admin.reports.edit', ['id' => $id]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id): void
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id): void
-    {
-        //
+        return view('admin.reports.index', ['stats' => $stats]);
     }
 }
