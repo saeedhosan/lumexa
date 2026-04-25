@@ -70,8 +70,8 @@
             <flux:button :href="route('admin.companies.edit', $company)" variant="primary">
                 Edit Company
             </flux:button>
-            <flux:button :href="route('admin.companies.members.index', $company)" variant="outline">
-                Manage Members
+            <flux:button :href="route('admin.users.index', ['company' => $company->id])" variant="outline">
+                View Members
             </flux:button>
             <flux:button :href="route('admin.companies.index')" variant="ghost" wire:navigate>
                 Back to List
