@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Admin\BillingController;
 use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\CompanyMemberController;
 use App\Http\Controllers\Admin\DashobardController;
 use App\Http\Controllers\Admin\InviteController;
 use App\Http\Controllers\Admin\InvoiceController;
@@ -23,6 +24,9 @@ Route::get('/', DashobardController::class)->name('home');
 Route::get('/dashboard', DashobardController::class)->name('dashboard');
 
 Route::resource('companies', CompanyController::class);
+Route::get('/companies/{company}/members', [CompanyMemberController::class, 'index'])->name('companies.members.index');
+Route::post('/companies/{company}/members', [CompanyMemberController::class, 'store'])->name('companies.members.store');
+Route::delete('/companies/{company}/members/{user}', [CompanyMemberController::class, 'destroy'])->name('companies.members.destroy');
 Route::resource('services', ServiceController::class);
 Route::resource('billing', BillingController::class);
 Route::resource('invoices', InvoiceController::class);
