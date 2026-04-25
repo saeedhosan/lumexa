@@ -18,13 +18,20 @@ class StoreUserRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+        $user = $this->user();
+
+        $rules = [
             'name'               => ['required', 'string', 'max:255'],
             'email'              => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password'           => ['required', 'confirmed'],
             'status'             => ['required', 'string', 'in:'.implode(',', UserStatus::values())],
-            'type'               => ['required', 'string', 'in:'.implode(',', UserType::values())],
             'current_company_id' => ['nullable', 'exists:companies,id'],
         ];
+
+        if ($user->isSuper()) {
+            $rules['type'] = ['required', 'string', 'in:'.implode(',', UserType::values())];
+        }
+
+        return $rules;
     }
 }

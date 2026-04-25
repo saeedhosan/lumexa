@@ -19,9 +19,6 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request): Factory|View
     {
         $this->authorize('viewAny', User::class);
@@ -29,7 +26,8 @@ class UserController extends Controller
         $search = $request->query('search');
 
         $users = User::query()
-            ->when($search, fn ($query) => $query->where('name', 'like', sprintf('%%%s%%', $search))->orWhere('email', 'like', sprintf('%%%s%%', $search)))
+            ->with('companies')
+            ->when($search, fn ($query) => $query->where(fn ($q) => $q->where('name', 'like', '%'.$search.'%')->orWhere('email', 'like', '%'.$search.'%')))
             ->when(Auth::user()->type !== UserType::super, fn ($query) => $query->whereHas('companies', fn ($q) => $q->whereIn('companies.id', Auth::user()->companies()->pluck('companies.id'))))
             ->orderBy('name')
             ->paginate(10);
@@ -37,40 +35,51 @@ class UserController extends Controller
         return view('admin.users.index', ['users' => $users, 'search' => $search]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(): Factory|View
     {
         $this->authorize('create', User::class);
 
+        $user = Auth::user();
+
+        $companies = $user->isSuper()
+            ? Company::query()->get()
+            : $user->companies()->get();
+
         return view('admin.users.create', [
-            'companies' => Company::query()->get(),
+            'companies' => $companies,
             'statuses'  => UserStatus::values(),
-            'types'     => UserType::values(),
+            'types'     => $user->isSuper() ? UserType::values() : null,
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreUserRequest $request): RedirectResponse
     {
         $this->authorize('create', User::class);
 
-        $user = User::query()->create($request->validated());
+        $validated = $request->validated();
 
-        if ($request->filled('current_company_id')) {
-            $user->companies()->attach($request->current_company_id);
+        $user = Auth::user();
+
+        if ($user->isSuper() && isset($validated['type'])) {
+            $type = $validated['type'];
+            unset($validated['type']);
+        } else {
+            $type = UserType::customer;
+        }
+
+        $companyId = $validated['current_company_id'] ?? null;
+        unset($validated['current_company_id']);
+
+        $newUser = User::query()->create(array_merge($validated, ['type' => $type]));
+
+        if ($companyId) {
+            $newUser->companies()->attach($companyId, ['role' => Company::ROLE_ADMIN]);
         }
 
         return to_route('admin.users.index')
             ->with('success', 'User created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(User $user): Factory|View
     {
         $this->authorize('view', $user);
@@ -78,48 +87,52 @@ class UserController extends Controller
         return view('admin.users.show', ['user' => $user]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(User $user): Factory|View
     {
         $this->authorize('update', $user);
 
+        $currentUser = Auth::user();
+
+        $companies = $currentUser->isSuper()
+            ? Company::query()->get()
+            : $currentUser->companies()->get();
+
         return view('admin.users.edit', [
             'user'      => $user,
-            'companies' => Company::query()->get(),
+            'companies' => $companies,
             'statuses'  => UserStatus::values(),
-            'types'     => UserType::values(),
+            'types'     => $currentUser->isSuper() ? UserType::values() : null,
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         $this->authorize('update', $user);
 
         $data = $request->validated();
 
-        if (empty($data['password'])) {
+        $currentUser = Auth::user();
+
+        if (isset($data['password']) && empty($data['password'])) {
             unset($data['password']);
+        }
+
+        if ($currentUser->isAdmin() && isset($data['type'])) {
+            unset($data['type']);
         }
 
         $user->update($data);
 
-        $user->companies()->sync($request->current_company_id ?? []);
+        if (isset($data['current_company_id'])) {
+            $user->companies()->sync([$data['current_company_id'] => ['role' => Company::ROLE_ADMIN]]);
+        }
 
         return to_route('admin.users.index')
             ->with('success', 'User updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(User $user): void
     {
         $this->authorize('update', $user);
-        //
     }
 }
