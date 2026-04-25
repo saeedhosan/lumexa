@@ -108,7 +108,7 @@ docker compose down        # stop
 docker compose restart     # restart
 docker compose exec app bash # enter container
 
-## run migrate  and seeder for fresh data
+## Get demo data for testing
 docker compose exec app php artisan migrate:fresh --seed
 ```
 
