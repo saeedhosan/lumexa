@@ -19,12 +19,13 @@
 
 -   [Introduction](#introduction)
 -   [Core Features](#core-features)
--   [API Documentation](#api-documentation)
 -   [Requirements](#requirements)
 -   [Installation](#installation)
+-   [Docker Setup](#docker-setup-optional)
 -   [Architecture](#architecture)
 -   [Dependencies](#dependencies)
 -   [Technologies](#technologies)
+-   [API Documentation](#api-documentation)
 -   [Stable tests](#stable-tests)
 -   [Tests Login](#tests-login)
 
@@ -43,40 +44,6 @@ It includes a basic role-based system, secure authentication with 2FA, and core 
 - **Lead management** – Basic system to create and manage leads
 - **User invitations** - Invite new members to companies
 - **Activity tracking** - Log and monitor user and system activities
-- **REST API** - JSON API for external integrations
-- **Event-driven** - Laravel Events & Listeners
-- **Background jobs** - Queue processing
-
-## API Documentation
-
-Full API documentation is available in [docs/api.md](/docs/api.md).
-
-**Quick Start:**
-
-```bash
-# List leads
-curl -X GET "http://localhost:8000/api/v1/leads" \
-  -H "Accept: application/json"
-
-# Get single lead
-curl -X GET "http://localhost:8000/api/v1/leads/1" \
-  -H "Accept: application/json"
-```
-
-**Base URL:** `/api/v1`
-
-**Features:**
-- RESTful JSON responses
-- Pagination support (per_page parameter)
-- Rate limited (60 requests/minute)
-- API Resources for consistent response formatting
-
-#### Upcoming features
-
--   **Plan management** - Subscription plans with service limits
--   **Service catalog** - Service product offerings and management
--   **Billing & invoices** - Company billing and invoice generation
--   **Campaign management** - Create and monitor marketing campaigns
 
 ## Requirements
 
@@ -176,6 +143,31 @@ Run lint:
 ```bash
 composer lint
 ```
+
+## API Documentation
+
+Full API documentation is available in [docs/api.md](/docs/api.md).
+
+**Quick Start:**
+
+```bash
+# List leads
+curl -X GET "http://localhost:8000/api/v1/leads" \
+  -H "Accept: application/json"
+
+# Get single lead
+curl -X GET "http://localhost:8000/api/v1/leads/1" \
+  -H "Accept: application/json"
+```
+
+**Base URL:** `/api/v1`
+
+**Features:**
+- RESTful JSON responses via Laravel API Resources
+- Pagination support (`per_page` parameter)
+- Rate limited (60 requests/minute)
+- Event-driven architecture with Laravel Events
+- Background job processing with Laravel Queues
 
 ## Tests Login
 
