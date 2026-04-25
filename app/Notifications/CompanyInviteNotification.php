@@ -26,9 +26,9 @@ class CompanyInviteNotification extends Notification
     public function toMail(User $user): MailMessage
     {
         return (new MailMessage)
-            ->subject("You've been invited to {$this->companyName}")
-            ->greeting("Hello {$user->name}!")
-            ->line("{$this->invitedBy} has invited you to join {$this->companyName} on Lumexa.")
+            ->subject('You\'ve been invited to '.$this->companyName)
+            ->greeting(sprintf('Hello %s!', $user->name))
+            ->line(sprintf('%s has invited you to join %s on Lumexa.', $this->invitedBy, $this->companyName))
             ->action('View Invitation', url('/app/companies'))
             ->line('Thank you for using Lumexa!');
     }
