@@ -41,12 +41,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --classmap-
 RUN bun run build
 
 # Setup storage permissions
-RUN mkdir -p /var/www/storage && chmod -R 775 /var/www/storage \
-    && mkdir -p /var/www/storage/app/public \
-    && mkdir -p /var/www/storage/framework/cache/data \
-    && mkdir -p /var/www/storage/framework/sessions \
-    && mkdir -p /var/www/storage/framework/views \
-    && mkdir -p /var/www/storage/logs \
+RUN chmod -R 775 /var/www/storage \
     && chown -R www-data:www-data /var/www
 
 EXPOSE 8000
