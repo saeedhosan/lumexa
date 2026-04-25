@@ -12,7 +12,7 @@ use function Pest\Laravel\get;
 
 uses(RefreshDatabase::class);
 
-it('can render services page', function () {
+it('can render services page', function (): void {
     $superAdmin = User::factory()->create(['type' => UserType::super]);
 
     actingAs($superAdmin);
@@ -20,7 +20,7 @@ it('can render services page', function () {
     get(route('admin.services.index'))->assertSuccessful();
 });
 
-it('shows services list', function () {
+it('shows services list', function (): void {
     $superAdmin = User::factory()->create(['type' => UserType::super]);
     Service::factory()->count(3)->create();
 
@@ -31,7 +31,7 @@ it('shows services list', function () {
         ->assertSee('v1.0.0');
 });
 
-it('shows service details in table', function () {
+it('shows service details in table', function (): void {
     $superAdmin = User::factory()->create(['type' => UserType::super]);
     $service    = Service::factory()->create([
         'name'      => 'Test Service',

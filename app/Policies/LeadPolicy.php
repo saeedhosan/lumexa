@@ -11,7 +11,11 @@ class LeadPolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->isSuper() || $user->isAdmin();
+        if ($user->isSuper()) {
+            return true;
+        }
+
+        return $user->isAdmin();
     }
 
     public function view(User $user, Lead $lead): bool
@@ -25,7 +29,11 @@ class LeadPolicy
 
     public function create(User $user): bool
     {
-        return $user->isSuper() || $user->isAdmin();
+        if ($user->isSuper()) {
+            return true;
+        }
+
+        return $user->isAdmin();
     }
 
     public function update(User $user, Lead $lead): bool

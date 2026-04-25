@@ -14,11 +14,11 @@ use function Pest\Laravel\post;
 
 uses(RefreshDatabase::class);
 
-beforeEach(function () {
+beforeEach(function (): void {
     Notification::fake();
 });
 
-it('can render the invite list screen', function () {
+it('can render the invite list screen', function (): void {
     $superAdmin = User::factory()->create(['type' => UserType::super]);
 
     actingAs($superAdmin);
@@ -26,7 +26,7 @@ it('can render the invite list screen', function () {
     get(route('admin.invites.index'))->assertSuccessful();
 });
 
-it('can render the send invite form', function () {
+it('can render the send invite form', function (): void {
     $superAdmin = User::factory()->create(['type' => UserType::super]);
 
     actingAs($superAdmin);
@@ -34,7 +34,7 @@ it('can render the send invite form', function () {
     get(route('admin.invites.create'))->assertSuccessful();
 });
 
-it('can add existing user to company as super admin', function () {
+it('can add existing user to company as super admin', function (): void {
     $superAdmin = User::factory()->create(['type' => UserType::super]);
     $company    = Company::factory()->create();
     $newUser    = User::factory()->create(['email' => 'newuser@example.com']);
@@ -52,7 +52,7 @@ it('can add existing user to company as super admin', function () {
     expect($newUser->companies()->where('company_id', $company->id)->exists())->toBeTrue();
 });
 
-it('shows error for user not found', function () {
+it('shows error for user not found', function (): void {
     $superAdmin = User::factory()->create(['type' => UserType::super]);
     $company    = Company::factory()->create();
 
@@ -66,7 +66,7 @@ it('shows error for user not found', function () {
         ->assertSessionHasErrors(['email']);
 });
 
-it('can add user to company as admin with company access', function () {
+it('can add user to company as admin with company access', function (): void {
     $admin   = User::factory()->create(['type' => UserType::admin]);
     $company = Company::factory()->create();
     $company->users()->attach($admin, ['role' => Company::ROLE_ADMIN]);
@@ -84,7 +84,7 @@ it('can add user to company as admin with company access', function () {
     expect($newUser->companies()->where('company_id', $company->id)->exists())->toBeTrue();
 });
 
-it('cannot add user to company without access', function () {
+it('cannot add user to company without access', function (): void {
     $admin        = User::factory()->create(['type' => UserType::admin]);
     $otherCompany = Company::factory()->create();
     $existingUser = User::factory()->create(['email' => 'exists@example.com']);
@@ -99,7 +99,7 @@ it('cannot add user to company without access', function () {
         ->assertForbidden();
 });
 
-it('validates required fields when sending invite', function () {
+it('validates required fields when sending invite', function (): void {
     $superAdmin = User::factory()->create(['type' => UserType::super]);
     actingAs($superAdmin);
 
@@ -107,7 +107,7 @@ it('validates required fields when sending invite', function () {
         ->assertSessionHasErrors(['company_id', 'email', 'role']);
 });
 
-it('validates email format', function () {
+it('validates email format', function (): void {
     $superAdmin = User::factory()->create(['type' => UserType::super]);
     $company    = Company::factory()->create();
     actingAs($superAdmin);
@@ -120,7 +120,7 @@ it('validates email format', function () {
         ->assertSessionHasErrors(['email']);
 });
 
-it('adds existing user directly to company if they exist but have no access', function () {
+it('adds existing user directly to company if they exist but have no access', function (): void {
     $superAdmin   = User::factory()->create(['type' => UserType::super]);
     $company      = Company::factory()->create();
     $existingUser = User::factory()->create(['email' => 'exists@example.com']);
@@ -138,7 +138,7 @@ it('adds existing user directly to company if they exist but have no access', fu
     expect($existingUser->companies()->where('company_id', $company->id)->exists())->toBeTrue();
 });
 
-it('shows error for user already has access to company', function () {
+it('shows error for user already has access to company', function (): void {
     $superAdmin   = User::factory()->create(['type' => UserType::super]);
     $company      = Company::factory()->create();
     $existingUser = User::factory()->create(['email' => 'member@example.com']);
@@ -154,7 +154,7 @@ it('shows error for user already has access to company', function () {
         ->assertSessionHasErrors(['email']);
 });
 
-it('shows only accessible company users for admin', function () {
+it('shows only accessible company users for admin', function (): void {
     $admin    = User::factory()->create(['type' => UserType::admin]);
     $company1 = Company::factory()->create();
     $company2 = Company::factory()->create();

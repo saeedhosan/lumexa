@@ -6,6 +6,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Enums\UserStatus;
 use App\Enums\UserType;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -37,20 +38,18 @@ class StoreUserRequest extends FormRequest
 
     public function withValidator($validator): void
     {
-        $validator->after(function ($validator) {
+        $validator->after(function ($validator): void {
             $companyId = $this->input('current_company_id');
 
             if ($companyId) {
                 $user = $this->user();
 
                 if ($user->isSuper()) {
-                    if (! \App\Models\Company::where('id', $companyId)->exists()) {
+                    if (! Company::query()->where('id', $companyId)->exists()) {
                         $validator->errors()->add('current_company_id', 'The selected company is invalid.');
                     }
-                } else {
-                    if (! $user->companies()->where('companies.id', $companyId)->exists()) {
-                        $validator->errors()->add('current_company_id', 'You do not have access to this company.');
-                    }
+                } elseif (! $user->companies()->where('companies.id', $companyId)->exists()) {
+                    $validator->errors()->add('current_company_id', 'You do not have access to this company.');
                 }
             }
         });

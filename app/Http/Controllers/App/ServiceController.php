@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
+use App\Models\Service;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class ServiceController extends Controller
      */
     public function index(): Factory|View
     {
-        $services = \App\Models\Service::latest()->paginate(15);
+        $services = Service::query()->latest()->paginate(15);
 
         return view('app.services.index', ['services' => $services]);
     }

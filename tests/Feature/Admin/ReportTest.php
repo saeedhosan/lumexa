@@ -6,12 +6,13 @@ use App\Enums\UserType;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 
 uses(RefreshDatabase::class);
 
-it('can render reports page', function () {
+it('can render reports page', function (): void {
     $superAdmin = User::factory()->create(['type' => UserType::super]);
 
     actingAs($superAdmin);
@@ -19,7 +20,7 @@ it('can render reports page', function () {
     get(route('admin.reports.index'))->assertSuccessful();
 });
 
-it('shows user and company totals', function () {
+it('shows user and company totals', function (): void {
     $superAdmin = User::factory()->create(['type' => UserType::super]);
     User::factory()->count(2)->create(['type' => UserType::user]);
     Company::factory()->count(3)->create();
@@ -32,9 +33,9 @@ it('shows user and company totals', function () {
         ->assertSee('5');
 });
 
-it('shows users by type breakdown', function () {
+it('shows users by type breakdown', function (): void {
     $superAdmin = User::factory()->create(['type' => UserType::super]);
-    $company = Company::factory()->create();
+    $company    = Company::factory()->create();
 
     $superAdmin->companies()->attach($company->id);
 
@@ -53,9 +54,9 @@ it('shows users by type breakdown', function () {
         ->assertSee('Admin');
 });
 
-it('admin only sees their company data', function () {
-    $admin = User::factory()->create(['type' => UserType::admin]);
-    $company = Company::factory()->create();
+it('admin only sees their company data', function (): void {
+    $admin        = User::factory()->create(['type' => UserType::admin]);
+    $company      = Company::factory()->create();
     $otherCompany = Company::factory()->create();
 
     $admin->companies()->attach($company->id, ['role' => Company::ROLE_ADMIN]);

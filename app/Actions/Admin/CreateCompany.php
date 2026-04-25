@@ -12,7 +12,7 @@ class CreateCompany
     public function handle(array $data, int $userId, string $role = Company::ROLE_ADMIN): Company
     {
         return DB::transaction(function () use ($data, $userId, $role) {
-            $company = Company::create([
+            $company = Company::query()->create([
                 'name'        => $data['name'],
                 'title'       => $data['title']       ?? null,
                 'description' => $data['description'] ?? null,
