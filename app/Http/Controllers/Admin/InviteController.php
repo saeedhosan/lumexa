@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
-use App\Actions\Admin\SendInvite;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SendInviteRequest;
 use App\Models\Company;
-use App\Models\Invite;
+use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -16,10 +15,6 @@ use Illuminate\Support\Facades\Auth;
 
 class InviteController extends Controller
 {
-    public function __construct(
-        private readonly SendInvite $sendInvite
-    ) {}
-
     public function index(): Factory|View
     {
         $user = Auth::user();
@@ -28,12 +23,12 @@ class InviteController extends Controller
             ? Company::query()->pluck('id')
             : $user->companies()->pluck('companies.id');
 
-        $invites = Invite::with(['company', 'inviter'])
-            ->whereIn('company_id', $companyIds)
+        $users = User::whereHas('companies', fn ($q) => $q->whereIn('companies.id', $companyIds))
+            ->with('companies')
             ->latest()
             ->paginate(15);
 
-        return view('admin.invites.index', ['invites' => $invites]);
+        return view('admin.invites.index', ['users' => $users]);
     }
 
     public function create(): Factory|View
@@ -44,7 +39,10 @@ class InviteController extends Controller
             ? Company::query()->get()
             : $user->companies()->get();
 
-        return view('admin.invites.create', ['companies' => $companies]);
+        return view('admin.invites.create', [
+            'companies'   => $companies,
+            'defaultRole' => Company::ROLE_CUSTOMER,
+        ]);
     }
 
     public function store(SendInviteRequest $request): RedirectResponse
@@ -58,35 +56,19 @@ class InviteController extends Controller
             abort(403, 'You do not have permission to invite users to this company.');
         }
 
-        $this->sendInvite->handle(
-            $company,
-            $validated['email'],
-            $validated['role'],
-            $user->id()
-        );
+        $existingUser = User::where('email', $validated['email'])->firstOrFail();
 
-        return redirect()
-            ->route('admin.invites.index')
-            ->with('toast', 'Invitation sent successfully.');
-    }
-
-    public function show(Invite $invite): Factory|View
-    {
-        return view('admin.invites.show', ['invite' => $invite]);
-    }
-
-    public function destroy(Invite $invite): RedirectResponse
-    {
-        $user = Auth::user();
-
-        if (! $user->isSuper() && ! $user->companies()->where('companies.id', $invite->company_id)->exists()) {
-            abort(403, 'You do not have permission to delete this invitation.');
+        if ($existingUser->companies()->where('company_id', $company->id)->exists()) {
+            return redirect()
+                ->back()
+                ->with('toast', 'This user already has access to this company.')
+                ->withInput();
         }
 
-        $invite->delete();
+        $existingUser->companies()->attach($company->id, ['role' => $validated['role']]);
 
         return redirect()
             ->route('admin.invites.index')
-            ->with('toast', 'Invitation deleted.');
+            ->with('toast', 'User added to company successfully.');
     }
 }
