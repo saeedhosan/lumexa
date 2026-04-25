@@ -4,21 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Policies\InvitePolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-/**
- * @property int $id
- * @property int $company_id
- * @property int $invited_by
- * @property string $email
- * @property string $role
- * @property \Carbon\Carbon $accepted_at
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property-read Company $company
- * @property-read User $inviter
- */
+#[UsePolicy(InvitePolicy::class)]
 class Invite extends Model
 {
     protected $fillable = [

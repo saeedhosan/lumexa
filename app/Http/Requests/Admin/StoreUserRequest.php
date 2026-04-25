@@ -23,9 +23,9 @@ class StoreUserRequest extends FormRequest
         $rules = [
             'name'               => ['required', 'string', 'max:255'],
             'email'              => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password'           => ['required', 'confirmed'],
+            'password'           => ['required', 'confirmed', 'min:8'],
             'status'             => ['required', 'string', 'in:'.implode(',', UserStatus::values())],
-            'current_company_id' => ['nullable', 'exists:companies,id'],
+            'current_company_id' => ['nullable', 'integer'],
         ];
 
         if ($user->isSuper()) {
@@ -33,5 +33,26 @@ class StoreUserRequest extends FormRequest
         }
 
         return $rules;
+    }
+
+    public function withValidator($validator): void
+    {
+        $validator->after(function ($validator) {
+            $companyId = $this->input('current_company_id');
+
+            if ($companyId) {
+                $user = $this->user();
+
+                if ($user->isSuper()) {
+                    if (! \App\Models\Company::where('id', $companyId)->exists()) {
+                        $validator->errors()->add('current_company_id', 'The selected company is invalid.');
+                    }
+                } else {
+                    if (! $user->companies()->where('companies.id', $companyId)->exists()) {
+                        $validator->errors()->add('current_company_id', 'You do not have access to this company.');
+                    }
+                }
+            }
+        });
     }
 }
