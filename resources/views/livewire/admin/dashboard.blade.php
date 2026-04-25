@@ -61,7 +61,6 @@
                 <div class="divide-y divide-zinc-100 dark:divide-zinc-700">
                     @foreach ($recentRegistrations as $user)
                         <div class="flex items-center justify-between py-3 first:pt-0 last:pb-0">
-                            <div class="flex items-center justify-between py-3 first:pt-0 last:pb-0">
                             <div class="flex items-center gap-3">
                                 <flux:avatar :name="$user->name" size="sm" />
                                 <div>
@@ -174,6 +173,9 @@
                                 <flux:heading level="3" size="sm">
                                     {{ $activity->description }}
                                 </flux:heading>
+                                <span class="text-zinc-500 dark:text-zinc-400 text-sm">
+                                    by {{ $activity->causer?->name ?? 'System' }}
+                                </span>
                             </div>
                             <flux:text size="xs" class="text-zinc-500 dark:text-zinc-400">
                                 @if ($subjectClass)
