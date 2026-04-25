@@ -6,8 +6,9 @@ namespace App\Livewire;
 
 use App\Enums\LeadStatus;
 use App\Models\Lead;
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Date;
+use Illuminate\View\View;
 use Livewire\Component;
 use Spatie\Activitylog\Models\Activity;
 
@@ -54,7 +55,7 @@ class Dashboard extends Component
         $this->loadLineChartData();
     }
 
-    public function render(): \Illuminate\View\View
+    public function render(): View
     {
         return view('livewire.dashboard');
     }
@@ -76,15 +77,15 @@ class Dashboard extends Component
     {
         $this->thisWeekLeads = Lead::query()
             ->whereBetween('created_at', [
-                Carbon::now()->startOfWeek(),
-                Carbon::now()->endOfWeek(),
+                Date::now()->startOfWeek(),
+                Date::now()->endOfWeek(),
             ])
             ->count();
 
         $this->lastWeekLeads = Lead::query()
             ->whereBetween('created_at', [
-                Carbon::now()->subWeek()->startOfWeek(),
-                Carbon::now()->subWeek()->endOfWeek(),
+                Date::now()->subWeek()->startOfWeek(),
+                Date::now()->subWeek()->endOfWeek(),
             ])
             ->count();
 
@@ -99,7 +100,7 @@ class Dashboard extends Component
         $data   = [];
 
         for ($i = $this->daysRange - 1; $i >= 0; $i--) {
-            $date     = Carbon::now()->subDays($i);
+            $date     = Date::now()->subDays($i);
             $labels[] = $date->format('M d');
 
             $count = Lead::query()
