@@ -4,18 +4,22 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Admin\CreateCompany;
 use App\Domain\Company\CompanyService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreCompanyRequest;
 use App\Models\Company;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
     public function __construct(
-        private readonly CompanyService $service
+        private readonly CompanyService $service,
+        private readonly CreateCompany $createCompany
     ) {}
 
     public function index(): Factory|View
@@ -30,9 +34,13 @@ class CompanyController extends Controller
         return view('admin.companies.create');
     }
 
-    public function store(Request $request): void
+    public function store(StoreCompanyRequest $request): RedirectResponse
     {
-        //
+        $company = $this->createCompany->handle($request->validated(), Auth::id());
+
+        return redirect()
+            ->route('admin.companies.show', $company)
+            ->with('toast', 'Company created successfully.');
     }
 
     public function show(Company $company): Factory|View
