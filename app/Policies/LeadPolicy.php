@@ -11,38 +11,46 @@ class LeadPolicy
 {
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->isSuper() || $user->isAdmin();
     }
 
     public function view(User $user, Lead $lead): bool
     {
-        return true;
+        if ($user->isSuper()) {
+            return true;
+        }
+
+        return $user->companies()->where('companies.id', $lead->company_id)->exists();
     }
 
     public function create(User $user): bool
     {
-        if ($user->isAdmin()) {
-            return true;
-        }
-
-        return $user->isSuper();
+        return $user->isSuper() || $user->isAdmin();
     }
 
     public function update(User $user, Lead $lead): bool
     {
-        if ($user->isAdmin()) {
+        if ($user->isSuper()) {
             return true;
         }
 
-        return $user->isSuper();
+        if (! $user->companies()->where('companies.id', $lead->company_id)->exists()) {
+            return false;
+        }
+
+        return $user->isAdminOf($lead->company);
     }
 
     public function delete(User $user, Lead $lead): bool
     {
-        if ($user->isAdmin()) {
+        if ($user->isSuper()) {
             return true;
         }
 
-        return $user->isSuper();
+        if (! $user->companies()->where('companies.id', $lead->company_id)->exists()) {
+            return false;
+        }
+
+        return $user->isAdminOf($lead->company);
     }
 }
