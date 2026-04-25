@@ -83,30 +83,39 @@ docker-compose down
 
 ## Architecture
 
-Lumexa follows a layered MVC architecture with middleware-based access control:
+Lumexa follows a clean Laravel architecture with service layer pattern:
 
 ```
 app/
 ├── Http/
 │   ├── Controllers/
-│   │   ├── App/                    # User-facing controllers
-│   │   ├── Admin/                  # Company admin controllers
-│   └── Middleware/                 # Role-based access middleware
-├── Models/                         # Eloquent models
-├── Enums/                          # Application enumerations
-├── Actions/                        # Business logic actions
-└── Livewire/                       # Livewire components
-└── resources/views/components/     # Livewire components
+│   │   ├── Api/                     # API controllers
+│   │   ├── App/                     # User-facing controllers
+│   │   └── Admin/                   # Admin controllers
+│   ├── Middleware/                  # Role-based access
+│   ├── Resources/                   # API Resources
+│   └── Requests/                    # Form requests
+├── Models/                          # Eloquent models
+├── Domain/                         # Service layer
+├── Events/                         # Laravel events
+├── Listeners/                       # Event listeners
+├── Jobs/                           # Queue jobs
+├── Notifications/                 # Notifications
+├── Enums/                          # PHP enums
+├── Livewire/                       # Livewire components
+├── Providers/                     # Service providers
+└── Policies/                      # Authorization policies
 ```
 
 View full architectural [documents](/docs)
 
 **Route Structure:**
 
--   `/` - Public landing page
--   `/app/*` - User dashboard and features
--   `/admin/*` - Company administration
--   `/admin/*` - System administration
+- `/` - Public landing page
+- `/api/v1/*` - REST API endpoints
+- `/app/*` - User dashboard and features
+- `/admin/*` - Company administration
+- `/settings/*` - User profile settings
 -   `/settings/*` - User profile settings
 
 ## Dependencies
