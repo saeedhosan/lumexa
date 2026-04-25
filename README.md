@@ -96,32 +96,20 @@ npm run build
 ## Docker Setup
 
 ```bash
-# Build & start (production)
+# Build & start
 docker-compose up -d --build
-
-# With queue worker
-docker-compose --profile queue up -d
 
 # View logs
 docker-compose logs -f
 
 # Stop
 docker-compose down
-
-# Rebuild
-docker-compose build --no-cache
-docker-compose up -d
 ```
 
-**Production Settings:**
-- APP_ENV=production
-- APP_DEBUG=false
-
 **Services:**
-- `app` - Laravel application (port 8000)
+- `app` - Laravel + Queue worker (port 8000)
 - `mysql` - MySQL 8.0 (port 3306)
 - `redis` - Redis 7 (port 6379)
-- `queue` - Queue worker (optional)
 
 ## Architecture
 
