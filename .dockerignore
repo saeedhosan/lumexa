@@ -1,0 +1,13 @@
+node_modules/
+vendor/
+.git/
+.github/
+.docs/
+storage/*.key
+.env
+.env.backup
+*.sqlite
+*.sqlite-journal
+.idea/
+.vscode/
+*.log
