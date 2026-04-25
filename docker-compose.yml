@@ -28,7 +28,6 @@ services:
         if [ ! -f /app/storage/app/.docker.lock ]; then
           php artisan key:generate --no-interaction &&
           php artisan storage:link --force &&
-          php artisan migrate:fresh --seed &&
           touch /app/storage/app/.docker.lock
         fi &&
 
