@@ -93,40 +93,31 @@ composer dev
 npm run build
 ```
 
-## Docker Setup (Recommended)
+## Docker Setup
 
 ```bash
-# Start all services (dev)
-./bin/docker start
+# Start all services (development)
+docker-compose up -d
 
-# Development server
-./bin/docker dev
-
-# Production build
-./bin/docker prod
-
-# Run tests
-./bin/docker test
-
-# Run migrations
-./bin/docker migrate
+# Start with queue worker
+docker-compose --profile queue up -d
 
 # View logs
-./bin/docker logs
-```
-
-**Or use docker-compose directly:**
-
-```bash
-# Development
-docker-compose up -d app
-
-# Production (with queue workers)
-docker-compose up -d --scale queue=2
+docker-compose logs -f
 
 # Stop
 docker-compose down
+
+# Rebuild
+docker-compose build --no-cache
+docker-compose up -d
 ```
+
+**Services:**
+- `app` - Laravel application (port 8000)
+- `mysql` - MySQL 8.0 (port 3306)
+- `redis` - Redis 7 (port 6379)
+- `queue` - Queue worker (optional)
 
 ## Architecture
 
