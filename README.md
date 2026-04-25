@@ -11,13 +11,15 @@
 [![PHP Version](https://img.shields.io/badge/PHP-8.4-blue)](https://www.php.net/)
 [![Laravel Version](https://img.shields.io/badge/Laravel-13.0-red)](https://laravel.com/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.2.0-06B6D4)](https://tailwindcss.com/)
-[![Tests](https://img.shields.io/badge/Tests-100%25_passed-green)](https://phpunit.de/)
+[![Tests](https://img.shields.io/badge/Tests-161-green)](https://phpunit.de/)
+[![API](https://img.shields.io/badge/API-REST-brightgreen)](https://laravel.com/)
 ![Stage](https://img.shields.io/badge/Stage-production-green)
 
 ## Table of contents
 
 -   [Introduction](#introduction)
 -   [Core Features](#core-features)
+-   [API Documentation](#api-documentation)
 -   [Requirements](#requirements)
 -   [Installation](#installation)
 -   [Architecture](#architecture)
@@ -41,6 +43,33 @@ It includes a basic role-based system, secure authentication with 2FA, and core 
 - **Lead management** – Basic system to create and manage leads
 - **User invitations** - Invite new members to companies
 - **Activity tracking** - Log and monitor user and system activities
+- **REST API** - JSON API for external integrations
+- **Event-driven** - Laravel Events & Listeners
+- **Background jobs** - Queue processing
+
+## API Documentation
+
+Full API documentation is available in [docs/api.md](/docs/api.md).
+
+**Quick Start:**
+
+```bash
+# List leads
+curl -X GET "http://localhost:8000/api/v1/leads" \
+  -H "Accept: application/json"
+
+# Get single lead
+curl -X GET "http://localhost:8000/api/v1/leads/1" \
+  -H "Accept: application/json"
+```
+
+**Base URL:** `/api/v1`
+
+**Features:**
+- RESTful JSON responses
+- Pagination support (per_page parameter)
+- Rate limited (60 requests/minute)
+- API Resources for consistent response formatting
 
 #### Upcoming features
 
