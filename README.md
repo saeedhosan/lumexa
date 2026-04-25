@@ -92,24 +92,25 @@ composer dev
 # Build assets for production
 npm run build
 ```
-
 ## Docker Setup
 
+> Requires [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
 ```bash
-# Build & start
-docker-compose up -d --build
-
-# View logs
-docker-compose logs -f
-
-# Stop
-docker-compose down
+cp .env.example .env
+docker compose up -d
 ```
 
-**Services:**
-- `app` - Laravel + Queue worker (port 8000)
-- `mysql` - MySQL 8.0 (port 3306)
-- `redis` - Redis 7 (port 6379)
+Open http://localhost:8080 — done!
+
+```bash
+docker compose down        # stop
+docker compose restart     # restart
+docker compose exec app bash # enter container
+
+## run migrate  and seeder for fresh data
+docker compose exec app php artisan migrate:fresh --seed
+```
 
 ## Architecture
 
