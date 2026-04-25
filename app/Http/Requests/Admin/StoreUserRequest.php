@@ -6,13 +6,14 @@ namespace App\Http\Requests\Admin;
 
 use App\Enums\UserStatus;
 use App\Enums\UserType;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('create', \App\Models\User::class);
+        return $this->user()->can('create', User::class);
     }
 
     public function rules(): array

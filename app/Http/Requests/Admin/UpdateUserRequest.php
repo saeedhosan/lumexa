@@ -6,13 +6,14 @@ namespace App\Http\Requests\Admin;
 
 use App\Enums\UserStatus;
 use App\Enums\UserType;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('update', \App\Models\User::class);
+        return $this->user()->can('update', User::class);
     }
 
     public function rules(): array
