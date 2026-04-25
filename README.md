@@ -73,8 +73,8 @@ It includes a basic role-based system, secure authentication with 2FA, and core 
 
 -   PHP 8.4+ - [Download PHP](https://www.php.net/downloads.php)
 -   Composer - [Get composer](https://getcomposer.org)
--   Bun (for frontend assets) - [Install Bun](https://bun.sh)
--   MySQL (default) or SQLite/PostgreSQL
+-   Bun - [Install Bun](https://bun.sh)
+-   MySQL 8.0 or SQLite
 
 ## Installation
 
