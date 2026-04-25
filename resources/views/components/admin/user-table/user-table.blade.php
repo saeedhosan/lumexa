@@ -1,18 +1,23 @@
 <div>
     <div class="flex items-center justify-between mb-6">
-        <form wire:submit.prevent class="flex-1 max-w-md">
+        <div class="flex items-center gap-4">
             <flux:input
                 type="search"
                 wire:model.live="search"
                 placeholder="Search users..."
                 icon="magnifying-glass"
+                class="w-64"
             />
-        </form>
-        <div>
-            <flux:button variant="primary" wire:navigate :href="route('admin.users.create')">
-                Add new user
-            </flux:button>
+            <flux:select wire:model.live="companyId" class="w-48">
+                <flux:select.option value="">All Companies</flux:select.option>
+                @foreach ($this->companies as $company)
+                    <flux:select.option value="{{ $company->id }}">{{ $company->name }}</flux:select.option>
+                @endforeach
+            </flux:select>
         </div>
+        <flux:button variant="primary" wire:navigate :href="route('admin.users.create')">
+            Add new user
+        </flux:button>
     </div>
 
     <div class="overflow-x-auto">
@@ -20,7 +25,8 @@
             <flux:table.columns>
                 <flux:table.column>Name</flux:table.column>
                 <flux:table.column>Email</flux:table.column>
-                <flux:table.column>Company</flux:table.column>
+                <flux:table.column>Companies</flux:table.column>
+                <flux:table.column>Status</flux:table.column>
                 <flux:table.column>Type</flux:table.column>
                 <flux:table.column>Actions</flux:table.column>
             </flux:table.columns>
@@ -33,11 +39,20 @@
                             <span class="ml-3">{{ $user->name }}</span>
                         </flux:table.cell>
                         <flux:table.cell>{{ $user->email }}</flux:table.cell>
-                        <flux:table.cell>{{ $user->currentCompany?->name }}</flux:table.cell>
                         <flux:table.cell>
-                            <flux:badge size="sm">
-                                {{ $user->type->value }}
+                            @forelse($user->companies as $company)
+                                <flux:badge size="sm" variant="subtle" class="mr-1">{{ $company->name }}</flux:badge>
+                            @empty
+                                <span class="text-zinc-400">-</span>
+                            @endforelse
+                        </flux:table.cell>
+                        <flux:table.cell>
+                            <flux:badge size="sm" :color="$user->status->color()">
+                                {{ $user->status->label() }}
                             </flux:badge>
+                        </flux:table.cell>
+                        <flux:table.cell>
+                            <flux:badge size="sm">{{ ucfirst($user->type->value) }}</flux:badge>
                         </flux:table.cell>
                         <flux:table.cell>
                             <div class="flex items-center gap-2">

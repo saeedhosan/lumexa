@@ -60,43 +60,33 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <flux:field>
                         <flux:label>Status</flux:label>
-                        <flux:select name="status" placeholder="Select status" required>
+                        <flux:select name="status" value="{{ old('status', UserStatus::fallback()->value) }}">
                             @foreach ($statuses as $status)
-                                <flux:select.option value="{{ $status }}"
-                                    :selected="old('status', UserStatus::fallback()->value) === $status"
-                                >
-                                    {{ ucfirst($status) }}
-                                </flux:select.option>
+                                <flux:select.option value="{{ $status }}">{{ ucfirst($status) }}</flux:select.option>
                             @endforeach
                         </flux:select>
                         <flux:error name="status" />
                     </flux:field>
 
-                    <flux:field>
-                        <flux:label>Type</flux:label>
-                        <flux:select name="type" placeholder="Select type" required>
-                            @foreach ($types as $type)
-                                <flux:select.option value="{{ $type }}"
-                                    :selected="old('type', UserType::fallback()->value) === $type"
-                                >
-                                    {{ ucfirst($type) }}
-                                </flux:select.option>
-                            @endforeach
-                        </flux:select>
-                        <flux:error name="type" />
-                    </flux:field>
+                    @if ($types)
+                        <flux:field>
+                            <flux:label>Type</flux:label>
+                            <flux:select name="type" value="{{ old('type', UserType::fallback()->value) }}">
+                                @foreach ($types as $type)
+                                    <flux:select.option value="{{ $type }}">{{ ucfirst($type) }}</flux:select.option>
+                                @endforeach
+                            </flux:select>
+                            <flux:error name="type" />
+                        </flux:field>
+                    @endif
                 </div>
 
                 <flux:field>
                     <flux:label>Company</flux:label>
-                    <flux:select name="current_company_id" placeholder="Select company (optional)">
-                        <flux:select.option value="">No company</flux:select.option>
+                    <flux:select name="current_company_id" value="{{ old('current_company_id') }}">
+                        <flux:select.option value="">Select company</flux:select.option>
                         @foreach ($companies as $company)
-                            <flux:select.option value="{{ $company->id }}"
-                                :selected="old('current_company_id') == $company->id"
-                            >
-                                {{ $company->name }}
-                            </flux:select.option>
+                            <flux:select.option value="{{ $company->id }}">{{ $company->name }}</flux:select.option>
                         @endforeach
                     </flux:select>
                     <flux:error name="current_company_id" />
