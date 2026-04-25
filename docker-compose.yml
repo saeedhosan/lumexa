@@ -19,7 +19,7 @@ services:
       bash -c "
         curl -fsSL https://bun.sh/install | bash &&
         export PATH=$HOME/.bun/bin:$PATH &&
-        chmod -R 777 /app/storage /app/bootstrap/cache &&
+        chown -R www-data:www-data /app/storage /app/bootstrap/cache &&
         composer install --no-interaction &&
         bun install &&
         bun run build &&
