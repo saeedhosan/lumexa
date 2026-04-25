@@ -5,21 +5,21 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\Admin\CreateCompany;
+use App\Actions\Admin\UpdateCompany;
 use App\Domain\Company\CompanyService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCompanyRequest;
+use App\Http\Requests\Admin\UpdateCompanyRequest;
 use App\Models\Company;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
     public function __construct(
-        private readonly CompanyService $service,
-        private readonly CreateCompany $createCompany
+        private readonly CompanyService $service
     ) {}
 
     public function index(): Factory|View
@@ -36,7 +36,7 @@ class CompanyController extends Controller
 
     public function store(StoreCompanyRequest $request): RedirectResponse
     {
-        $company = $this->createCompany->handle($request->validated(), Auth::id());
+        $company = app(CreateCompany::class)->handle($request->validated(), Auth::id());
 
         return redirect()
             ->route('admin.companies.show', $company)
@@ -53,13 +53,21 @@ class CompanyController extends Controller
         return view('admin.companies.edit', ['company' => $company]);
     }
 
-    public function update(Request $request, Company $company): void
+    public function update(UpdateCompanyRequest $request, Company $company): RedirectResponse
     {
-        //
+        app(UpdateCompany::class)->handle($company, $request->validated());
+
+        return redirect()
+            ->route('admin.companies.show', $company)
+            ->with('toast', 'Company updated successfully.');
     }
 
-    public function destroy(Company $company): void
+    public function destroy(Company $company): RedirectResponse
     {
-        //
+        $company->delete();
+
+        return redirect()
+            ->route('admin.companies.index')
+            ->with('toast', 'Company deleted successfully.');
     }
 }
