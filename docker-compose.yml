@@ -7,8 +7,90 @@ services:
       - "8000:8000"
     volumes:
       - .:/var/www
-      - ./storage:/var/www/storage
     environment:
       - APP_ENV=local
-      - DB_CONNECTION=sqlite
+      - APP_DEBUG=true
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=lumexa
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - QUEUE_CONNECTION=redis
+      - CACHE_STORE=redis
+      - BROADCAST_CONNECTION=reverb
+      - SESSION_DRIVER=database
+      - LOG_CHANNEL=daily
+    depends_on:
+      - mysql
+      - redis
     working_dir: /var/www
+    networks:
+      - lumexa
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=lumexa
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - lumexa
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - lumexa
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      timeout: 3s
+      retries: 5
+
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["php", "artisan", "queue:work", "--sleep=3", "--tries=3"]
+    volumes:
+      - .:/var/www
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      - APP_ENV=local
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=lumexa
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - QUEUE_CONNECTION=redis
+      - CACHE_STORE=redis
+    working_dir: /var/www
+    networks:
+      - lumexa
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  lumexa:
+    driver: bridge
