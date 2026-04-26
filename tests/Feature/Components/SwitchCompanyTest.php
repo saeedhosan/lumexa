@@ -29,7 +29,7 @@ test('company switch displays select company text when no company selected', fun
 });
 
 test('company switch shows all user companies', function (): void {
-    $user      = User::factory()->create();
+    $user     = User::factory()->create();
     $company1 = Company::factory()->create(['name' => 'Company One']);
     $company2 = Company::factory()->create(['name' => 'Company Two']);
     $user->companies()->attach($company1, ['role' => 'admin']);
@@ -43,7 +43,7 @@ test('company switch shows all user companies', function (): void {
 });
 
 test('company switch shows check icon on current company', function (): void {
-    $user      = User::factory()->create();
+    $user     = User::factory()->create();
     $company1 = Company::factory()->create(['name' => 'Current Company']);
     $company2 = Company::factory()->create(['name' => 'Other Company']);
     $user->companies()->attach($company1, ['role' => 'admin']);
@@ -56,7 +56,7 @@ test('company switch shows check icon on current company', function (): void {
 });
 
 test('company switch can switch to another company', function (): void {
-    $user      = User::factory()->create();
+    $user     = User::factory()->create();
     $company1 = Company::factory()->create(['name' => 'Company A']);
     $company2 = Company::factory()->create(['name' => 'Company B']);
     $user->companies()->attach($company1, ['role' => 'admin']);
@@ -72,7 +72,7 @@ test('company switch can switch to another company', function (): void {
 });
 
 test('company switch does not switch if company not associated with user', function (): void {
-    $user      = User::factory()->create();
+    $user     = User::factory()->create();
     $company1 = Company::factory()->create(['name' => 'My Company']);
     $company2 = Company::factory()->create(['name' => 'Unrelated Company']);
     $user->companies()->attach($company1, ['role' => 'admin']);

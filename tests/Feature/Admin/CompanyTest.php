@@ -47,7 +47,7 @@ it('can create new company with valid data', function (): void {
 
     $response->assertRedirect();
 
-    expect(Company::where('name', 'Test Company')->exists())->toBeTrue();
+    expect(Company::query()->where('name', 'Test Company')->exists())->toBeTrue();
 });
 
 it('can render company show page', function (): void {

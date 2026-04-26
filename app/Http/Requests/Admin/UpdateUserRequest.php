@@ -7,7 +7,6 @@ namespace App\Http\Requests\Admin;
 use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Models\Company;
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
