@@ -3,6 +3,10 @@
 declare(strict_types=1);
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Livewire\Livewire;
+
+uses(RefreshDatabase::class);
 
 test('profile page is displayed', function (): void {
     $this->actingAs($user = User::factory()->create());
@@ -34,10 +38,28 @@ test('email verification status is unchanged when email address is unchanged', f
     expect($user->refresh()->email_verified_at)->not->toBeNull();
 });
 
-test('user can delete their account', function (): void {
-    $this->markTestSkipped('Delete user form requires Auth::user() context which is difficult to test with Livewire::test()');
+test('correct password must be provided to delete account', function (): void {
+    $user = User::factory()->create(['password' => bcrypt('password123')]);
+
+    $this->actingAs($user);
+
+    Livewire::test('pages::settings.delete-user-form')
+        ->set('password', 'wrong-password')
+        ->call('deleteUser')
+        ->assertHasErrors();
+
+    expect(User::find($user->id))->not->toBeNull();
 });
 
-test('correct password must be provided to delete account', function (): void {
-    $this->markTestSkipped('Delete user form validation requires Auth::user() context which is difficult to test with Livewire::test()');
+test('user can delete account with correct password', function (): void {
+    $user = User::factory()->create(['password' => bcrypt('password123')]);
+
+    $this->actingAs($user);
+
+    Livewire::test('pages::settings.delete-user-form')
+        ->set('password', 'password123')
+        ->call('deleteUser')
+        ->assertRedirect('/');
+
+    expect(User::find($user->id))->toBeNull();
 });
