@@ -65,5 +65,15 @@ test('already verified user visiting verification link is redirected without fir
 });
 
 test('email can be verified without authenticated', function (): void {
-    $this->markTestSkipped('Email verification without authentication requires proper signed URL handling');
+    $user = User::factory()->unverified()->create();
+
+    $verificationUrl = URL::temporarySignedRoute(
+        'verification.verify',
+        now()->addMinutes(60),
+        ['id' => $user->id, 'hash' => sha1((string) $user->email)]
+    );
+
+    $response = $this->get($verificationUrl);
+
+    $response->assertRedirect(route('login'));
 });
