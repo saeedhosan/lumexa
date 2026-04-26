@@ -7,6 +7,7 @@ namespace App\Livewire;
 use App\Enums\LeadStatus;
 use App\Models\Lead;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
 use Illuminate\View\View;
@@ -63,27 +64,23 @@ class Dashboard extends Component
 
     public function clearCache(): void
     {
-        $companyId = auth()->user()->current_company_id;
-        Cache::forget('dashboard:statistics:'.$companyId);
-        Cache::forget('dashboard:line_chart:'.$this->daysRange.':'.$companyId);
-        Cache::forget('dashboard:donut_chart:'.$companyId);
+        Cache::forget($this->cachePrefix('statistics'));
+        Cache::forget($this->cachePrefix('line_chart:'.$this->daysRange));
+        Cache::forget($this->cachePrefix('donut_chart'));
 
         $this->loadStatistics();
         $this->loadLineChartData();
         $this->loadDonutChartData();
     }
 
-    private function getCacheKeyPrefix(): string
+    private function cachePrefix(string $name = ''): string
     {
-        $companyId = auth()->user()->current_company_id;
-        $userId    = auth()->id();
-
-        return 'dashboard:'.$companyId.':'.$userId.':';
+        return 'app:dashboard:'.Auth::user()->current_company_id.':'.Auth::id().':'.$name;
     }
 
     private function loadStatistics(): void
     {
-        $cacheKey = $this->getCacheKeyPrefix().'statistics';
+        $cacheKey = $this->cachePrefix('statistics');
 
         $stats = Cache::remember($cacheKey, now()->addMinutes(5), function (): array {
             $totalLeads    = Lead::query()->count();
@@ -135,7 +132,7 @@ class Dashboard extends Component
 
     private function loadLineChartData(): void
     {
-        $cacheKey = $this->getCacheKeyPrefix().'line_chart:'.$this->daysRange;
+        $cacheKey = $this->cachePrefix('line_chart:'.$this->daysRange);
 
         $chartData = Cache::remember($cacheKey, now()->addMinutes(10), function (): array {
             $labels = [];
@@ -160,7 +157,7 @@ class Dashboard extends Component
 
     private function loadDonutChartData(): void
     {
-        $cacheKey = $this->getCacheKeyPrefix().'donut_chart';
+        $cacheKey = $this->cachePrefix('donut_chart');
 
         $chartData = Cache::remember($cacheKey, now()->addMinutes(10), function (): array {
             $statusCounts = Lead::query()
