@@ -24,7 +24,9 @@ class LeadPolicy
             return true;
         }
 
-        return $user->companies()->where('companies.id', $lead->company_id)->exists();
+        $tenantKey = currentTenant()->tenantKey();
+
+        return $tenantKey && $lead->company_id === $tenantKey;
     }
 
     public function create(User $user): bool
@@ -42,7 +44,9 @@ class LeadPolicy
             return true;
         }
 
-        if (! $user->companies()->where('companies.id', $lead->company_id)->exists()) {
+        $tenantKey = currentTenant()->tenantKey();
+
+        if (! $tenantKey || $lead->company_id !== $tenantKey) {
             return false;
         }
 
@@ -55,7 +59,9 @@ class LeadPolicy
             return true;
         }
 
-        if (! $user->companies()->where('companies.id', $lead->company_id)->exists()) {
+        $tenantKey = currentTenant()->tenantKey();
+
+        if (! $tenantKey || $lead->company_id !== $tenantKey) {
             return false;
         }
 
