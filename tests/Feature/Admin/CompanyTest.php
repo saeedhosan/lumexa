@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
+use function Pest\Laravel\post;
 use function Pest\Laravel\put;
 
 uses(RefreshDatabase::class);
@@ -30,7 +31,23 @@ it('can render company create page', function (): void {
 });
 
 it('can create new company with valid data', function (): void {
-    $this->markTestSkipped('CreateCompany action needs defaults for required fields');
+    $superAdmin = User::factory()->create(['type' => UserType::super]);
+
+    actingAs($superAdmin);
+
+    $response = post(route('admin.companies.store'), [
+        'name'        => 'Test Company',
+        'title'       => 'Test Title',
+        'description' => 'Test Description',
+        'language'    => 'en',
+        'timezone'    => 'UTC',
+        'currency'    => 'USD',
+        'country'     => 'US',
+    ]);
+
+    $response->assertRedirect();
+
+    expect(Company::where('name', 'Test Company')->exists())->toBeTrue();
 });
 
 it('can render company show page', function (): void {
