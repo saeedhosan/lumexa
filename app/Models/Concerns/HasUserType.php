@@ -25,7 +25,7 @@ trait HasUserType
     }
 
     /**
-     * Determine whether the user is a super.
+     * Determine whether the user is a customer user.
      */
     public function isUser(): bool
     {
