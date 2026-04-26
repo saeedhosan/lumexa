@@ -15,11 +15,10 @@ class ReportController extends Controller
     public function index(): Factory|View
     {
         $user = auth()->user();
-        $tenantKeys = currentTenant()->tenantKeys();
 
         $companyIds = $user->isSuper()
             ? Company::query()->pluck('id')
-            : $tenantKeys;
+            : $user->companies()->pluck('companies.id');
 
         $stats = [
             'total_users'     => User::query()->whereHas('companies', fn ($q) => $q->whereIn('companies.id', $companyIds))->count(),
