@@ -1,0 +1,60 @@
+services:
+  app:
+    image: webdevops/php-nginx:8.4-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+      - bun_install:/root/.bun
+    env_file:
+      - .env
+    environment:
+      - WEB_DOCUMENT_ROOT=/app/public
+    ports:
+      - "8080:80"
+      - "8081:8081"
+    depends_on:
+      - mysql
+      - redis
+    command: |
+      bash -c '
+          curl -fsSL https://bun.sh/install | bash &&
+          export PATH=$HOME/.bun/bin:$PATH &&
+          chmod -R 777 /app/storage /app/bootstrap/cache &&
+          php artisan optimize:clear &&
+
+          composer install -o --no-interaction &&
+          bun install &&
+          bun run build &&
+
+          grep -q "APP_KEY=base64" /app/.env || php artisan key:generate ; true &&
+          php artisan storage:link --force ; true &&
+          php artisan migrate --force &&
+
+          php artisan optimize &&
+
+          php artisan queue:work redis --sleep=3 --tries=3 &
+          php artisan reverb:start --host=0.0.0.0 --port=8081 &
+          php artisan schedule:work &
+          /entrypoint supervisord
+        '
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+      MYSQL_USER: ${DB_USERNAME:-laravel}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-secret}
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis_data:/data
+
+volumes:
+  mysql_data:
+  redis_data:
+  bun_install:
