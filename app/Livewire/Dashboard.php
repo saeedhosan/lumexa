@@ -7,7 +7,6 @@ namespace App\Livewire;
 use App\Enums\LeadStatus;
 use App\Models\Lead;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
 use Illuminate\View\View;
@@ -75,7 +74,9 @@ class Dashboard extends Component
 
     private function cachePrefix(string $name = ''): string
     {
-        return 'app:dashboard:'.Auth::user()->current_company_id.':'.Auth::id().':'.$name;
+        $tenantKey = currentTenant()->tenantKey();
+
+        return 'app:dashboard:'.$tenantKey.':'.$name;
     }
 
     private function loadStatistics(): void
