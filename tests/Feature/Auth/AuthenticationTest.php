@@ -26,7 +26,7 @@ test('users can authenticate using the login screen', function (): void {
     $this->assertAuthenticated();
 });
 
-test('users can not authenticate with invalid password', function (): void {
+test('users can not authenticate with invalid credential', function (): void {
     $user = User::factory()->create();
 
     $response = $this->post(route('login.store'), [

@@ -11,3 +11,9 @@ test('confirm password screen can be rendered', function (): void {
 
     $response->assertOk();
 });
+
+test('guest user cannot visit to the confirm password screen', function (): void {
+    $response = $this->get(route('password.confirm'));
+
+    $response->assertRedirect(route('login'));
+});

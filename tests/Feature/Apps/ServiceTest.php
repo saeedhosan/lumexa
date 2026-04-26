@@ -9,6 +9,28 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
+test('customer can access services index page', function (): void {
+    $user    = User::factory()->create();
+    $company = Company::factory()->create();
+    $user->companies()->attach($company, ['role' => Company::ROLE_CUSTOMER]);
+    $user->update(['current_company_id' => $company->id]);
+    $this->actingAs($user);
+
+    $response = $this->get(route('app.services.index'));
+    $response->assertOk();
+});
+
+test('customer can access services create page', function (): void {
+    $user    = User::factory()->create();
+    $company = Company::factory()->create();
+    $user->companies()->attach($company, ['role' => Company::ROLE_CUSTOMER]);
+    $user->update(['current_company_id' => $company->id]);
+    $this->actingAs($user);
+
+    $response = $this->get(route('app.services.create'));
+    $response->assertOk();
+});
+
 test('guests are redirected to the login page for services index', function (): void {
     $response = $this->get(route('app.services.index'));
     $response->assertRedirect(route('login'));
@@ -32,7 +54,7 @@ test('guests are redirected to the login page for services edit', function (): v
 test('authenticated users can access services index', function (): void {
     $user    = User::factory()->create();
     $company = Company::factory()->create();
-    $user->companies()->attach($company, ['role' => 'admin']);
+    $user->companies()->attach($company, ['role' => Company::ROLE_ADMIN]);
     $user->update(['current_company_id' => $company->id]);
     $this->actingAs($user);
 
@@ -43,7 +65,7 @@ test('authenticated users can access services index', function (): void {
 test('authenticated users can access services create', function (): void {
     $user    = User::factory()->create();
     $company = Company::factory()->create();
-    $user->companies()->attach($company, ['role' => 'admin']);
+    $user->companies()->attach($company, ['role' => Company::ROLE_ADMIN]);
     $user->update(['current_company_id' => $company->id]);
     $this->actingAs($user);
 
@@ -54,7 +76,7 @@ test('authenticated users can access services create', function (): void {
 test('services index displays empty when no services', function (): void {
     $user    = User::factory()->create();
     $company = Company::factory()->create();
-    $user->companies()->attach($company, ['role' => 'admin']);
+    $user->companies()->attach($company, ['role' => Company::ROLE_ADMIN]);
     $user->update(['current_company_id' => $company->id]);
     $this->actingAs($user);
 
@@ -65,7 +87,7 @@ test('services index displays empty when no services', function (): void {
 test('services index displays all services regardless of company', function (): void {
     $user    = User::factory()->create();
     $company = Company::factory()->create();
-    $user->companies()->attach($company, ['role' => 'admin']);
+    $user->companies()->attach($company, ['role' => Company::ROLE_ADMIN]);
     $user->update(['current_company_id' => $company->id]);
 
     Service::factory()->create(['name' => 'Campaign Monitoring', 'version' => '0.0']);
