@@ -25,12 +25,11 @@ class UserController extends Controller
         $search = $request->query('search');
 
         $user = auth()->user();
-        $tenantKey = currentTenant()->tenantKey();
 
         $users = User::query()
             ->with('companies')
-            ->when($search, fn ($query) => $query->where(fn ($q) => $q->where('name', 'like', '%'.$search.'%')->orWhere('email', 'like', '%'.$search.'%')))
             ->when($user->type !== UserType::super, fn ($query) => $query->whereHas('companies', fn ($q) => $q->whereIn('companies.id', currentTenant()->tenantKeys())))
+            ->when($search, fn ($query) => $query->where(fn ($q) => $q->where('name', 'like', '%'.$search.'%')->orWhere('email', 'like', '%'.$search.'%')))
             ->orderBy('name')
             ->paginate(10);
 
