@@ -41,13 +41,10 @@ class UserController extends Controller
         $this->authorize('create', User::class);
 
         $user = auth()->user();
-        $tenantKey = currentTenant()->tenantKey();
 
         $companies = $user->isSuper()
             ? Company::query()->get()
-            : currentTenant()->tenantKeys()
-                ? Company::query()->whereIn('id', currentTenant()->tenantKeys())->get()
-                : collect();
+            : $user->companies()->get();
 
         return view('admin.users.create', [
             'companies' => $companies,
@@ -71,7 +68,7 @@ class UserController extends Controller
             $type = UserType::user;
         }
 
-        $companyId = $validated['current_company_id'] ?? currentTenant()->tenantKey();
+        $companyId = $validated['current_company_id'] ?? $user->current_company_id;
         unset($validated['current_company_id']);
 
         $newUser = User::query()->create(array_merge($validated, ['type' => $type]));
@@ -99,9 +96,7 @@ class UserController extends Controller
 
         $companies = $currentUser->isSuper()
             ? Company::query()->get()
-            : currentTenant()->tenantKeys()
-                ? Company::query()->whereIn('id', currentTenant()->tenantKeys())->get()
-                : collect();
+            : $currentUser->companies()->get();
 
         return view('admin.users.edit', [
             'user'      => $user,
@@ -129,7 +124,7 @@ class UserController extends Controller
 
         $user->update($data);
 
-        $companyId = $data['current_company_id'] ?? currentTenant()->tenantKey();
+        $companyId = $data['current_company_id'] ?? $currentUser->current_company_id;
         if ($companyId) {
             $user->companies()->sync([$companyId => ['role' => Company::ROLE_ADMIN]]);
         }

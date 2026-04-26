@@ -17,11 +17,10 @@ class InviteController extends Controller
     public function index(): Factory|View
     {
         $user = auth()->user();
-        $tenantKeys = currentTenant()->tenantKeys();
 
         $companyIds = $user->isSuper()
             ? Company::query()->pluck('id')
-            : $tenantKeys;
+            : $user->companies()->pluck('companies.id');
 
         $users = User::query()->whereHas('companies', fn ($q) => $q->whereIn('companies.id', $companyIds))
             ->with('companies')
@@ -37,9 +36,7 @@ class InviteController extends Controller
 
         $companies = $user->isSuper()
             ? Company::query()->get()
-            : currentTenant()->tenantKeys()
-                ? Company::query()->whereIn('id', currentTenant()->tenantKeys())->get()
-                : collect();
+            : $user->companies()->get();
 
         return view('admin.invites.create', [
             'companies'   => $companies,
@@ -51,10 +48,14 @@ class InviteController extends Controller
     {
         $validated = $request->validated();
 
-        $user = auth()->user();
+        $user    = auth()->user();
         $company = Company::query()->findOrFail($validated['company_id']);
 
-        abort_if(! $user->isSuper() && ! currentTenant()->isTenantAccessible($company->id), 403, 'You do not have permission to invite users to this company.');
+        abort_if(
+            ! $user->isSuper() && ! $user->companies()->where('companies.id', $company->id)->exists(),
+            403,
+            'You do not have permission to invite users to this company.'
+        );
 
         $existingUser = User::query()->where('email', $validated['email'])->firstOrFail();
 
