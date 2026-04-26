@@ -130,12 +130,6 @@
 
 ### Admin
 
-**tests/Feature/Admin/ServiceTest.php**
-
-- can render services page
-- shows services list
-- shows service details in table
-
 **tests/Feature/Admin/InviteTest.php**
 
 - can render the invite list screen
@@ -157,10 +151,71 @@
 - shows users by type breakdown
 - admin only sees their company data
 
+**tests/Feature/Admin/ServiceTest.php**
+
+- can render services page
+- shows services list
+- shows service details in table
+
+**tests/Feature/Admin/UserTest.php**
+
+- can render users index page
+- can render user create page
+- can create new user with valid data
+- can render user show page
+- can render user edit page
+- can update user with valid data
+- cannot delete users
+
+**tests/Feature/Admin/CompanyTest.php**
+
+- can render companies index page
+- can render company create page
+- can create new company with valid data
+- can render company show page
+- can render company edit page
+- can update company with valid data
+- cannot view companies outside own
+- cannot manage other companies team members
+
+**tests/Feature/Admin/ActivityTest.php**
+
+- can render activities page
+
+**tests/Feature/Admin/BillingTest.php**
+
+- can render billing index page
+- can render billing create page
+- can create billing record
+
+**tests/Feature/Admin/InvoiceTest.php**
+
+- can render invoices index page
+- can render invoice create page
+- can create invoice record
+- can render invoice PDF (if applicable)
+
+**tests/Feature/Admin/PlanTest.php**
+
+- can render plans index page
+- can render plan create page
+- can create plan with valid data
+- can render plan show page
+- can render plan edit page
+- can update plan with valid data
+- can delete plan
+
+**tests/Feature/Admin/LogTest.php**
+
+- can render logs index page
+- logs display correctly
+- logs show user activity
+
 ### API
 
 **tests/Feature/Api/LeadApiTest.php**
 
+- api cannot access missing auth header
 - api leads index returns success
 - api leads index returns json structure
 
@@ -246,10 +301,6 @@
 - guests are redirected to the login page
 - authenticated users can visit the dashboard
 
-**tests/Feature/ExampleTest.php**
-
-- returns a successful response
-
 ## Unit tests
 
 **tests/Unit/Logging/DatabaseLoggerTest.php**
@@ -264,15 +315,13 @@
 
 - that true is true
 
----
-
-# Recommended Additional Tests for Production
+## Additional Recommended Tests
 
 The following test suites are recommended to ensure high security, bug-free production usage:
 
-## Security & Authorization Tests
+### Security & Authorization Tests
 
-### Role-Based Access Control (RBAC)
+#### Role-Based Access Control (RBAC)
 
 - super admin can view all users
 - admin can only view users in their company
@@ -287,74 +336,53 @@ The following test suites are recommended to ensure high security, bug-free prod
 - `tests/Feature/Policies/LeadPolicyTest.php`
 - `tests/Feature/Policies/CompanyPolicyTest.php`
 
-## Admin Module Tests
+### Admin Module Tests
 
-### User Management
+#### Admin Dashboard
 
-- admin can create new users
-- admin can assign users to companies
-- admin cannot grant super admin privileges
-- super admin can delete any user
-- user search functionality works
-- pagination works correctly
-- user status can be changed
+- admin can access dashboard
+- non-admin users cannot access dashboard
 
-**Proposed test files:**
+#### User Management
 
-- `tests/Feature/Admin/UserTest.php`
+- admin can see all users for active company
+- admin cannot delete any users
+- admin cannot update any user password
+- admin can view active company users
+- admin can edit active company users
+- admin can create new user for active company
 
-### Company Management
+#### Company Management
 
-- super admin can create companies
-- admin can view their company
-- company update works correctly
-- company deletion works
-- company-users relationship management
+- cannot see all other companies that don't belong to user
+- admin can view all companies that they own
+- admin can visit create company page if policy allowed
+- admin can create a new company with valid information
+- admin can edit company that they own
+- admin can view a company that they own
+- admin cannot manage other companies team members
+- admin can manage own companies team members
 
-**Proposed test files:**
+#### Activity Logging
 
-- `tests/Feature/Admin/CompanyTest.php`
+- can render activities page
 
-### Billing & Invoicing
+### API Security Tests
 
-- invoice list displays correctly
-- invoices can be created
-- invoice PDF generation (if applicable)
-- billing history displays correctly
-
-**Proposed test files:**
-
-- `tests/Feature/Admin/BillingTest.php`
-- `tests/Feature/Admin/InvoiceTest.php`
-
-### Plans & Services Management
-
-- plans can be listed
-- plans can be created/updated/deleted
-- service versioning works
-- service activation/deactivation
-
-**Proposed test files:**
-
-- `tests/Feature/Admin/PlanTest.php`
-- `tests/Feature/Admin/ServiceManagementTest.php`
-
-## API Security Tests
-
-### Authentication
+#### Authentication
 
 - unauthenticated requests are rejected
 - invalid tokens are rejected
 - expired tokens are rejected
 - proper error messages returned
 
-### Rate Limiting
+#### Rate Limiting
 
 - API rate limit is enforced
 - rate limit headers are present
 - exceeded limit returns proper error
 
-### Input Validation
+#### Input Validation
 
 - invalid JSON is rejected
 - required fields are validated
@@ -366,9 +394,9 @@ The following test suites are recommended to ensure high security, bug-free prod
 - `tests/Feature/Api/LeadApiSecurityTest.php`
 - `tests/Feature/Api/LeadApiValidationTest.php`
 
-## Form Validation Tests
+### Form Validation Tests
 
-### Request Validation
+#### Request Validation
 
 - StoreUserRequest validates correctly
 - UpdateUserRequest validates correctly
@@ -380,9 +408,9 @@ The following test suites are recommended to ensure high security, bug-free prod
 - `tests/Unit/Http/Requests/StoreUserRequestTest.php`
 - `tests/Unit/Http/Requests/UpdateUserRequestTest.php`
 
-## File Upload Security Tests
+### File Upload Security Tests
 
-### Lead Import
+#### Lead Import
 
 - file type validation works (csv only)
 - file size limit is enforced
@@ -394,9 +422,9 @@ The following test suites are recommended to ensure high security, bug-free prod
 
 - `tests/Feature/Components/LeadImportSecurityTest.php`
 
-## Company Switching Tests
+### Company Switching Tests
 
-### Security
+#### Security
 
 - users cannot switch to unauthorized companies
 - session is properly updated
@@ -406,9 +434,9 @@ The following test suites are recommended to ensure high security, bug-free prod
 
 - `tests/Feature/Components/SwitchCompanySecurityTest.php`
 
-## Audit Logging Tests
+### Audit Logging Tests
 
-### Database Logger
+#### Database Logger
 
 - all CRUD operations are logged
 - log entries contain correct data
@@ -420,9 +448,9 @@ The following test suites are recommended to ensure high security, bug-free prod
 - `tests/Feature/Admin/LogsTest.php`
 - `tests/Unit/Logging/AuditLogTest.php`
 
-## Performance Tests
+### Performance Tests
 
-### Database Queries
+#### Database Queries
 
 - no N+1 query problems
 - proper indexing is used
@@ -432,14 +460,14 @@ The following test suites are recommended to ensure high security, bug-free prod
 
 - `tests/Unit/Performance/QueryOptimizationTest.php`
 
-## Integration Tests
+### Integration Tests
 
-### Multi-User Scenarios
+#### Multi-User Scenarios
 
 - concurrent company switches don't conflict
-- multipleadmin operations work correctly
+- multiple admin operations work correctly
 
-### Full Workflow Tests
+#### Full Workflow Tests
 
 - user registration -> company creation -> lead creation
 - invite user flow
@@ -450,7 +478,7 @@ The following test suites are recommended to ensure high security, bug-free prod
 - `tests/Feature/Integration/UserRegistrationFlowTest.php`
 - `tests/Feature/Integration/InviteUserFlowTest.php`
 
-## Browser/E2E Tests (Optional)
+### Browser/E2E Tests (Optional)
 
 - complete login flow
 - complete registration flow
