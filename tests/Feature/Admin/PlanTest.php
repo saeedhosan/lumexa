@@ -28,10 +28,6 @@ it('can render plan create page', function (): void {
     get(route('admin.plans.create'))->assertSuccessful();
 });
 
-it('can create plan with valid data', function (): void {
-    $this->markTestSkipped('Plan creation requires form validation handling');
-});
-
 it('can render plan show page', function (): void {
     $superAdmin = User::factory()->create(['type' => UserType::super]);
     $plan       = Plan::factory()->create();
@@ -48,12 +44,4 @@ it('can render plan edit page', function (): void {
     actingAs($superAdmin);
 
     get(route('admin.plans.edit', $plan))->assertSuccessful();
-});
-
-it('can update plan with valid data', function (): void {
-    $this->markTestSkipped('Plan update requires form validation handling');
-});
-
-it('can delete plan', function (): void {
-    $this->markTestSkipped('Plan deletion is allowed in admin controller');
 });

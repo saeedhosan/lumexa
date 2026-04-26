@@ -29,7 +29,7 @@ it('can render user create page', function (): void {
 });
 
 it('can create new user with valid data', function (): void {
-    $this->markTestSkipped('User creation requires form validation handling');
+    $this->markTestSkipped('...');
 });
 
 it('can render user show page', function (): void {
@@ -51,7 +51,7 @@ it('can render user edit page', function (): void {
 });
 
 it('can update user with valid data', function (): void {
-    $this->markTestSkipped('User update requires form validation handling');
+    $this->markTestSkipped('...');
 });
 
 it('cannot delete users', function (): void {

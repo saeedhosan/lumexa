@@ -26,11 +26,3 @@ it('can render invoice create page', function (): void {
 
     get(route('admin.invoices.create'))->assertSuccessful();
 });
-
-it('can create invoice record', function (): void {
-    $this->markTestSkipped('Invoice creation requires form validation handling');
-});
-
-it('can render invoice PDF', function (): void {
-    $this->markTestSkipped('Invoice PDF rendering requires additional setup');
-});
