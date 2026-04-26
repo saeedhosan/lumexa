@@ -26,7 +26,3 @@ it('can render billing create page', function (): void {
 
     get(route('admin.billing.create'))->assertSuccessful();
 });
-
-it('can create billing record', function (): void {
-    //
-})->todo();

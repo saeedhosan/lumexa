@@ -1,8 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
-use App\Enums\LeadStatus;
 use App\Models\Company;
 use App\Models\Lead;
 use App\Models\User;
@@ -127,7 +125,7 @@ test('lead items delete removes lead', function (): void {
         ->call('delete', $lead)
         ->assertDontSee('Delete Me');
 
-    expect(Lead::find($lead->id))->toBeNull();
+    expect(Lead::query()->find($lead->id))->toBeNull();
 });
 
 test('lead items search resets pagination', function (): void {

@@ -48,7 +48,7 @@ test('correct password must be provided to delete account', function (): void {
         ->call('deleteUser')
         ->assertHasErrors();
 
-    expect(User::find($user->id))->not->toBeNull();
+    expect(User::query()->find($user->id))->not->toBeNull();
 });
 
 test('user can delete account with correct password', function (): void {
@@ -61,5 +61,5 @@ test('user can delete account with correct password', function (): void {
         ->call('deleteUser')
         ->assertRedirect('/');
 
-    expect(User::find($user->id))->toBeNull();
+    expect(User::query()->find($user->id))->toBeNull();
 });

@@ -8,7 +8,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Livewire\Livewire;
-use Livewire\Features\Testing\FileUploadLimit;
 
 uses(RefreshDatabase::class);
 
@@ -72,7 +71,7 @@ test('lead import accepts valid csv file', function (): void {
     $this->actingAs($user);
 
     $csvContent = "first_name,last_name,email,phone\nJohn,Doe,john@example.com,1234567890";
-    $file = UploadedFile::fake()->createWithContent('test.csv', $csvContent);
+    $file       = UploadedFile::fake()->createWithContent('test.csv', $csvContent);
 
     Livewire::test('leads.lead-import')
         ->set('title', 'Test Import')
@@ -80,7 +79,7 @@ test('lead import accepts valid csv file', function (): void {
         ->call('import')
         ->assertHasNoErrors();
 
-    expect(Lead::where('title', 'Test Import')->exists())->toBeTrue();
+    expect(Lead::query()->where('title', 'Test Import')->exists())->toBeTrue();
 });
 
 test('lead import resets form after successful import', function (): void {
@@ -91,7 +90,7 @@ test('lead import resets form after successful import', function (): void {
     $this->actingAs($user);
 
     $csvContent = "first_name,last_name,email,phone\nJohn,Doe,john@example.com,1234567890";
-    $file = UploadedFile::fake()->createWithContent('test.csv', $csvContent);
+    $file       = UploadedFile::fake()->createWithContent('test.csv', $csvContent);
 
     $component = Livewire::test('leads.lead-import')
         ->set('title', 'Test Import')

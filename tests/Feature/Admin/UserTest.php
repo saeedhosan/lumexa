@@ -47,7 +47,7 @@ it('can create new user with valid data', function (): void {
         'current_company_id'    => $company->id,
     ])->assertRedirect(route('admin.users.index'));
 
-    expect(User::where('email', 'newuser@example.com')->exists())->toBeTrue();
+    expect(User::query()->where('email', 'newuser@example.com')->exists())->toBeTrue();
 });
 
 it('can render user show page', function (): void {

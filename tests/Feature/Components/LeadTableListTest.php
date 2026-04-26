@@ -1,8 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
-use App\Enums\LeadListStatus;
 use App\Models\Company;
 use App\Models\Lead;
 use App\Models\LeadList;
@@ -148,7 +146,7 @@ test('lead lists delete removes lead list record', function (): void {
     $company = Company::factory()->create();
     $user->companies()->attach($company, ['role' => 'admin']);
     $user->update(['current_company_id' => $company->id]);
-    $lead = Lead::factory()->forCompany($company)->create();
+    $lead     = Lead::factory()->forCompany($company)->create();
     $leadList = LeadList::factory()->forLead($lead)->create(['first_name' => 'Delete Me']);
     $this->actingAs($user);
 
@@ -156,5 +154,5 @@ test('lead lists delete removes lead list record', function (): void {
         ->call('delete', $leadList)
         ->assertDontSee('Delete Me');
 
-    expect(LeadList::find($leadList->id))->toBeNull();
+    expect(LeadList::query()->find($leadList->id))->toBeNull();
 });
