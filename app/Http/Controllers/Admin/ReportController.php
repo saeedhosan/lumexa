@@ -9,17 +9,17 @@ use App\Models\Company;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
     public function index(): Factory|View
     {
-        $user = Auth::user();
+        $user = auth()->user();
+        $tenantKeys = currentTenant()->tenantKeys();
 
         $companyIds = $user->isSuper()
             ? Company::query()->pluck('id')
-            : $user->companies()->pluck('companies.id');
+            : $tenantKeys;
 
         $stats = [
             'total_users'     => User::query()->whereHas('companies', fn ($q) => $q->whereIn('companies.id', $companyIds))->count(),

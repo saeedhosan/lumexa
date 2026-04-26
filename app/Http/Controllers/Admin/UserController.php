@@ -15,7 +15,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -25,10 +24,13 @@ class UserController extends Controller
 
         $search = $request->query('search');
 
+        $user = auth()->user();
+        $tenantKey = currentTenant()->tenantKey();
+
         $users = User::query()
             ->with('companies')
             ->when($search, fn ($query) => $query->where(fn ($q) => $q->where('name', 'like', '%'.$search.'%')->orWhere('email', 'like', '%'.$search.'%')))
-            ->when(Auth::user()->type !== UserType::super, fn ($query) => $query->whereHas('companies', fn ($q) => $q->whereIn('companies.id', Auth::user()->companies()->pluck('companies.id'))))
+            ->when($user->type !== UserType::super, fn ($query) => $query->whereHas('companies', fn ($q) => $q->whereIn('companies.id', currentTenant()->tenantKeys())))
             ->orderBy('name')
             ->paginate(10);
 
@@ -39,11 +41,14 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        $user = Auth::user();
+        $user = auth()->user();
+        $tenantKey = currentTenant()->tenantKey();
 
         $companies = $user->isSuper()
             ? Company::query()->get()
-            : $user->companies()->get();
+            : currentTenant()->tenantKeys()
+                ? Company::query()->whereIn('id', currentTenant()->tenantKeys())->get()
+                : collect();
 
         return view('admin.users.create', [
             'companies' => $companies,
@@ -58,7 +63,7 @@ class UserController extends Controller
 
         $validated = $request->validated();
 
-        $user = Auth::user();
+        $user = auth()->user();
 
         if ($user->isSuper() && isset($validated['type'])) {
             $type = $validated['type'];
@@ -67,7 +72,7 @@ class UserController extends Controller
             $type = UserType::user;
         }
 
-        $companyId = $validated['current_company_id'] ?? null;
+        $companyId = $validated['current_company_id'] ?? currentTenant()->tenantKey();
         unset($validated['current_company_id']);
 
         $newUser = User::query()->create(array_merge($validated, ['type' => $type]));
@@ -91,11 +96,13 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
 
-        $currentUser = Auth::user();
+        $currentUser = auth()->user();
 
         $companies = $currentUser->isSuper()
             ? Company::query()->get()
-            : $currentUser->companies()->get();
+            : currentTenant()->tenantKeys()
+                ? Company::query()->whereIn('id', currentTenant()->tenantKeys())->get()
+                : collect();
 
         return view('admin.users.edit', [
             'user'      => $user,
@@ -111,7 +118,7 @@ class UserController extends Controller
 
         $data = $request->validated();
 
-        $currentUser = Auth::user();
+        $currentUser = auth()->user();
 
         if (isset($data['password']) && empty($data['password'])) {
             unset($data['password']);
@@ -123,8 +130,9 @@ class UserController extends Controller
 
         $user->update($data);
 
-        if (isset($data['current_company_id'])) {
-            $user->companies()->sync([$data['current_company_id'] => ['role' => Company::ROLE_ADMIN]]);
+        $companyId = $data['current_company_id'] ?? currentTenant()->tenantKey();
+        if ($companyId) {
+            $user->companies()->sync([$companyId => ['role' => Company::ROLE_ADMIN]]);
         }
 
         return to_route('admin.users.index')
