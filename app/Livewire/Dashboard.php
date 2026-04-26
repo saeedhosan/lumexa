@@ -63,27 +63,18 @@ class Dashboard extends Component
 
     public function clearCache(): void
     {
-        $companyId = auth()->user()->current_company_id;
-        Cache::forget('dashboard:statistics:'.$companyId);
-        Cache::forget('dashboard:line_chart:'.$this->daysRange.':'.$companyId);
-        Cache::forget('dashboard:donut_chart:'.$companyId);
+        Cache::forget('dashboard:statistics');
+        Cache::forget('dashboard:line_chart:'.$this->daysRange);
+        Cache::forget('dashboard:donut_chart');
 
         $this->loadStatistics();
         $this->loadLineChartData();
         $this->loadDonutChartData();
     }
 
-    private function getCacheKeyPrefix(): string
-    {
-        $companyId = auth()->user()->current_company_id;
-        $userId    = auth()->id();
-
-        return 'dashboard:'.$companyId.':'.$userId.':';
-    }
-
     private function loadStatistics(): void
     {
-        $cacheKey = $this->getCacheKeyPrefix().'statistics';
+        $cacheKey = 'dashboard:statistics';
 
         $stats = Cache::remember($cacheKey, now()->addMinutes(5), function (): array {
             $totalLeads    = Lead::query()->count();
@@ -135,7 +126,7 @@ class Dashboard extends Component
 
     private function loadLineChartData(): void
     {
-        $cacheKey = $this->getCacheKeyPrefix().'line_chart:'.$this->daysRange;
+        $cacheKey = 'dashboard:line_chart:'.$this->daysRange;
 
         $chartData = Cache::remember($cacheKey, now()->addMinutes(10), function (): array {
             $labels = [];
@@ -160,7 +151,7 @@ class Dashboard extends Component
 
     private function loadDonutChartData(): void
     {
-        $cacheKey = $this->getCacheKeyPrefix().'donut_chart';
+        $cacheKey = 'dashboard:donut_chart';
 
         $chartData = Cache::remember($cacheKey, now()->addMinutes(10), function (): array {
             $statusCounts = Lead::query()
