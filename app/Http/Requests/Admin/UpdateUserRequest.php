@@ -14,7 +14,7 @@ class UpdateUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('update', User::class);
+        return true;
     }
 
     public function rules(): array

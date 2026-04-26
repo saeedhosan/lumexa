@@ -11,6 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
+use function Pest\Laravel\put;
 
 uses(RefreshDatabase::class);
 
@@ -68,7 +69,18 @@ it('can render user edit page', function (): void {
 });
 
 it('can update user with valid data', function (): void {
-    $this->markTestSkipped('UserPolicy has a bug - update() expects 2 arguments but receives 1');
+    $superAdmin = User::factory()->create(['type' => UserType::super]);
+    $user       = User::factory()->create(['name' => 'Original Name']);
+
+    actingAs($superAdmin);
+
+    put(route('admin.users.update', $user), [
+        'name'   => 'Updated Name',
+        'status' => UserStatus::active->value,
+        'type'   => UserType::user->value,
+    ])->assertRedirect(route('admin.users.index'));
+
+    expect($user->fresh()->name)->toBe('Updated Name');
 });
 
 it('cannot delete users', function (): void {
