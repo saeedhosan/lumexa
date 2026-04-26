@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\LeadStatus;
-use App\Models\Scopes\CompanyScope;
 use App\Policies\LeadPolicy;
 use Database\Factories\LeadFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
@@ -14,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use SaeedHosan\Tenancy\Concerns\HasTenant;
 use SaeedHosan\Useful\Models\Concerns\HasUuid;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
@@ -22,6 +22,7 @@ use Spatie\Activitylog\Models\Concerns\LogsActivity;
 class Lead extends Model
 {
     use HasFactory;
+    use HasTenant;
     use HasUuid;
     use LogsActivity;
 
@@ -82,13 +83,5 @@ class Lead extends Model
     public function leadList(): HasMany
     {
         return $this->hasMany(LeadList::class);
-    }
-
-    /**
-     * Boot the model.
-     */
-    protected static function booted(): void
-    {
-        static::addGlobalScope(new CompanyScope());
     }
 }
