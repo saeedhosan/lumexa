@@ -7,6 +7,7 @@ namespace App\Livewire;
 use App\Enums\LeadStatus;
 use App\Models\Lead;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -60,17 +61,46 @@ class Dashboard extends Component
         return view('livewire.dashboard');
     }
 
+    public function clearCache(): void
+    {
+        Cache::forget('dashboard:statistics');
+        Cache::forget('dashboard:line_chart:'.$this->daysRange);
+        Cache::forget('dashboard:donut_chart');
+
+        $this->loadStatistics();
+        $this->loadLineChartData();
+        $this->loadDonutChartData();
+    }
+
     private function loadStatistics(): void
     {
-        $this->totalLeads    = Lead::query()->count();
-        $this->pendingLeads  = Lead::query()->where('status', LeadStatus::pending)->count();
-        $this->approvedLeads = Lead::query()->where('status', LeadStatus::approved)->count();
-        $this->rejectedLeads = Lead::query()->where('status', LeadStatus::rejected)->count();
+        $cacheKey = 'dashboard:statistics';
 
-        $totalProcessed       = $this->approvedLeads + $this->rejectedLeads;
-        $this->conversionRate = $totalProcessed > 0
-            ? round(($this->approvedLeads / $totalProcessed) * 100, 1)
-            : 0;
+        $stats = Cache::remember($cacheKey, now()->addMinutes(5), function (): array {
+            $totalLeads    = Lead::query()->count();
+            $pendingLeads  = Lead::query()->where('status', LeadStatus::pending)->count();
+            $approvedLeads = Lead::query()->where('status', LeadStatus::approved)->count();
+            $rejectedLeads = Lead::query()->where('status', LeadStatus::rejected)->count();
+
+            $totalProcessed = $approvedLeads + $rejectedLeads;
+            $conversionRate = $totalProcessed > 0
+                ? round(($approvedLeads / $totalProcessed) * 100, 1)
+                : 0;
+
+            return [
+                'totalLeads'     => $totalLeads,
+                'pendingLeads'   => $pendingLeads,
+                'approvedLeads'  => $approvedLeads,
+                'rejectedLeads'  => $rejectedLeads,
+                'conversionRate' => $conversionRate,
+            ];
+        });
+
+        $this->totalLeads     = $stats['totalLeads'];
+        $this->pendingLeads   = $stats['pendingLeads'];
+        $this->approvedLeads  = $stats['approvedLeads'];
+        $this->rejectedLeads  = $stats['rejectedLeads'];
+        $this->conversionRate = $stats['conversionRate'];
     }
 
     private function loadTrendData(): void
@@ -96,52 +126,57 @@ class Dashboard extends Component
 
     private function loadLineChartData(): void
     {
-        $labels = [];
-        $data   = [];
+        $cacheKey = 'dashboard:line_chart:'.$this->daysRange;
 
-        for ($i = $this->daysRange - 1; $i >= 0; $i--) {
-            $date     = Date::now()->subDays($i);
-            $labels[] = $date->format('M d');
+        $chartData = Cache::remember($cacheKey, now()->addMinutes(10), function (): array {
+            $labels = [];
+            $data   = [];
 
-            $count = Lead::query()
-                ->whereDate('created_at', $date->toDateString())
-                ->count();
+            for ($i = $this->daysRange - 1; $i >= 0; $i--) {
+                $date     = Date::now()->subDays($i);
+                $labels[] = $date->format('M d');
 
-            $data[] = $count;
-        }
+                $count = Lead::query()
+                    ->whereDate('created_at', $date->toDateString())
+                    ->count();
 
-        $this->lineChartData = [
-            'labels' => $labels,
-            'data'   => $data,
-        ];
+                $data[] = $count;
+            }
+
+            return ['labels' => $labels, 'data' => $data];
+        });
+
+        $this->lineChartData = $chartData;
     }
 
     private function loadDonutChartData(): void
     {
-        $statusCounts = Lead::query()
-            ->selectRaw('status, COUNT(*) as count')
-            ->groupBy('status')
-            ->pluck('count', 'status')
-            ->toArray();
+        $cacheKey = 'dashboard:donut_chart';
 
-        $labels = [];
-        $data   = [];
-        $colors = [];
+        $chartData = Cache::remember($cacheKey, now()->addMinutes(10), function (): array {
+            $statusCounts = Lead::query()
+                ->selectRaw('status, COUNT(*) as count')
+                ->groupBy('status')
+                ->pluck('count', 'status')
+                ->toArray();
 
-        foreach (LeadStatus::cases() as $status) {
-            $count = $statusCounts[$status->value] ?? 0;
-            if ($count > 0) {
-                $labels[] = $status->label();
-                $data[]   = $count;
-                $colors[] = $this->getStatusColor($status);
+            $labels = [];
+            $data   = [];
+            $colors = [];
+
+            foreach (LeadStatus::cases() as $status) {
+                $count = $statusCounts[$status->value] ?? 0;
+                if ($count > 0) {
+                    $labels[] = $status->label();
+                    $data[]   = $count;
+                    $colors[] = $this->getStatusColor($status);
+                }
             }
-        }
 
-        $this->donutChartData = [
-            'labels' => $labels,
-            'data'   => $data,
-            'colors' => $colors,
-        ];
+            return ['labels' => $labels, 'data' => $data, 'colors' => $colors];
+        });
+
+        $this->donutChartData = $chartData;
     }
 
     private function loadRecentLeads(): void

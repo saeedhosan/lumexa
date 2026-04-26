@@ -6,7 +6,9 @@ namespace App\Providers;
 
 use App\Enums\Access;
 use App\Enums\UserType;
+use App\Events\LeadCreated;
 use App\Listeners\AuthenticationActivitySubscriber;
+use App\Listeners\LogLeadCreated;
 use Carbon\CarbonImmutable;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Date;
@@ -33,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->configureDefaults();
         $this->configureGateAccess();
+        $this->configureEventListeners();
         Event::subscribe(AuthenticationActivitySubscriber::class);
     }
 
@@ -56,6 +59,11 @@ class AppServiceProvider extends ServiceProvider
                 ->uncompromised()
             : null
         );
+    }
+
+    private function configureEventListeners(): void
+    {
+        Event::listen(LeadCreated::class, LogLeadCreated::class);
     }
 
     private function configureGateAccess(): void
