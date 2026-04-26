@@ -6,11 +6,10 @@ use App\Models\User;
 use Laravel\Fortify\Features;
 use Livewire\Livewire;
 
-beforeEach(function (): void {
-    if (! Features::canManageTwoFactorAuthentication()) {
-        $this->markTestSkipped('Two-factor authentication is not enabled.');
-    }
+use function Pest\Laravel\actingAs;
+use function Pest\Laravel\assertDatabaseHas;
 
+beforeEach(function (): void {
     Features::twoFactorAuthentication([
         'confirm'         => true,
         'confirmPassword' => true,
@@ -20,7 +19,7 @@ beforeEach(function (): void {
 test('two factor settings page can be rendered', function (): void {
     $user = User::factory()->create();
 
-    $this->actingAs($user)
+    actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
         ->get(route('two-factor.show'))
         ->assertOk()
@@ -31,7 +30,7 @@ test('two factor settings page can be rendered', function (): void {
 test('two factor settings page requires password confirmation when enabled', function (): void {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)
+    $response = actingAs($user)
         ->get(route('two-factor.show'));
 
     $response->assertRedirect(route('password.confirm'));
@@ -42,7 +41,7 @@ test('two factor settings page returns forbidden response when two factor is dis
 
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)
+    $response = actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
         ->get(route('two-factor.show'));
 
@@ -58,13 +57,13 @@ test('two factor authentication disabled when confirmation abandoned between req
         'two_factor_confirmed_at'   => null,
     ])->save();
 
-    $this->actingAs($user);
+    actingAs($user);
 
     $component = Livewire::test('pages::settings.two-factor');
 
     $component->assertSet('twoFactorEnabled', false);
 
-    $this->assertDatabaseHas('users', [
+    assertDatabaseHas('users', [
         'id'                        => $user->id,
         'two_factor_secret'         => null,
         'two_factor_recovery_codes' => null,
