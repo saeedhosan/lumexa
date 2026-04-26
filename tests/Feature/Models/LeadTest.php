@@ -8,6 +8,7 @@ use App\Models\Lead;
 use App\Models\LeadList;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use SaeedHosan\Tenancy\TenantContext;
 
 uses(RefreshDatabase::class);
 
@@ -115,6 +116,11 @@ it('scopes leads by company for authenticated user', function (): void {
 
     $this->actingAs($user1);
 
+    $context = resolve(TenantContext::class);
+    $context->setScoped(true);
+    $context->setTenant($company1);
+    $context->setTenantKeys([$company1->id]);
+
     $scopedLeads = Lead::query()->get();
 
     expect($scopedLeads)->toHaveCount(3);
@@ -127,6 +133,11 @@ it('returns empty collection when user has no company', function (): void {
     Lead::factory()->for($company)->count(3)->create();
 
     $this->actingAs($user);
+
+    $context = resolve(TenantContext::class);
+    $context->setScoped(true);
+    $context->setTenant(null);
+    $context->setTenantKeys([]);
 
     $scopedLeads = Lead::query()->get();
 
