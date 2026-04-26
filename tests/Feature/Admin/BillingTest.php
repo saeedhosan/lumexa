@@ -28,5 +28,5 @@ it('can render billing create page', function (): void {
 });
 
 it('can create billing record', function (): void {
-    $this->markTestSkipped('Billing creation requires form validation handling');
-});
+    //
+})->todo();
