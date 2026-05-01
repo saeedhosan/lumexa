@@ -1,5 +1,5 @@
-![Lumexa Logo](/docs/banner.png)
---
+## ![Lumexa Logo](/docs/banner.png)
+
 ![Lumexa demo](/docs/screenshot.png)
 
 <center>
@@ -17,17 +17,17 @@
 
 ## Table of contents
 
--   [Introduction](#introduction)
--   [Core Features](#core-features)
--   [Requirements](#requirements)
--   [Installation](#installation)
--   [Docker Setup](#docker-setup)
--   [Architecture](#architecture)
--   [Dependencies](#dependencies)
--   [Technologies](#technologies)
--   [API Documentation](#api-documentation)
--   [Stable tests](#stable-tests)
--   [Tests Login](#tests-login)
+- [Introduction](#introduction)
+- [Core Features](#core-features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Docker Setup](#docker-setup)
+- [Architecture](#architecture)
+- [Dependencies](#dependencies)
+- [Technologies](#technologies)
+- [API Documentation](#api-documentation)
+- [Stable tests](#stable-tests)
+- [Tests Login](#tests-login)
 
 ## Introduction
 
@@ -38,43 +38,49 @@ It includes a basic role-based system, secure authentication with 2FA, and core 
 ## Core Features
 
 ### Authentication & Security
+
 - **Multi-factor authentication (2FA)** – Secure login with TOTP via Laravel Fortify
 - **Role-based access control** – Three roles: Super Admin, Admin, and User
 - **Email verification** – Email confirmation for user accounts
 - **Password reset** – Secure password recovery flow
 
 ### Multi-Tenancy
+
 - **Multi-company support** – Users can work with multiple companies, each with isolated data
 - **Company workspace** – Each company has its own workspace and management area
 - **User invitations** – Invite new members to companies
 
 ### Lead Management
+
 - **Lead CRUD** – Create, read, update, delete leads
 - **Lead lists** – Individual contacts within leads
 - **Lead status workflow** – Pending, Process, Cleaned, Blocked, Approved, Rejected
 - **Excel import** – Bulk import leads via Excel/CSV files
 
 ### API & Integrations
+
 - **REST API** – JSON API for external integrations (`/api/v1`)
 - **API Resources** – Consistent JSON response formatting
 - **Rate limiting** – 60 requests/minute per IP
 - **Laravel Sanctum** – Token-based authentication ready
 
 ### Performance & Scalability
+
 - **Dashboard caching** – 5-minute cache for statistics
 - **Background jobs** – Queue processing for heavy tasks
 - **Event-driven** – Laravel Events & Listeners for decoupling
 
 ### Activity & Logging
+
 - **Activity tracking** – Full audit trail with Spatie ActivityLog
 - **System logging** – Comprehensive activity logging
 
 ## Requirements
 
--   PHP 8.4+ - [Download PHP](https://www.php.net/downloads.php)
--   Composer - [Get composer](https://getcomposer.org)
--   Bun - [Install Bun](https://bun.sh)
--   MySQL 8.0 or SQLite
+- PHP 8.4+ - [Download PHP](https://www.php.net/downloads.php)
+- Composer - [Get composer](https://getcomposer.org)
+- Bun - [Install Bun](https://bun.sh)
+- MySQL 8.0 or SQLite
 
 ## Installation
 
@@ -92,6 +98,7 @@ composer dev
 # Build assets for production
 npm run build
 ```
+
 ## Docker Setup
 
 > Requires [Docker Desktop](https://www.docker.com/products/docker-desktop/)
@@ -127,15 +134,15 @@ app/
 │   ├── Resources/                   # API Resources
 │   └── Requests/                    # Form requests
 ├── Models/                          # Eloquent models
-├── Domain/                         # Service layer
-├── Events/                         # Laravel events
+├── Domain/                          # Service layer
+├── Events/                          # Laravel events
 ├── Listeners/                       # Event listeners
-├── Jobs/                           # Queue jobs
-├── Notifications/                 # Notifications
-├── Enums/                          # PHP enums
-├── Livewire/                       # Livewire components
-├── Providers/                     # Service providers
-└── Policies/                      # Authorization policies
+├── Jobs/                            # Queue jobs
+├── Notifications/                   # Notifications
+├── Enums/                           # PHP enums
+├── Livewire/                        # Livewire components
+├── Providers/                       # Service providers
+└── Policies/                        # Authorization policies
 ```
 
 View full architectural [documents](/docs)
@@ -147,7 +154,7 @@ View full architectural [documents](/docs)
 - `/app/*` - User dashboard and features
 - `/admin/*` - Company administration
 - `/settings/*` - User profile settings
--   `/settings/*` - User profile settings
+- `/settings/*` - User profile settings
 
 ## Dependencies
 
@@ -163,12 +170,12 @@ View full architectural [documents](/docs)
 
 ## Technologies
 
--   **Backend:** PHP 8.4, Laravel 13
--   **Frontend:** Blade templates, TailwindCSS 4, Flux UI
--   **Database:** SQLite (default), MySQL/PostgreSQL compatible
--   **Authentication:** Laravel Fortify with 2FA
--   **Testing:** Pest PHP
--   **Code Quality:** Laravel Pint, Rector
+- **Backend:** PHP 8.4, Laravel 13
+- **Frontend:** Blade templates, TailwindCSS 4, Flux UI
+- **Database:** SQLite (default), MySQL/PostgreSQL compatible
+- **Authentication:** Laravel Fortify with 2FA
+- **Testing:** Pest PHP
+- **Code Quality:** Laravel Pint, Rector
 
 ## Stable tests
 
@@ -203,6 +210,7 @@ curl -X GET "http://localhost:8000/api/v1/leads/1" \
 **Base URL:** `/api/v1`
 
 **Features:**
+
 - RESTful JSON responses via Laravel API Resources
 - Pagination support (`per_page` parameter)
 - Rate limited (60 requests/minute)
