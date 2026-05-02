@@ -44,7 +44,7 @@ it('can add existing user to company as super admin', function (): void {
     post(route('admin.invites.store'), [
         'company_id' => $company->id,
         'email'      => 'newuser@example.com',
-        'role'       => 'customer',
+        'role'       => Company::ROLE_USER,
     ])
         ->assertRedirect(route('admin.invites.index'))
         ->assertSessionHas('toast', 'User added to company successfully.');
@@ -61,7 +61,7 @@ it('shows error for user not found', function (): void {
     post(route('admin.invites.store'), [
         'company_id' => $company->id,
         'email'      => 'notfound@example.com',
-        'role'       => 'customer',
+        'role'       => Company::ROLE_USER,
     ])
         ->assertSessionHasErrors(['email']);
 });
@@ -77,7 +77,7 @@ it('can add user to company as admin with company access', function (): void {
     post(route('admin.invites.store'), [
         'company_id' => $company->id,
         'email'      => 'newuser@example.com',
-        'role'       => 'customer',
+        'role'       => Company::ROLE_USER,
     ])
         ->assertRedirect(route('admin.invites.index'));
 
@@ -94,7 +94,7 @@ it('cannot add user to company without access', function (): void {
     post(route('admin.invites.store'), [
         'company_id' => $otherCompany->id,
         'email'      => 'exists@example.com',
-        'role'       => 'customer',
+        'role'       => Company::ROLE_USER,
     ])
         ->assertForbidden();
 });
@@ -115,7 +115,7 @@ it('validates email format', function (): void {
     post(route('admin.invites.store'), [
         'company_id' => $company->id,
         'email'      => 'invalid-email',
-        'role'       => 'customer',
+        'role'       => Company::ROLE_USER,
     ])
         ->assertSessionHasErrors(['email']);
 });
