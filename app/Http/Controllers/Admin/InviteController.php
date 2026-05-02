@@ -40,7 +40,7 @@ class InviteController extends Controller
 
         return view('admin.invites.create', [
             'companies'   => $companies,
-            'defaultRole' => Company::ROLE_CUSTOMER,
+            'defaultRole' => Company::ROLE_USER,
         ]);
     }
 

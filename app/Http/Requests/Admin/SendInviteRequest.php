@@ -20,7 +20,7 @@ class SendInviteRequest extends FormRequest
         return [
             'company_id' => ['required', 'integer'],
             'email'      => ['required', 'email', 'max:255'],
-            'role'       => ['required', 'string', 'in:'.Company::ROLE_ADMIN.','.Company::ROLE_CUSTOMER],
+            'role'       => ['required', 'string', 'in:'.Company::ROLE_ADMIN.','.Company::ROLE_USER],
         ];
     }
 

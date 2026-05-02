@@ -113,7 +113,7 @@ class UserFactory extends Factory
     {
         return $this->afterCreating(function (User $user) use ($company, $role): void {
             $company ??= Company::factory()->create();
-            $user->companies()->attach($company, ['role' => $role ?? Company::ROLE_CUSTOMER]);
+            $user->companies()->attach($company, ['role' => $role ?? Company::ROLE_USER]);
         });
     }
 
@@ -121,7 +121,7 @@ class UserFactory extends Factory
     {
         return $this->afterCreating(function (User $user) use ($count, $role): void {
             $companies = Company::factory()->count($count)->create();
-            $companies->each(fn (Company $company) => $user->companies()->attach($company, ['role' => $role ?? Company::ROLE_CUSTOMER]));
+            $companies->each(fn (Company $company) => $user->companies()->attach($company, ['role' => $role ?? Company::ROLE_USER]));
         });
     }
 }

@@ -76,7 +76,7 @@ class CompanyService
         return $company->delete();
     }
 
-    public function attachUser(Company $company, User $user, string $role = Company::ROLE_CUSTOMER): void
+    public function attachUser(Company $company, User $user, string $role = Company::ROLE_USER): void
     {
         $company->users()->syncWithoutDetaching([
             $user->id => ['role' => $role],

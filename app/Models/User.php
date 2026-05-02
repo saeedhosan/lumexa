@@ -126,7 +126,7 @@ class User extends Authenticatable
     {
         return $this->companies()
             ->where('companies.id', $company->id)
-            ->wherePivot('role', Company::ROLE_CUSTOMER)
+            ->wherePivot('role', Company::ROLE_USER)
             ->exists();
     }
 }

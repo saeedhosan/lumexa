@@ -161,10 +161,10 @@ it('shows only accessible company users for admin', function (): void {
     $company1->users()->attach($admin, ['role' => Company::ROLE_ADMIN]);
 
     $user1 = User::factory()->create(['email' => 'user1@example.com']);
-    $user1->companies()->attach($company1->id, ['role' => Company::ROLE_CUSTOMER]);
+    $user1->companies()->attach($company1->id, ['role' => Company::ROLE_USER]);
 
     $user2 = User::factory()->create(['email' => 'user2@example.com']);
-    $user2->companies()->attach($company2->id, ['role' => Company::ROLE_CUSTOMER]);
+    $user2->companies()->attach($company2->id, ['role' => Company::ROLE_USER]);
 
     actingAs($admin);
 

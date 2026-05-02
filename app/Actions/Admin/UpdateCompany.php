@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Admin;
 
 use App\Models\Company;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateCompany
 {
@@ -19,7 +20,7 @@ class UpdateCompany
             'language'    => $data['language']    ?? null,
             'timezone'    => $data['timezone']    ?? null,
             'currency'    => $data['currency']    ?? null,
-            'updated_by'  => auth()->id(),
+            'updated_by'  => Auth::id(),
         ]);
 
         return $company->fresh();

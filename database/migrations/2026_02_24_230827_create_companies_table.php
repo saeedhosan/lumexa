@@ -42,7 +42,7 @@ return new class extends Migration
         Schema::create('company_user', function (Blueprint $table): void {
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Company::class)->constrained()->cascadeOnDelete();
-            $table->string('role')->default(Company::ROLE_CUSTOMER);
+            $table->string('role')->default(Company::ROLE_USER);
             $table->primary(['user_id', 'company_id']);
             $table->unique(['user_id', 'company_id']);
             $table->timestamps();
