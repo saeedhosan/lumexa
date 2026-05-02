@@ -9,9 +9,11 @@ new class extends Component {
     public bool $showToken = false;
     public bool $showGenerateModal = false;
     public $tokens;
+    public $expiresAt;
 
     public function mount(): void
     {
+        $this->expiresAt = now()->addMonth()->format('Y-m-d');
         $this->loadTokens();
     }
 
@@ -19,6 +21,7 @@ new class extends Component {
     {
         $this->resetErrorBag();
         $this->tokenName = '';
+        $this->expiresAt = now()->addMonth()->format('Y-m-d');
         $this->showGenerateModal = true;
     }
 
@@ -26,10 +29,12 @@ new class extends Component {
     {
         $this->validate([
             'tokenName' => 'required|string|max:255',
+            'expiresAt' => 'nullable|date|after:now',
         ]);
 
         $user = Auth::user();
-        $token = $user->createToken($this->tokenName);
+        $expiresAt = $this->expiresAt ? now()->parse($this->expiresAt) : null;
+        $token = $user->createToken($this->tokenName, ['*'], $expiresAt);
 
         $this->plainTextToken = $token->plainTextToken;
         $this->showToken = true;
@@ -180,6 +185,14 @@ new class extends Component {
                 :placeholder="__('e.g., Mobile App, Third-party Integration')"
                 required
                 autofocus
+            />
+
+            <flux:input
+                wire:model="expiresAt"
+                :label="__('Expiration Date')"
+                :description="__('Leave empty for no expiration')"
+                type="date"
+                :min="now()->format('Y-m-d')"
             />
 
             @error('tokenName')
