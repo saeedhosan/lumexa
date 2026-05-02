@@ -185,7 +185,7 @@ class Customer extends Model
 
     public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class, 'role_customer', 'customer_id', 'role_id');
+        return $this->belongsToMany(Role::class, 'role_user', 'customer_id', 'role_id');
     }
 }
 ```

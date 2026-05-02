@@ -62,10 +62,10 @@ it('admin only sees their company data', function (): void {
     $admin->companies()->attach($company->id, ['role' => Company::ROLE_ADMIN]);
 
     $userInCompany = User::factory()->create();
-    $userInCompany->companies()->attach($company->id, ['role' => Company::ROLE_CUSTOMER]);
+    $userInCompany->companies()->attach($company->id, ['role' => Company::ROLE_USER]);
 
     $userInOtherCompany = User::factory()->create(['email' => 'other@example.com']);
-    $userInOtherCompany->companies()->attach($otherCompany->id, ['role' => Company::ROLE_CUSTOMER]);
+    $userInOtherCompany->companies()->attach($otherCompany->id, ['role' => Company::ROLE_USER]);
 
     actingAs($admin);
 

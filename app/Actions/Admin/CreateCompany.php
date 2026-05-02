@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class CreateCompany
 {
-    public function handle(array $data, int $userId, string $role = Company::ROLE_ADMIN): Company
+    public function handle(array $data, int $userId, string $role = Company::ROLE_USER): Company
     {
         return DB::transaction(function () use ($data, $userId, $role) {
             $company = Company::query()->create([

@@ -12,7 +12,7 @@ uses(RefreshDatabase::class);
 test('customer can access services index page', function (): void {
     $user    = User::factory()->create();
     $company = Company::factory()->create();
-    $user->companies()->attach($company, ['role' => Company::ROLE_CUSTOMER]);
+    $user->companies()->attach($company, ['role' => Company::ROLE_USER]);
     $user->update(['current_company_id' => $company->id]);
     $this->actingAs($user);
 
@@ -23,7 +23,7 @@ test('customer can access services index page', function (): void {
 test('customer can access services create page', function (): void {
     $user    = User::factory()->create();
     $company = Company::factory()->create();
-    $user->companies()->attach($company, ['role' => Company::ROLE_CUSTOMER]);
+    $user->companies()->attach($company, ['role' => Company::ROLE_USER]);
     $user->update(['current_company_id' => $company->id]);
     $this->actingAs($user);
 

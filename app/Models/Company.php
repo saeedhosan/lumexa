@@ -53,7 +53,7 @@ class Company extends Model
     /**
      * The model support roles
      */
-    public const ROLE_CUSTOMER = 'customer';
+    public const ROLE_USER = 'user';
 
     public const ROLE_ADMIN = 'admin';
 
@@ -146,7 +146,7 @@ class Company extends Model
      */
     public function customers(): BelongsToMany
     {
-        return $this->users()->wherePivot('role', self::ROLE_CUSTOMER);
+        return $this->users()->wherePivot('role', self::ROLE_USER);
     }
 
     /**
