@@ -10,12 +10,18 @@ Lumexa provides a RESTful API for lead management integration with external syst
 
 ## Authentication
 
-Currently, the API is open for development. In production, use Laravel Sanctum tokens:
+All API endpoints require authentication using Laravel Sanctum tokens. Include the token in the `Authorization` header:
 
 ```bash
-# Create token
-curl -X POST https://your-domain.com/api/v1 \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+# Create token (via login endpoint)
+curl -X POST https://your-domain.com/login \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -d '{"email": "user@example.com", "password": "password"}'
+
+# Use token in API requests
+curl -X GET https://your-domain.com/api/v1/leads \
+  -H "Authorization: Bearer YOUR_SANCTUM_TOKEN" \
   -H "Accept: application/json"
 ```
 
@@ -101,6 +107,7 @@ API requests are limited to 60 requests per minute per IP address.
 | Status | Description |
 |--------|-------------|
 | 200 | Success |
+| 401 | Unauthorized (missing/invalid token) |
 | 404 | Not found |
 | 429 | Too many requests |
 | 500 | Server error |
