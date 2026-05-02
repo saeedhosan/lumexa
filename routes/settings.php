@@ -25,4 +25,6 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
             ),
         )
         ->name('two-factor.show');
+
+    Route::livewire('settings/api-tokens', 'pages::settings.api-tokens')->name('api-tokens.index');
 });
