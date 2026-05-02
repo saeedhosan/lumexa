@@ -20,12 +20,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
 #[UsePolicy(UserPolicy::class)]
 #[UseFactory(UserFactory::class)]
 class User extends Authenticatable
 {
+    use HasApiTokens;
     use HasFactory;
     use HasUserType;
     use LogsActivity;
