@@ -2,12 +2,12 @@
 
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Flux\Flux;
 
 new class extends Component {
     public string $tokenName = '';
     public string $plainTextToken = '';
     public bool $showToken = false;
-    public bool $showGenerateModal = false;
     public $tokens;
     public $expiresAt;
 
@@ -15,14 +15,6 @@ new class extends Component {
     {
         $this->expiresAt = now()->addMonth()->format('Y-m-d');
         $this->loadTokens();
-    }
-
-    public function openGenerateModal(): void
-    {
-        $this->resetErrorBag();
-        $this->tokenName = '';
-        $this->expiresAt = now()->addMonth()->format('Y-m-d');
-        $this->showGenerateModal = true;
     }
 
     public function generateToken(): void
@@ -38,9 +30,18 @@ new class extends Component {
 
         $this->plainTextToken = $token->plainTextToken;
         $this->showToken = true;
-        $this->showGenerateModal = false;
         $this->tokenName = '';
+        $this->expiresAt = now()->addMonth()->format('Y-m-d');
+        Flux::modal('generate-token')->close();
         $this->loadTokens();
+    }
+
+    public function openGenerateModal(): void
+    {
+        $this->resetErrorBag();
+        $this->tokenName = '';
+        $this->expiresAt = now()->addMonth()->format('Y-m-d');
+        Flux::modal('generate-token')->show();
     }
 
     public function revokeToken(int $tokenId): void
@@ -92,12 +93,10 @@ new class extends Component {
                     <flux:subheading size="sm" class="mt-1">{{ __('Tokens that can access the API') }}</flux:subheading>
                 </div>
                 <div class="flex gap-3">
-                    <flux:modal.trigger name="generate-token">
-                        <flux:button variant="primary">
-                            <flux:icon name="plus" class="size-4" />
-                            <span class="ml-2">{{ __('Generate Token') }}</span>
-                        </flux:button>
-                    </flux:modal.trigger>
+                    <flux:button wire:click="openGenerateModal" variant="primary">
+                        <flux:icon name="plus" class="size-4" />
+                        <span class="ml-2">{{ __('Generate Token') }}</span>
+                    </flux:button>
 
                     <flux:button
                         wire:click="revokeAllTokens"
@@ -113,12 +112,10 @@ new class extends Component {
                     <flux:heading size="sm">{{ __('API Tokens') }}</flux:heading>
                     <flux:subheading size="sm" class="mt-1">{{ __('Generate a token to get started') }}</flux:subheading>
                 </div>
-                <flux:modal.trigger name="generate-token">
-                    <flux:button variant="primary">
-                        <flux:icon name="plus" class="size-4" />
-                        <span class="ml-2">{{ __('Generate Token') }}</span>
-                    </flux:button>
-                </flux:modal.trigger>
+                <flux:button wire:click="openGenerateModal" variant="primary">
+                    <flux:icon name="plus" class="size-4" />
+                    <span class="ml-2">{{ __('Generate Token') }}</span>
+                </flux:button>
             @endif
         </div>
 
@@ -172,7 +169,7 @@ new class extends Component {
         @endif
     </x-pages::settings.layout>
 
-    <flux:modal name="generate-token" :show="$showGenerateModal">
+    <flux:modal name="generate-token">
         <form wire:submit="generateToken" class="space-y-5 p-6">
             <div>
                 <flux:heading size="lg">{{ __('Generate New Token') }}</flux:heading>
