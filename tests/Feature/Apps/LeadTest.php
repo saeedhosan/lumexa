@@ -42,7 +42,7 @@ test('authenticated users can access leads index', function (): void {
     $response->assertOk();
 });
 
-test('authenticated users can access leads create', function (): void {
+test('authenticated users are redirected from leads create', function (): void {
     $user    = User::factory()->create();
     $company = Company::factory()->create();
     $user->companies()->attach($company, ['role' => 'admin']);
@@ -50,7 +50,7 @@ test('authenticated users can access leads create', function (): void {
     $this->actingAs($user);
 
     $response = $this->get(route('app.leads.create'));
-    $response->assertOk();
+    $response->assertRedirect(route('app.leads.index', ['action' => 'create']));
 });
 
 test('authenticated users can access leads show', function (): void {
