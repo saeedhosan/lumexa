@@ -2,6 +2,7 @@
     "agents": [
         "opencode"
     ],
+    "cloud": false,
     "guidelines": true,
     "mcp": true,
     "nightwatch_mcp": false,
@@ -15,7 +16,6 @@
         "fluxui-development",
         "livewire-development",
         "pest-testing",
-        "tailwindcss-development",
         "debug-using-debugbar"
     ]
 }
