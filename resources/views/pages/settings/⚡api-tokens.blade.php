@@ -197,9 +197,11 @@ new class extends Component {
             @enderror
 
             <div class="flex gap-3 justify-end">
-                <flux:button type="button" variant="subtle" wire:click="$set('showGenerateModal', false)">
-                    {{ __('Cancel') }}
-                </flux:button>
+                <flux:modal.close>
+                    <flux:button type="button" variant="subtle">
+                        {{ __('Cancel') }}
+                    </flux:button>
+                </flux:modal.close>
                 <flux:button type="submit" variant="primary">
                     {{ __('Generate Token') }}
                 </flux:button>
