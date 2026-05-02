@@ -6,6 +6,7 @@ use App\Enums\LeadStatus;
 use App\Imports\LeadListImport;
 use App\Models\Lead;
 use Flux\Flux;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -19,6 +20,13 @@ new class extends Component
     public string $title = '';
 
     public $file = null;
+
+    public function mount()
+    {
+        if (app(Request::class)->input('action') === 'create') {
+            Flux::modal('lead-import')->show();
+        }
+    }
 
     public function import(): void
     {

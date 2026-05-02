@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Lead;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class LeadController extends Controller
@@ -33,9 +34,9 @@ class LeadController extends Controller
         ]);
     }
 
-    public function create(): Factory|View
+    public function create(): RedirectResponse
     {
-        return view('app.leads.create');
+        return to_route('app.leads.index', ['action' => 'create']);
     }
 
     public function store(Request $request): void
