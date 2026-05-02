@@ -6,7 +6,7 @@ use App\Models\Lead;
 use App\Models\User;
 
 it('api leads index returns success', function (): void {
-    $user = User::factory()->create();
+    $user  = User::factory()->create();
     $token = $user->createToken('test')->plainTextToken;
 
     $response = $this->withToken($token)->getJson('/api/v1/leads');
@@ -15,7 +15,7 @@ it('api leads index returns success', function (): void {
 });
 
 it('api leads index returns json structure', function (): void {
-    $user = User::factory()->create();
+    $user  = User::factory()->create();
     $token = $user->createToken('test')->plainTextToken;
     Lead::factory()->count(3)->create();
 
