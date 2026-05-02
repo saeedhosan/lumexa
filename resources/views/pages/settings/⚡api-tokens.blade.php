@@ -80,56 +80,55 @@ new class extends Component {
             </flux:card>
         @endif
 
-        <div>
-            <div class="flex items-center justify-between mb-4">
-                @if($tokens->count() > 0)
-                    <div>
-                        <flux:heading size="sm">{{ __('Active Tokens') }}</flux:heading>
-                        <flux:subheading size="sm" class="mt-1">{{ __('Tokens that can access the API') }}</flux:subheading>
-                    </div>
-                    <div class="flex gap-3">
-                        <flux:button
-                            wire:click="openGenerateModal"
-                            variant="primary"
-                        >
+        <div class="flex items-center justify-between mb-4">
+            @if($tokens->count() > 0)
+                <div>
+                    <flux:heading size="sm">{{ __('Active Tokens') }}</flux:heading>
+                    <flux:subheading size="sm" class="mt-1">{{ __('Tokens that can access the API') }}</flux:subheading>
+                </div>
+                <div class="flex gap-3">
+                    <flux:modal.trigger name="generate-token">
+                        <flux:button variant="primary">
                             <flux:icon name="plus" class="size-4" />
                             <span class="ml-2">{{ __('Generate Token') }}</span>
                         </flux:button>
-                        <flux:button
-                            wire:click="revokeAllTokens"
-                            wire:confirm="{{ __('Are you sure you want to revoke all tokens?') }}"
-                            variant="danger"
-                            size="sm"
-                        >
-                            {{ __('Revoke All') }}
-                        </flux:button>
-                    </div>
-                @else
-                    <div>
-                        <flux:heading size="sm">{{ __('API Tokens') }}</flux:heading>
-                        <flux:subheading size="sm" class="mt-1">{{ __('Generate a token to get started') }}</flux:subheading>
-                    </div>
+                    </flux:modal.trigger>
+
                     <flux:button
-                        wire:click="openGenerateModal"
-                        variant="primary"
+                        wire:click="revokeAllTokens"
+                        wire:confirm="{{ __('Are you sure you want to revoke all tokens?') }}"
+                        variant="danger"
+                        size="sm"
                     >
+                        {{ __('Revoke All') }}
+                    </flux:button>
+                </div>
+            @else
+                <div>
+                    <flux:heading size="sm">{{ __('API Tokens') }}</flux:heading>
+                    <flux:subheading size="sm" class="mt-1">{{ __('Generate a token to get started') }}</flux:subheading>
+                </div>
+                <flux:modal.trigger name="generate-token">
+                    <flux:button variant="primary">
                         <flux:icon name="plus" class="size-4" />
                         <span class="ml-2">{{ __('Generate Token') }}</span>
                     </flux:button>
-                @endif
-            </div>
+                </flux:modal.trigger>
+            @endif
+        </div>
 
-            @if($tokens->count() > 0)
-                <flux:table class="mt-4">
+        @if($tokens->count() > 0)
+            <div class="overflow-x-auto">
+                <flux:table>
                     <flux:table.columns>
                         <flux:table.column>{{ __('Name') }}</flux:table.column>
                         <flux:table.column>{{ __('Expires At') }}</flux:table.column>
-                        <flux:table.column></flux:table.column>
+                        <flux:table.column>{{ __('Actions') }}</flux:table.column>
                     </flux:table.columns>
 
                     <flux:table.rows>
                         @foreach($tokens as $token)
-                            <flux:table.row>
+                            <flux:table.row :key="$token->id">
                                 <flux:table.cell>
                                     <div class="flex items-center gap-2">
                                         <flux:icon name="key" class="size-4 text-zinc-400" />
@@ -142,29 +141,30 @@ new class extends Component {
                                     </flux:text>
                                 </flux:table.cell>
                                 <flux:table.cell>
-                                    <flux:button
-                                        wire:click="revokeToken({{ $token->id }})"
-                                        wire:confirm="{{ __('Revoke this token?') }}"
-                                        variant="danger"
-                                        size="sm"
-                                    >
-                                        {{ __('Revoke') }}
-                                    </flux:button>
+                                    <div class="flex items-center gap-2">
+                                        <flux:button
+                                            wire:click="revokeToken({{ $token->id }})"
+                                            wire:confirm="{{ __('Revoke this token?') }}"
+                                            variant="ghost"
+                                            size="sm"
+                                            icon="trash"
+                                        />
+                                    </div>
                                 </flux:table.cell>
                             </flux:table.row>
                         @endforeach
                     </flux:table.rows>
                 </flux:table>
-            @else
-                <flux:card class="border-dashed">
-                    <div class="text-center py-12">
-                        <flux:icon name="key" class="mx-auto mb-4 size-12 text-zinc-300 dark:text-zinc-600" />
-                        <flux:heading size="sm" class="mb-2">{{ __('No API Tokens') }}</flux:heading>
-                        <flux:text variant="subtle" size="sm">{{ __('Generate your first token using the button above to get started with the API.') }}</flux:text>
-                    </div>
-                </flux:card>
-            @endif
-        </div>
+            </div>
+        @else
+            <flux:card class="border-dashed">
+                <div class="text-center py-12">
+                    <flux:icon name="key" class="mx-auto mb-4 size-12 text-zinc-300 dark:text-zinc-600" />
+                    <flux:heading size="sm" class="mb-2">{{ __('No API Tokens') }}</flux:heading>
+                    <flux:text variant="subtle" size="sm">{{ __('Generate your first token using the button above to get started with the API.') }}</flux:text>
+                </div>
+            </flux:card>
+        @endif
     </x-pages::settings.layout>
 
     <flux:modal name="generate-token" :show="$showGenerateModal">
