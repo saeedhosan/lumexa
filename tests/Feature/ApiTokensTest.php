@@ -9,6 +9,7 @@ it('can access api tokens page', function (): void {
     $user = User::factory()->create();
 
     $this->actingAs($user)
+        ->withSession(['auth.password_confirmed_at' => time()])
         ->get('/settings/api-tokens')
         ->assertOk();
 });
