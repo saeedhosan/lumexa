@@ -1,11 +1,12 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/livewire-starter-kit",
+    "name": "saeedhosan/lumexa",
     "type": "project",
-    "description": "The official Laravel starter kit for Livewire.",
+    "description": "Lumexa is a SaaS application that allows multiple companies to use the same system while keeping their data separate.",
     "keywords": [
-        "laravel",
-        "framework"
+        "lumexa",
+        "multi-tenant",
+        "saeedhosan"
     ],
     "license": "MIT",
     "require": {
