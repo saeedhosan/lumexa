@@ -22,7 +22,6 @@
 -   [Installation](#installation)
     -   [Docker setup](#docker-setup)
     -   [Quick setup](#quick-setup)
--   [Docker Setup](#docker-setup)
 -   [Architecture](#architecture)
 -   [Dependencies](#dependencies)
 -   [Technologies](#technologies)
