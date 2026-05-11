@@ -17,74 +17,76 @@
 
 ## Table of contents
 
-- [Introduction](#introduction)
-- [Core Features](#core-features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Docker Setup](#docker-setup)
-- [Architecture](#architecture)
-- [Dependencies](#dependencies)
-- [Technologies](#technologies)
-- [API Documentation](#api-documentation)
-- [Stable tests](#stable-tests)
-- [Tests Login](#tests-login)
+-   [Introduction](#introduction)
+-   [Core Features](#core-features)
+-   [Requirements](#requirements)
+-   [Installation](#installation)
+-   [Docker Setup](#docker-setup)
+-   [Architecture](#architecture)
+-   [Dependencies](#dependencies)
+-   [Technologies](#technologies)
+-   [API Documentation](#api-documentation)
+-   [Stable tests](#stable-tests)
+-   [Tests Login](#tests-login)
 
 ## Introduction
 
 Lumexa is a SaaS application that allows multiple companies to use the same system while keeping their data separate.
 
 ### The Problem
+
 Small to medium-sized businesses often struggle with "data sprawl"—using multiple disconnected tools for leads, team management, and internal operations. This leads to security risks, data silos, and high subscription costs.
 
 ### The Solution
+
 Lumexa provides a unified, **multi-tenant ecosystem** where companies can securely manage their entire lifecycle—from lead acquisition via Excel imports to team collaboration—all within a single, high-performance platform.
 
 ## Core Features
 
 ### Authentication & Security
 
-- **Multi-factor authentication (2FA)** – Secure login with TOTP via Laravel Fortify
-- **Role-based access control** – Three roles: Super Admin, Admin, and User
-- **Email verification** – Email confirmation for user accounts
-- **Password reset** – Secure password recovery flow
+-   **Multi-factor authentication (2FA)** – Secure login with TOTP via Laravel Fortify
+-   **Role-based access control** – Three roles: Super Admin, Admin, and User
+-   **Email verification** – Email confirmation for user accounts
+-   **Password reset** – Secure password recovery flow
 
 ### Multi-Tenancy
 
-- **Multi-company support** – Users can work with multiple companies, each with isolated data
-- **Company workspace** – Each company has its own workspace and management area
-- **User invitations** – Invite new members to companies
+-   **Multi-company support** – Users can work with multiple companies, each with isolated data
+-   **Company workspace** – Each company has its own workspace and management area
+-   **User invitations** – Invite new members to companies
 
 ### Lead Management
 
-- **Lead CRUD** – Create, read, update, delete leads
-- **Lead lists** – Individual contacts within leads
-- **Lead status workflow** – Pending, Process, Cleaned, Blocked, Approved, Rejected
-- **Excel import** – Bulk import leads via Excel/CSV files
+-   **Lead CRUD** – Create, read, update, delete leads
+-   **Lead lists** – Individual contacts within leads
+-   **Lead status workflow** – Pending, Process, Cleaned, Blocked, Approved, Rejected
+-   **Excel import** – Bulk import leads via Excel/CSV files
 
 ### API & Integrations
 
-- **REST API** – JSON API for external integrations (`/api/v1`)
-- **API Resources** – Consistent JSON response formatting
-- **Rate limiting** – 60 requests/minute per IP
-- **Laravel Sanctum** – Token-based authentication ready
+-   **REST API** – JSON API for external integrations (`/api/v1`)
+-   **API Resources** – Consistent JSON response formatting
+-   **Rate limiting** – 60 requests/minute per IP
+-   **Laravel Sanctum** – Token-based authentication ready
 
 ### Performance & Scalability
 
-- **Dashboard caching** – 5-minute cache for statistics
-- **Background jobs** – Queue processing for heavy tasks
-- **Event-driven** – Laravel Events & Listeners for decoupling
+-   **Dashboard caching** – 5-minute cache for statistics
+-   **Background jobs** – Queue processing for heavy tasks
+-   **Event-driven** – Laravel Events & Listeners for decoupling
 
 ### Activity & Logging
 
-- **Activity tracking** – Full audit trail with Spatie ActivityLog
-- **System logging** – Comprehensive activity logging
+-   **Activity tracking** – Full audit trail with Spatie ActivityLog
+-   **System logging** – Comprehensive activity logging
 
 ## Requirements
 
-- PHP 8.4+ - [Download PHP](https://www.php.net/downloads.php)
-- Composer - [Get composer](https://getcomposer.org)
-- Bun - [Install Bun](https://bun.sh)
-- MySQL 8.0 or SQLite
+-   PHP 8.4+ - [Download PHP](https://www.php.net/downloads.php)
+-   Composer - [Get composer](https://getcomposer.org)
+-   Bun - [Install Bun](https://bun.sh)
+-   MySQL 8.0 or SQLite
 
 ## Installation
 
@@ -128,11 +130,12 @@ docker compose exec app php artisan migrate:fresh --seed
 Lumexa follows a clean Laravel architecture with a **Domain-Driven Service Layer** pattern to ensure the codebase remains maintainable as the product scales.
 
 ### System Architecture Diagram
+
 ```mermaid
 graph TD
     User((User/Admin)) -->|Auth/2FA| Web[Web Interface/Livewire]
     User -->|API Token| API[REST API v1]
-    
+
     subgraph Core_Application
         Web --> Controllers
         API --> Controllers
@@ -147,7 +150,7 @@ graph TD
         Models --> Cache[(Redis/Cache)]
         Jobs --> Queue[(Job Queue)]
     end
-    
+
     subgraph External_Services
         Domain --> Storage[File Storage/S3]
         Domain --> Mail[Mail Service]
@@ -156,22 +159,22 @@ graph TD
 
 ### Technical Decisions & Trade-offs
 
-| Decision | Choice | Rationale |
-| :--- | :--- | :--- |
-| **Multi-Tenancy** | Single Database | Chosen for cost-efficiency and easier maintenance for a mid-market SaaS. Data isolation is strictly enforced via Global Scopes. |
-| **Auth Backend** | Laravel Fortify | Prioritized security-first development by using a battle-tested, headless auth engine with native 2FA support. |
-| **Frontend** | Livewire + Flux UI | Opted for "The TALL Stack" to achieve SPA-like reactivity without the complexity of a separate JS framework, reducing "Time to Market". |
-| **Testing** | Pest PHP | Implemented 160+ tests using Pest for its superior readability and developer velocity, ensuring a stable production environment. |
-| **Import Engine** | Maatwebsite Excel | Used a robust library for lead imports to handle complex CSV/Excel edge cases and prevent CSV Injection attacks. |
+| Decision          | Choice             | Rationale                                                                                                                               |
+| :---------------- | :----------------- | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| **Multi-Tenancy** | Single Database    | Chosen for cost-efficiency and easier maintenance for a mid-market SaaS. Data isolation is strictly enforced via Global Scopes.         |
+| **Auth Backend**  | Laravel Fortify    | Prioritized security-first development by using a battle-tested, headless auth engine with native 2FA support.                          |
+| **Frontend**      | Livewire + Flux UI | Opted for "The TALL Stack" to achieve SPA-like reactivity without the complexity of a separate JS framework, reducing "Time to Market". |
+| **Testing**       | Pest PHP           | Implemented 160+ tests using Pest for its superior readability and developer velocity, ensuring a stable production environment.        |
+| **Import Engine** | Maatwebsite Excel  | Used a robust library for lead imports to handle complex CSV/Excel edge cases and prevent CSV Injection attacks.                        |
 
 **Route Structure:**
 
-- `/` - Public landing page
-- `/api/v1/*` - REST API endpoints
-- `/app/*` - User dashboard and features
-- `/admin/*` - Company administration
-- `/settings/*` - User profile settings
-- `/settings/*` - User profile settings
+-   `/` - Public landing page
+-   `/api/v1/*` - REST API endpoints
+-   `/app/*` - User dashboard and features
+-   `/admin/*` - Company administration
+-   `/settings/*` - User profile settings
+-   `/settings/*` - User profile settings
 
 ## Dependencies
 
@@ -187,12 +190,12 @@ graph TD
 
 ## Technologies
 
-- **Backend:** PHP 8.4, Laravel 13
-- **Frontend:** Blade templates, TailwindCSS 4, Flux UI
-- **Database:** SQLite (default), MySQL/PostgreSQL compatible
-- **Authentication:** Laravel Fortify with 2FA
-- **Testing:** Pest PHP
-- **Code Quality:** Laravel Pint, Rector
+-   **Backend:** PHP 8.4, Laravel 13
+-   **Frontend:** Blade templates, TailwindCSS 4, Flux UI
+-   **Database:** SQLite (default), MySQL/PostgreSQL compatible
+-   **Authentication:** Laravel Fortify with 2FA
+-   **Testing:** Pest PHP
+-   **Code Quality:** Laravel Pint, Rector
 
 ## Stable tests
 
@@ -228,11 +231,11 @@ curl -X GET "http://localhost:8000/api/v1/leads/1" \
 
 **Features:**
 
-- RESTful JSON responses via Laravel API Resources
-- Pagination support (`per_page` parameter)
-- Rate limited (60 requests/minute)
-- Event-driven architecture with Laravel Events
-- Background job processing with Laravel Queues
+-   RESTful JSON responses via Laravel API Resources
+-   Pagination support (`per_page` parameter)
+-   Rate limited (60 requests/minute)
+-   Event-driven architecture with Laravel Events
+-   Background job processing with Laravel Queues
 
 ## Tests Login
 
