@@ -84,10 +84,18 @@ class Dashboard extends Component
         $cacheKey = $this->cachePrefix('statistics');
 
         $stats = Cache::remember($cacheKey, now()->addMinutes(5), function (): array {
-            $totalLeads    = Lead::query()->count();
-            $pendingLeads  = Lead::query()->where('status', LeadStatus::pending)->count();
-            $approvedLeads = Lead::query()->where('status', LeadStatus::approved)->count();
-            $rejectedLeads = Lead::query()->where('status', LeadStatus::rejected)->count();
+            $counts = Lead::query()
+                ->selectRaw('count(*) as total')
+                ->selectRaw('count(case when status = ? then 1 end) as pending', [LeadStatus::pending->value])
+                ->selectRaw('count(case when status = ? then 1 end) as approved', [LeadStatus::approved->value])
+                ->selectRaw('count(case when status = ? then 1 end) as rejected', [LeadStatus::rejected->value])
+                ->toBase()
+                ->first();
+
+            $totalLeads    = (int) ($counts->total ?? 0);
+            $pendingLeads  = (int) ($counts->pending ?? 0);
+            $approvedLeads = (int) ($counts->approved ?? 0);
+            $rejectedLeads = (int) ($counts->rejected ?? 0);
 
             $totalProcessed = $approvedLeads + $rejectedLeads;
             $conversionRate = $totalProcessed > 0
@@ -112,19 +120,22 @@ class Dashboard extends Component
 
     private function loadTrendData(): void
     {
-        $this->thisWeekLeads = Lead::query()
-            ->whereBetween('created_at', [
-                Date::now()->startOfWeek(),
-                Date::now()->endOfWeek(),
-            ])
-            ->count();
-
-        $this->lastWeekLeads = Lead::query()
+        $counts = Lead::query()
             ->whereBetween('created_at', [
                 Date::now()->subWeek()->startOfWeek(),
-                Date::now()->subWeek()->endOfWeek(),
+                Date::now()->endOfWeek(),
             ])
-            ->count();
+            ->selectRaw('count(case when created_at >= ? then 1 end) as current_week', [
+                Date::now()->startOfWeek()->toDateTimeString(),
+            ])
+            ->selectRaw('count(case when created_at < ? then 1 end) as last_week', [
+                Date::now()->startOfWeek()->toDateTimeString(),
+            ])
+            ->toBase()
+            ->first();
+
+        $this->thisWeekLeads = (int) ($counts->current_week ?? 0);
+        $this->lastWeekLeads = (int) ($counts->last_week ?? 0);
 
         $this->avgLeadsPerDay = $this->daysRange > 0
             ? (int) round($this->totalLeads / $this->daysRange)
@@ -139,15 +150,18 @@ class Dashboard extends Component
             $labels = [];
             $data   = [];
 
+            $startDate = Date::now()->subDays($this->daysRange - 1)->startOfDay();
+
+            $counts = Lead::query()
+                ->where('created_at', '>=', $startDate)
+                ->selectRaw("strftime('%Y-%m-%d', created_at) as date, count(*) as count")
+                ->groupBy('date')
+                ->pluck('count', 'date');
+
             for ($i = $this->daysRange - 1; $i >= 0; $i--) {
                 $date     = Date::now()->subDays($i);
                 $labels[] = $date->format('M d');
-
-                $count = Lead::query()
-                    ->whereDate('created_at', $date->toDateString())
-                    ->count();
-
-                $data[] = $count;
+                $data[]   = $counts->get($date->toDateString(), 0);
             }
 
             return ['labels' => $labels, 'data' => $data];

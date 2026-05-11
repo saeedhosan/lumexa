@@ -33,7 +33,11 @@
 
 Lumexa is a SaaS application that allows multiple companies to use the same system while keeping their data separate.
 
-It includes a basic role-based system, secure authentication with 2FA, and core features like lead management. The project is being actively developed, with more features like billing, campaigns, and activity tracking planned next.
+### The Problem
+Small to medium-sized businesses often struggle with "data sprawl"—using multiple disconnected tools for leads, team management, and internal operations. This leads to security risks, data silos, and high subscription costs.
+
+### The Solution
+Lumexa provides a unified, **multi-tenant ecosystem** where companies can securely manage their entire lifecycle—from lead acquisition via Excel imports to team collaboration—all within a single, high-performance platform.
 
 ## Core Features
 
@@ -121,31 +125,44 @@ docker compose exec app php artisan migrate:fresh --seed
 
 ## Architecture
 
-Lumexa follows a clean Laravel architecture with service layer pattern:
+Lumexa follows a clean Laravel architecture with a **Domain-Driven Service Layer** pattern to ensure the codebase remains maintainable as the product scales.
 
-```
-app/
-├── Http/
-│   ├── Controllers/
-│   │   ├── Api/                     # API controllers
-│   │   ├── App/                     # User-facing controllers
-│   │   └── Admin/                   # Admin controllers
-│   ├── Middleware/                  # Role-based access
-│   ├── Resources/                   # API Resources
-│   └── Requests/                    # Form requests
-├── Models/                          # Eloquent models
-├── Domain/                          # Service layer
-├── Events/                          # Laravel events
-├── Listeners/                       # Event listeners
-├── Jobs/                            # Queue jobs
-├── Notifications/                   # Notifications
-├── Enums/                           # PHP enums
-├── Livewire/                        # Livewire components
-├── Providers/                       # Service providers
-└── Policies/                        # Authorization policies
+### System Architecture Diagram
+```mermaid
+graph TD
+    User((User/Admin)) -->|Auth/2FA| Web[Web Interface/Livewire]
+    User -->|API Token| API[REST API v1]
+    
+    subgraph Core_Application
+        Web --> Controllers
+        API --> Controllers
+        Controllers --> Domain[Domain Service Layer]
+        Domain --> Models[Eloquent Models]
+        Domain --> Events[Events/Listeners]
+        Domain --> Jobs[Background Jobs]
+    end
+
+    subgraph Data_Storage
+        Models --> DB[(Primary Database)]
+        Models --> Cache[(Redis/Cache)]
+        Jobs --> Queue[(Job Queue)]
+    end
+    
+    subgraph External_Services
+        Domain --> Storage[File Storage/S3]
+        Domain --> Mail[Mail Service]
+    end
 ```
 
-View full architectural [documents](/docs)
+### Technical Decisions & Trade-offs
+
+| Decision | Choice | Rationale |
+| :--- | :--- | :--- |
+| **Multi-Tenancy** | Single Database | Chosen for cost-efficiency and easier maintenance for a mid-market SaaS. Data isolation is strictly enforced via Global Scopes. |
+| **Auth Backend** | Laravel Fortify | Prioritized security-first development by using a battle-tested, headless auth engine with native 2FA support. |
+| **Frontend** | Livewire + Flux UI | Opted for "The TALL Stack" to achieve SPA-like reactivity without the complexity of a separate JS framework, reducing "Time to Market". |
+| **Testing** | Pest PHP | Implemented 160+ tests using Pest for its superior readability and developer velocity, ensuring a stable production environment. |
+| **Import Engine** | Maatwebsite Excel | Used a robust library for lead imports to handle complex CSV/Excel edge cases and prevent CSV Injection attacks. |
 
 **Route Structure:**
 

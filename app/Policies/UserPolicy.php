@@ -5,47 +5,34 @@ declare(strict_types=1);
 namespace App\Policies;
 
 use App\Models\User;
+use App\Policies\Concerns\SuperPolicyBefore;
 
 class UserPolicy
 {
+    use SuperPolicyBefore;
+
     public function viewAny(User $user): bool
     {
-        if ($user->isAdmin()) {
-            return true;
-        }
-
-        return $user->isSuper();
+        return $user->isAdmin();
     }
 
     public function view(User $user, User $model): bool
     {
-        if ($user->isSuper()) {
-            return true;
-        }
-
-        $tenantKey = currentTenant()->tenantKey();
-
-        return $tenantKey && $model->companies()->where('id', $tenantKey)->exists();
+        return $user->belongsToCompany($model->currentCompany);
     }
 
     public function create(User $user): bool
     {
-        if ($user->isSuper()) {
-            return true;
-        }
-
         return $user->isAdmin();
     }
 
     public function update(User $user, User $model): bool
     {
-        if ($user->isSuper()) {
+        if ($user->isAdminOf($model->currentCompany)) {
             return true;
         }
 
-        $tenantKey = currentTenant()->tenantKey();
-
-        return $tenantKey && $model->companies()->where('id', $tenantKey)->exists();
+        return $user->id === $model->id;
     }
 
     public function delete(User $user, User $model): bool

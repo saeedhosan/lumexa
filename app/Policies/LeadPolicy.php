@@ -6,65 +6,42 @@ namespace App\Policies;
 
 use App\Models\Lead;
 use App\Models\User;
+use App\Policies\Concerns\SuperPolicyBefore;
 
 class LeadPolicy
 {
+    use SuperPolicyBefore;
+
     public function viewAny(User $user): bool
     {
-        if ($user->isSuper()) {
-            return true;
-        }
-
-        return $user->isAdmin();
+        return $user->companies()->exists();
     }
 
     public function view(User $user, Lead $lead): bool
     {
-        if ($user->isSuper()) {
-            return true;
-        }
-
-        $tenantKey = currentTenant()->tenantKey();
-
-        return $tenantKey && $lead->company_id === $tenantKey;
+        return $user->belongsToCompany($lead->company);
     }
 
     public function create(User $user): bool
     {
-        if ($user->isSuper()) {
-            return true;
-        }
-
-        return $user->isAdmin();
+        return $user->companies()->exists();
     }
 
     public function update(User $user, Lead $lead): bool
     {
-        if ($user->isSuper()) {
+        if ($user->isAdminOf($lead->company)) {
             return true;
         }
 
-        $tenantKey = currentTenant()->tenantKey();
-
-        if (! $tenantKey || $lead->company_id !== $tenantKey) {
-            return false;
-        }
-
-        return $user->isAdminOf($lead->company);
+        return $lead->user_id === $user->id;
     }
 
     public function delete(User $user, Lead $lead): bool
     {
-        if ($user->isSuper()) {
+        if ($user->isAdminOf($lead->company)) {
             return true;
         }
 
-        $tenantKey = currentTenant()->tenantKey();
-
-        if (! $tenantKey || $lead->company_id !== $tenantKey) {
-            return false;
-        }
-
-        return $user->isAdminOf($lead->company);
+        return $lead->user_id === $user->id;
     }
 }
