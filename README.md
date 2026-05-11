@@ -19,8 +19,9 @@
 
 -   [Introduction](#introduction)
 -   [Core Features](#core-features)
--   [Requirements](#requirements)
 -   [Installation](#installation)
+    -   [Docker setup](#docker-setup)
+    -   [Quick setup](#quick-setup)
 -   [Docker Setup](#docker-setup)
 -   [Architecture](#architecture)
 -   [Dependencies](#dependencies)
@@ -80,51 +81,17 @@ Lumexa provides a unified, **multi-tenant ecosystem** where companies can secure
 -   **Activity tracking** – Full audit trail with Spatie ActivityLog
 -   **System logging** – Comprehensive activity logging
 
-## Requirements
-
--   PHP 8.4+ - [Download PHP](https://www.php.net/downloads.php)
--   Composer - [Get composer](https://getcomposer.org)
--   Bun - [Install Bun](https://bun.sh)
--   MySQL 8.0 or SQLite
-
 ## Installation
 
 ```bash
 git clone https://github.com/saeedhosan/lumexa.git
 cd lumexa
-
-#1. Setup project
-composer setup
-
-#2. Start the development server
-composer dev
-# visit: http://localhost:8000
-
-# Build assets for production
-npm run build
-```
-
-After setup, seed local data and log in:
-
-```bash
-php artisan migrate:fresh --seed
-```
-
-| Role  | Email             | Password |
-| :---- | :---------------- | :------- |
-| Admin | admin@example.com | demo1234 |
-| User  | user@example.com  | demo1234 |
-
-## Docker Setup
-
-> Requires [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-
-```bash
 cp .env.example .env
-docker compose up -d
 ```
 
-Open http://localhost:8080 — done!
+### Docker Setup
+
+> Requires [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ```bash
 docker compose down        # stop
@@ -134,6 +101,37 @@ docker compose exec app bash # enter container
 ## Get local data for testing
 docker compose exec app php artisan migrate:fresh --seed
 ```
+
+Open [http://localhost:8080] — done!
+
+### Quick setup
+
+**prerequisites**
+
+-   PHP 8.4+ - [Download PHP](https://www.php.net/downloads.php)
+-   Composer - [Get composer](https://getcomposer.org)
+-   Bun - [Install Bun](https://bun.sh)
+-   MySQL 8.0 or SQLite
+
+```bash
+#1. Setup project
+composer setup
+
+#2. Genenerate local seed data (optional)
+php artisan migrate:fresh --seed
+
+#3. Start the development server
+composer dev
+```
+
+Open [http://localhost:8080] — done!
+
+**Seeder data users**
+
+| Role  | Email             | Password |
+| :---- | :---------------- | :------- |
+| Admin | admin@example.com | demo1234 |
+| User  | user@example.com  | demo1234 |
 
 ## Architecture
 
