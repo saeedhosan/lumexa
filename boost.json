@@ -1,13 +1,17 @@
 {
     "agents": [
-        "opencode"
+        "opencode",
+        "claude_code",
+        "codex",
+        "gemini"
     ],
     "cloud": false,
     "guidelines": true,
     "mcp": true,
-    "nightwatch_mcp": false,
+    "nightwatch": false,
     "packages": [
-        "fruitcake/laravel-debugbar"
+        "fruitcake/laravel-debugbar",
+        "spatie/laravel-activitylog"
     ],
     "sail": false,
     "skills": [
@@ -16,6 +20,8 @@
         "fluxui-development",
         "livewire-development",
         "pest-testing",
+        "tailwindcss-development",
+        "echo-development",
         "debug-using-debugbar"
     ]
 }
