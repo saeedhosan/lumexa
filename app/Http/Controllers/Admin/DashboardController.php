@@ -9,7 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
-class DashobardController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Handle the incoming request.

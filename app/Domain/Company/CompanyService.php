@@ -25,8 +25,12 @@ class CompanyService
         return $user->companies()->orderBy('name')->get();
     }
 
-    public function getAll(): Collection
+    public function getAll(?User $user = null): Collection
     {
+        if ($user instanceof User && ! $user->isSuper()) {
+            return $user->companies()->orderBy('name')->get();
+        }
+
         return Company::query()->orderBy('name')->get();
     }
 

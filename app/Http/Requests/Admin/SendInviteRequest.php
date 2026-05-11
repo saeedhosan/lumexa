@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Admin;
 
 use App\Models\Company;
+use App\Models\Invite;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -12,13 +13,13 @@ class SendInviteRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return $this->user()?->can('create', Invite::class) ?? false;
     }
 
     public function rules(): array
     {
         return [
-            'company_id' => ['required', 'integer'],
+            'company_id' => ['required', 'integer', 'exists:companies,id'],
             'email'      => ['required', 'email', 'max:255'],
             'role'       => ['required', 'string', 'in:'.Company::ROLE_ADMIN.','.Company::ROLE_USER],
         ];

@@ -57,7 +57,13 @@ test('authenticated users can access activities show', function (): void {
     $user->update(['current_company_id' => $company->id]);
     $this->actingAs($user);
 
-    $response = $this->get(route('app.activities.show', 'test-activity'));
+    $activity = activity()
+        ->causedBy($user)
+        ->performedOn($company)
+        ->event('updated')
+        ->log('test activity');
+
+    $response = $this->get(route('app.activities.show', $activity));
     $response->assertOk();
 });
 
@@ -68,7 +74,13 @@ test('authenticated users can access activities edit', function (): void {
     $user->update(['current_company_id' => $company->id]);
     $this->actingAs($user);
 
-    $response = $this->get(route('app.activities.edit', 'test-activity'));
+    $activity = activity()
+        ->causedBy($user)
+        ->performedOn($company)
+        ->event('updated')
+        ->log('test activity');
+
+    $response = $this->get(route('app.activities.edit', $activity));
     $response->assertOk();
 });
 

@@ -40,20 +40,6 @@ class Lead extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected $casts = [
-        'id'         => 'int',
-        'uuid'       => 'string',
-        'title'      => 'string',
-        'status'     => LeadStatus::class,
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
-    /**
      * Get spatie log name
      */
     public function getLogNameToUse(): ?string
@@ -63,6 +49,8 @@ class Lead extends Model
 
     /**
      * Get the user who owns this model.
+     *
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
@@ -71,6 +59,8 @@ class Lead extends Model
 
     /**
      * Get the company that associated with model.
+     *
+     * @return BelongsTo<Company, $this>
      */
     public function company(): BelongsTo
     {
@@ -79,9 +69,28 @@ class Lead extends Model
 
     /**
      * Get the available lead list for this model
+     *
+     * @return HasMany<LeadList, $this>
      */
     public function leadList(): HasMany
     {
         return $this->hasMany(LeadList::class);
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'id'         => 'int',
+            'uuid'       => 'string',
+            'title'      => 'string',
+            'status'     => LeadStatus::class,
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
     }
 }

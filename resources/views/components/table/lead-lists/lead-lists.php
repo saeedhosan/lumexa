@@ -45,11 +45,12 @@ new class extends Component
             ->leadList()
             ->when(
                 $this->search,
-                fn ($query) => $query
-                    ->where('first_name', 'like', "%{$this->search}%")
-                    ->orWhere('last_name', 'like', "%{$this->search}%")
-                    ->orWhere('email', 'like', "%{$this->search}%")
-                    ->orWhere('phone', 'like', "%{$this->search}%"),
+                fn ($query) => $query->where(function ($q): void {
+                    $q->where('first_name', 'like', '%'.escape_like($this->search).'%')
+                        ->orWhere('last_name', 'like', '%'.escape_like($this->search).'%')
+                        ->orWhere('email', 'like', '%'.escape_like($this->search).'%')
+                        ->orWhere('phone', 'like', '%'.escape_like($this->search).'%');
+                }),
             )
             ->orderBy($this->sortBy, $this->sortDirection)
             ->paginate(10);

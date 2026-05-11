@@ -30,7 +30,7 @@ class Logs extends Component
     {
         $activities = Activity::query()
             ->with('causer')
-            ->when($this->search, fn (Builder $q) => $q->where('description', 'like', '%'.$this->search.'%'))
+            ->when($this->search, fn (Builder $q) => $q->where('description', 'like', '%'.escape_like($this->search).'%'))
             ->when($this->filterLogName, fn (Builder $q) => $q->where('log_name', $this->filterLogName))
             ->latest()
             ->paginate(20);

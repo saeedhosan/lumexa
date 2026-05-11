@@ -25,7 +25,7 @@ class ActivityController extends Controller
             ->with(['causer', 'subject'])
             ->where('causer_id', Auth::id())
             ->when($search, function ($query, string $value): void {
-                $query->where('description', 'like', sprintf('%%%s%%', $value));
+                $query->where('description', 'like', '%'.escape_like($value).'%');
             })->latest()
             ->paginate(10);
 
@@ -54,9 +54,9 @@ class ActivityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): Factory|View
+    public function show(Activity $activity): Factory|View
     {
-        $activity = Activity::query()->find($id);
+        abort_if($activity->causer_id !== Auth::id(), 403);
 
         return view('app.activities.show', ['activity' => $activity]);
     }
@@ -64,15 +64,15 @@ class ActivityController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id): Factory|View
+    public function edit(Activity $activity): Factory|View
     {
-        return view('app.activities.edit', ['id' => $id]);
+        return view('app.activities.edit', ['activity' => $activity]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): void
+    public function update(Request $request, Activity $activity): void
     {
         //
     }
@@ -80,7 +80,7 @@ class ActivityController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(): RedirectResponse
     {
         Activity::query()->where('causer_id', Auth::id())->delete();
 

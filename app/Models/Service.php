@@ -48,27 +48,6 @@ class Service extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected $casts = [
-        'uuid'       => 'string',
-        'name'       => 'string',
-        'slug'       => 'string',
-        'icon'       => 'string',
-        'logo'       => 'string',
-        'code'       => 'string',
-        'about'      => 'string',
-        'is_active'  => 'boolean',
-        'is_default' => 'boolean',
-        'version'    => 'string',
-        'provider'   => 'string',
-        'features'   => 'array',
-        'settings'   => 'array',
-    ];
-
-    /**
      * Get spatie log name
      */
     public function getLogNameToUse(): ?string
@@ -114,6 +93,30 @@ class Service extends Model
     public function updater(): BelongsTo
     {
         return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'uuid'       => 'string',
+            'name'       => 'string',
+            'slug'       => 'string',
+            'icon'       => 'string',
+            'logo'       => 'string',
+            'code'       => 'string',
+            'about'      => 'string',
+            'is_active'  => 'boolean',
+            'is_default' => 'boolean',
+            'version'    => 'string',
+            'provider'   => 'string',
+            'features'   => 'array',
+            'settings'   => 'array',
+        ];
     }
 
     /**
