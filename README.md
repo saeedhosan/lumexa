@@ -1,6 +1,6 @@
 ## ![Lumexa Logo](/docs/banner.png)
 
-![Lumexa demo](/docs/screenshot.png)
+![Lumexa](/docs/screenshot.png)
 
 <center>
 
@@ -25,9 +25,8 @@
 -   [Architecture](#architecture)
 -   [Dependencies](#dependencies)
 -   [Technologies](#technologies)
--   [API Documentation](#api-documentation)
--   [Stable tests](#stable-tests)
--   [Tests Login](#tests-login)
+-   [JSON API](#json-api)
+-   [Testing](#testing)
 
 ## Introduction
 
@@ -65,7 +64,7 @@ Lumexa provides a unified, **multi-tenant ecosystem** where companies can secure
 
 ### API & Integrations
 
--   **REST API** – JSON API for external integrations (`/api/v1`)
+-   **JSON API** – API for external integrations (`/api/v1`)
 -   **API Resources** – Consistent JSON response formatting
 -   **Rate limiting** – 60 requests/minute per IP
 -   **Laravel Sanctum** – Token-based authentication ready
@@ -105,6 +104,17 @@ composer dev
 npm run build
 ```
 
+After setup, seed local data and log in:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+| Role  | Email             | Password |
+| :---- | :---------------- | :------- |
+| Admin | admin@example.com | demo1234 |
+| User  | user@example.com  | demo1234 |
+
 ## Docker Setup
 
 > Requires [Docker Desktop](https://www.docker.com/products/docker-desktop/)
@@ -121,56 +131,52 @@ docker compose down        # stop
 docker compose restart     # restart
 docker compose exec app bash # enter container
 
-## Get demo data for testing
+## Get local data for testing
 docker compose exec app php artisan migrate:fresh --seed
 ```
 
 ## Architecture
 
-Lumexa follows a clean Laravel architecture with a **Domain-Driven Service Layer** pattern to ensure the codebase remains maintainable as the product scales.
+Lumexa follows a clean Laravel architecture with service layer pattern:
 
-### System Architecture Diagram
+**Technical Decisions & Trade-offs**
 
-```mermaid
-graph TD
-    User((User/Admin)) -->|Auth/2FA| Web[Web Interface/Livewire]
-    User -->|API Token| API[REST API v1]
+| Decision           | Choice             | Rationale                                            |
+| :----------------- | :----------------- | :--------------------------------------------------- |
+| **Multi-Tenancy**  | Single Database    | Cost-efficient, data isolated via Global Scopes.     |
+| **Auth Backend**   | Laravel Fortify    | Battle-tested, headless auth with native 2FA.        |
+| **Frontend**       | Livewire + Flux UI | SPA-like reactivity without a separate JS framework. |
+| **Testing**        | Pest PHP           | Readable syntax, 160+ tests, stable production env.  |
+| **Infrastructure** | Docker             | Consistent environments - development to production. |
 
-    subgraph Core_Application
-        Web --> Controllers
-        API --> Controllers
-        Controllers --> Domain[Domain Service Layer]
-        Domain --> Models[Eloquent Models]
-        Domain --> Events[Events/Listeners]
-        Domain --> Jobs[Background Jobs]
-    end
+View more technical depth in [Technologies](#technologies)
 
-    subgraph Data_Storage
-        Models --> DB[(Primary Database)]
-        Models --> Cache[(Redis/Cache)]
-        Jobs --> Queue[(Job Queue)]
-    end
-
-    subgraph External_Services
-        Domain --> Storage[File Storage/S3]
-        Domain --> Mail[Mail Service]
-    end
 ```
-
-### Technical Decisions & Trade-offs
-
-| Decision          | Choice             | Rationale                                                                                                                               |
-| :---------------- | :----------------- | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **Multi-Tenancy** | Single Database    | Chosen for cost-efficiency and easier maintenance for a mid-market SaaS. Data isolation is strictly enforced via Global Scopes.         |
-| **Auth Backend**  | Laravel Fortify    | Prioritized security-first development by using a battle-tested, headless auth engine with native 2FA support.                          |
-| **Frontend**      | Livewire + Flux UI | Opted for "The TALL Stack" to achieve SPA-like reactivity without the complexity of a separate JS framework, reducing "Time to Market". |
-| **Testing**       | Pest PHP           | Implemented 160+ tests using Pest for its superior readability and developer velocity, ensuring a stable production environment.        |
-| **Import Engine** | Maatwebsite Excel  | Used a robust library for lead imports to handle complex CSV/Excel edge cases and prevent CSV Injection attacks.                        |
+app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── Api/                     # API controllers
+│   │   ├── App/                     # User-facing controllers
+│   │   └── Admin/                   # Admin controllers
+│   ├── Middleware/                  # Role-based access
+│   ├── Resources/                   # API Resources
+│   └── Requests/                    # Form requests
+├── Models/                          # Eloquent models
+├── Domain/                          # Service layer
+├── Events/                          # Laravel events
+├── Listeners/                       # Event listeners
+├── Jobs/                            # Queue jobs
+├── Notifications/                   # Notifications
+├── Enums/                           # PHP enums
+├── Livewire/                        # Livewire components
+├── Providers/                       # Service providers
+└── Policies/                        # Authorization policies
+```
 
 **Route Structure:**
 
 -   `/` - Public landing page
--   `/api/v1/*` - REST API endpoints
+-   `/api/v1/*` - JSON API endpoints
 -   `/app/*` - User dashboard and features
 -   `/admin/*` - Company administration
 -   `/settings/*` - User profile settings
@@ -197,23 +203,9 @@ graph TD
 -   **Testing:** Pest PHP
 -   **Code Quality:** Laravel Pint, Rector
 
-## Stable tests
+## JSON API
 
-Run tests:
-
-```bash
-composer test
-```
-
-Run lint:
-
-```bash
-composer lint
-```
-
-## API Documentation
-
-Full API documentation is available in [docs/api.md](/docs/api.md).
+Full API docs is available in [docs/api.md](/docs/api.md).
 
 **Quick Start:**
 
@@ -231,32 +223,22 @@ curl -X GET "http://localhost:8000/api/v1/leads/1" \
 
 **Features:**
 
--   RESTful JSON responses via Laravel API Resources
+-   JSON responses via Laravel API Resources
 -   Pagination support (`per_page` parameter)
 -   Rate limited (60 requests/minute)
 -   Event-driven architecture with Laravel Events
 -   Background job processing with Laravel Queues
 
-## Tests Login
+## Testing
 
-For testing purposes, you can use the demo [users](/config/demo.php) with UserSeeder.php:
+Run tests:
 
 ```bash
-php artisan migrate:fresh --seed
+composer test
 ```
 
-User:
+Run lint:
 
-```txt
-user: user@example.com
-pass: demo1234
+```bash
+composer lint
 ```
-
-Admin:
-
-```txt
-user: admin@example.com
-pass: demo1234
-```
-
-You can login and access the welcome page at `http://localhost:8000` to visit the dashboard.
