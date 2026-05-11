@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace {{ namespace }};
 
 {{ factoryImport }}
@@ -28,9 +30,10 @@ class {{ class }} extends Model
      *
      * @return array<string, string>
      */
-    protected $casts = [
-        'id'         => 'int',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            //
+        ];
+    }
 }

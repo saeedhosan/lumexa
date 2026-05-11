@@ -28,7 +28,7 @@ class LeadService
     public function search(?string $search = null, string $sort = 'created_at', string $direction = 'desc'): LengthAwarePaginator
     {
         return Lead::query()
-            ->when($search, fn ($query) => $query->where('title', 'like', sprintf('%%%s%%', $search)))
+            ->when($search, fn ($query) => $query->where('title', 'like', '%'.escape_like($search).'%'))
             ->orderBy($sort, $direction)
             ->paginate(10)
             ->withQueryString();

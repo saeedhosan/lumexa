@@ -48,7 +48,7 @@ new class extends Component
         return Lead::query()
             ->when(
                 $this->search,
-                fn ($query) => $query->where('title', 'like', "%{$this->search}%"),
+                fn ($query) => $query->where('title', 'like', '%'.escape_like($this->search).'%'),
             )
             ->orderBy($this->sortBy, $this->sortDirection)
             ->paginate(10);

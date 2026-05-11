@@ -31,16 +31,31 @@ class LeadListImport implements ToModel, WithHeadingRow
 
         return new LeadList([
             'lead_id'       => $this->lead->id,
-            'first_name'    => $row['first_name'] ?? null,
-            'last_name'     => $row['last_name']  ?? null,
-            'phone'         => $row['phone']      ?? null,
-            'email'         => $row['email']      ?? null,
-            'address'       => $row['address']    ?? null,
-            'city'          => $row['city']       ?? null,
-            'state'         => $row['state']      ?? null,
-            'zip_code'      => $row['zip_code']   ?? null,
+            'first_name'    => $this->sanitizeCsvValue($row['first_name'] ?? null),
+            'last_name'     => $this->sanitizeCsvValue($row['last_name'] ?? null),
+            'phone'         => $this->sanitizeCsvValue($row['phone'] ?? null),
+            'email'         => $this->sanitizeCsvValue($row['email'] ?? null),
+            'address'       => $this->sanitizeCsvValue($row['address'] ?? null),
+            'city'          => $this->sanitizeCsvValue($row['city'] ?? null),
+            'state'         => $this->sanitizeCsvValue($row['state'] ?? null),
+            'zip_code'      => $this->sanitizeCsvValue($row['zip_code'] ?? null),
             'birth_of_date' => $birthDate,
             'status'        => LeadListStatus::cleaned,
         ]);
+    }
+
+    private function sanitizeCsvValue(mixed $value): ?string
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        $value = (string) $value;
+
+        if (str_starts_with($value, '=') || str_starts_with($value, '+') || str_starts_with($value, '-') || str_starts_with($value, '@')) {
+            return "'".$value;
+        }
+
+        return $value;
     }
 }

@@ -85,9 +85,22 @@ it('can update company with valid data', function (): void {
     expect($company->fresh()->name)->toBe('Updated Name');
 });
 
-it('admin can manage other companies', function (): void {
+it('admin can view belogs companies', function (): void {
     $admin   = User::factory()->create(['type' => UserType::admin]);
     $company = Company::factory()->create(['name' => 'Other Company']);
+
+    $admin->companies()->attach($company, ['role' => Company::ROLE_ADMIN]);
+
+    actingAs($admin);
+
+    get(route('admin.companies.show', $company))->assertSuccessful();
+});
+
+it('admin can manage belogs companies', function (): void {
+    $admin   = User::factory()->create(['type' => UserType::admin]);
+    $company = Company::factory()->create(['name' => 'Other Company']);
+
+    $admin->companies()->attach($company, ['role' => Company::ROLE_ADMIN]);
 
     actingAs($admin);
 
@@ -100,13 +113,4 @@ it('admin can manage other companies', function (): void {
     ])->assertRedirect();
 
     expect($company->fresh()->name)->toBe('Updated By Admin');
-});
-
-it('admin can view other companies', function (): void {
-    $admin   = User::factory()->create(['type' => UserType::admin]);
-    $company = Company::factory()->create(['name' => 'Other Company']);
-
-    actingAs($admin);
-
-    get(route('admin.companies.show', $company))->assertSuccessful();
 });

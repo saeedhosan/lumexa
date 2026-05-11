@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Super;
 
-use App\Enums\Access;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Gate;
 
 class SettingStoreRequest extends FormRequest
 {
@@ -16,7 +14,7 @@ class SettingStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::has(Access::super);
+        return $this->user()?->isSuper() ?? false;
     }
 
     /**

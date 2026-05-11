@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+if (env('APP_ENV') !== 'local') {
+    return [];
+}
+
 return [
     'user' => [
         'name'     => 'User',

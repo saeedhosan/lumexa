@@ -16,9 +16,12 @@ class LeadController extends Controller
 {
     public function index(Request $request): JsonResource
     {
-        $perPage = min($request->query('per_page', 15), 100);
+        $perPage = min((int) $request->query('per_page', 15), 100);
+
+        $user = $request->user();
 
         $leads = Lead::query()
+            ->whereIn('company_id', $user->companies()->select('companies.id'))
             ->with('company')
             ->latest()
             ->paginate($perPage);
@@ -26,11 +29,16 @@ class LeadController extends Controller
         return new LeadCollection($leads);
     }
 
-    public function show(int $id): JsonResponse
+    public function show(Request $request, int $id): JsonResponse
     {
+        $user = $request->user();
+
         $lead = Lead::query()
+            ->whereIn('company_id', $user->companies()->select('companies.id'))
             ->with('company', 'leadList')
             ->findOrFail($id);
+
+        $this->authorize('view', $lead);
 
         return response()->json([
             'data' => new LeadResource($lead),

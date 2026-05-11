@@ -9,6 +9,7 @@ use App\Enums\UserType;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class StoreUserRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class StoreUserRequest extends FormRequest
         $rules = [
             'name'               => ['required', 'string', 'max:255'],
             'email'              => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password'           => ['required', 'confirmed', 'min:8'],
+            'password'           => ['required', 'confirmed', Password::defaults()],
             'status'             => ['required', 'string', 'in:'.implode(',', UserStatus::values())],
             'current_company_id' => ['nullable', 'integer'],
         ];

@@ -61,7 +61,7 @@ new class extends Component
     {
         return [
             'title' => 'required|string|max:255',
-            'file'  => 'required|file|mimes:xlsx,xls,csv',
+            'file'  => 'required|file|mimes:xlsx,xls,csv|max:10240',
         ];
     }
 };

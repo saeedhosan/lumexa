@@ -40,8 +40,8 @@ it('can create new user with valid data', function (): void {
     post(route('admin.users.store'), [
         'name'                  => 'New User',
         'email'                 => 'newuser@example.com',
-        'password'              => 'password123',
-        'password_confirmation' => 'password123',
+        'password'              => 'Password123',
+        'password_confirmation' => 'Password123',
         'status'                => UserStatus::active->value,
         'type'                  => UserType::user->value,
         'current_company_id'    => $company->id,

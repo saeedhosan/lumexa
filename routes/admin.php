@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Admin\BillingController;
 use App\Http\Controllers\Admin\CompanyController;
-use App\Http\Controllers\Admin\DashobardController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InviteController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\LogController;
@@ -19,8 +19,8 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', DashobardController::class)->name('home');
-Route::get('/dashboard', DashobardController::class)->name('dashboard');
+Route::get('/', DashboardController::class)->name('home');
+Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
 Route::resource('companies', CompanyController::class);
 Route::resource('services', ServiceController::class);

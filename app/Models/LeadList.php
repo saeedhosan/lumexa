@@ -37,27 +37,6 @@ class LeadList extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected $casts = [
-        'id'            => 'int',
-        'first_name'    => 'string',
-        'last_name'     => 'string',
-        'phone'         => 'string',
-        'email'         => 'string',
-        'address'       => 'string',
-        'city'          => 'string',
-        'state'         => 'string',
-        'zip_code'      => 'string',
-        'birth_of_date' => 'date',
-        'status'        => LeadListStatus::class,
-        'created_at'    => 'datetime',
-        'updated_at'    => 'datetime',
-    ];
-
-    /**
      * The accessors to append to the model's array form.
      *
      * @var array
@@ -66,10 +45,36 @@ class LeadList extends Model
 
     /**
      * Get the lead who owns this model.
+     *
+     * @return BelongsTo<Lead, $this>
      */
     public function lead(): BelongsTo
     {
         return $this->belongsTo(Lead::class);
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'id'            => 'int',
+            'first_name'    => 'string',
+            'last_name'     => 'string',
+            'phone'         => 'string',
+            'email'         => 'string',
+            'address'       => 'string',
+            'city'          => 'string',
+            'state'         => 'string',
+            'zip_code'      => 'string',
+            'birth_of_date' => 'date',
+            'status'        => LeadListStatus::class,
+            'created_at'    => 'datetime',
+            'updated_at'    => 'datetime',
+        ];
     }
 
     /**
