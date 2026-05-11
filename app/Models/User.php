@@ -115,17 +115,6 @@ class User extends Authenticatable
     /**
      * Determine if user has acces t the given company.
      */
-    public function isCustomerOf(Company $company): bool
-    {
-        return $this->companies()
-            ->where('companies.id', $company->id)
-            ->wherePivot('role', Company::ROLE_USER)
-            ->exists();
-    }
-
-    /**
-     * Determine if user has acces t the given company.
-     */
     public function belongsToCompany(Company $company): bool
     {
         return $this->companies()
