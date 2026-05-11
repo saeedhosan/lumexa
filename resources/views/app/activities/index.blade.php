@@ -15,7 +15,7 @@
                     </flux:button>
                 @endif
             </form>
-            <form method="POST" action="{{ route('app.activities.destroy') }}"
+            <form method="POST" action="{{ route('app.activities.destroy', 'null') }}"
                 onsubmit="return confirm('Are you sure you want to clear all your activity logs?');"
             >
                 @csrf
