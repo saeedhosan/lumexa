@@ -82,16 +82,6 @@ class Company extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected $casts = [
-        'settings'  => 'array',
-        'is_active' => 'boolean',
-    ];
-
-    /**
      * Get spatie log name
      */
     public function getLogNameToUse(): ?string
@@ -167,5 +157,18 @@ class Company extends Model
     public function plan(): BelongsTo
     {
         return $this->belongsTo(Plan::class);
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'settings'  => 'array',
+            'is_active' => 'boolean',
+        ];
     }
 }

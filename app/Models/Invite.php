@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Policies\InvitePolicy;
 use Database\Factories\InviteFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use SaeedHosan\Tenancy\Concerns\HasTenant;
 
+#[UsePolicy(InvitePolicy::class)]
 #[UseFactory(InviteFactory::class)]
 class Invite extends Model
 {
@@ -25,10 +28,6 @@ class Invite extends Model
         'accepted_at',
     ];
 
-    protected $casts = [
-        'accepted_at' => 'datetime',
-    ];
-
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
@@ -37,5 +36,17 @@ class Invite extends Model
     public function inviter(): BelongsTo
     {
         return $this->belongsTo(User::class, 'invited_by');
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'accepted_at' => 'datetime',
+        ];
     }
 }

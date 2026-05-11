@@ -18,3 +18,13 @@ if (! function_exists('home_route')) {
         });
     }
 }
+
+if (! function_exists('escape_like')) {
+    /**
+     * Escape LIKE wildcard characters for safe SQL LIKE queries.
+     */
+    function escape_like(string $value): string
+    {
+        return str_replace(['%', '_'], ['\\%', '\\_'], $value);
+    }
+}

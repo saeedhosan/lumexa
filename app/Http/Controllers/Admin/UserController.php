@@ -126,7 +126,7 @@ class UserController extends Controller
 
         $companyId = $data['current_company_id'] ?? $currentUser->current_company_id;
         if ($companyId) {
-            $user->companies()->sync([$companyId => ['role' => Company::ROLE_ADMIN]]);
+            $user->companies()->syncWithoutDetaching([$companyId => ['role' => Company::ROLE_ADMIN]]);
         }
 
         return to_route('admin.users.index')

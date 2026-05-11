@@ -6,43 +6,54 @@ namespace App\Policies;
 
 use App\Models\Service;
 use App\Models\User;
+use App\Policies\Concerns\SuperPolicyBefore;
 
 class ServicePolicy
 {
+    use SuperPolicyBefore;
+
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->companies()->exists();
     }
 
     public function view(User $user, Service $service): bool
     {
-        return true;
+        return $service->companies()
+            ->whereKey($user->companies()->select('companies.id'))
+            ->exists();
     }
 
     public function create(User $user): bool
     {
-        if ($user->isAdmin()) {
-            return true;
-        }
-
-        return $user->isSuper();
+        return $this->belongsToAnyServiceCompany($user);
     }
 
     public function update(User $user, Service $service): bool
     {
-        if ($user->isAdmin()) {
-            return true;
-        }
-
-        return $user->isSuper();
+        return $this->belongsToServiceCompany($user, $service);
     }
 
     public function delete(User $user, Service $service): bool
     {
-        if ($user->isAdmin()) {
-            return true;
-        }
+        return $this->belongsToServiceCompany($user, $service);
+    }
 
-        return $user->isSuper();
+    /**
+     * User must belong to at least one company that owns services
+     */
+    private function belongsToAnyServiceCompany(User $user): bool
+    {
+        return $user->companies()->exists();
+    }
+
+    /**
+     * User must belong to the service's company
+     */
+    private function belongsToServiceCompany(User $user, Service $service): bool
+    {
+        return $service->companies()
+            ->whereKey($user->companies()->select('companies.id'))
+            ->exists();
     }
 }

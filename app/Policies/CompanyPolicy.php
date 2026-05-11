@@ -6,39 +6,34 @@ namespace App\Policies;
 
 use App\Models\Company;
 use App\Models\User;
+use App\Policies\Concerns\SuperPolicyBefore;
 
 class CompanyPolicy
 {
+    use SuperPolicyBefore;
+
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->companies()->exists();
     }
 
     public function view(User $user, Company $company): bool
     {
-        if ($user->isSuper()) {
-            return true;
-        }
-
-        return $user->companies()->where('companies.id', $company->id)->exists();
+        return $user->belongsToCompany($company);
     }
 
     public function create(User $user): bool
     {
-        return $user->isSuper();
+        return $user->isAdmin() && $user->belongsToCompany($user->currentCompany);
     }
 
     public function update(User $user, Company $company): bool
     {
-        if ($user->isSuper()) {
-            return true;
-        }
-
-        return $user->isAdminOf($company);
+        return $user->isAdmin() && $user->belongsToCompany($company);
     }
 
     public function delete(User $user, Company $company): bool
     {
-        return $user->isSuper();
+        return false;
     }
 }

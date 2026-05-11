@@ -44,7 +44,6 @@ class User extends Authenticatable
         'email',
         'status',
         'password',
-        'type',
         'current_company_id',
     ];
 
@@ -58,18 +57,6 @@ class User extends Authenticatable
         'two_factor_secret',
         'two_factor_recovery_codes',
         'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password'          => 'hashed',
-        'status'            => UserStatus::class,
-        'type'              => UserType::class,
     ];
 
     /**
@@ -96,6 +83,8 @@ class User extends Authenticatable
      * Primary company (users.company_id).
      *
      * Used when a user has a default or active company.
+     *
+     * @return BelongsTo<Company, $this>
      */
     public function currentCompany(): BelongsTo
     {
@@ -104,6 +93,8 @@ class User extends Authenticatable
 
     /**
      * All companies the user belongs to via pivot table.
+     *
+     * @return BelongsToMany<Company>
      */
     public function companies(): BelongsToMany
     {
@@ -122,13 +113,27 @@ class User extends Authenticatable
     }
 
     /**
-     * Determine if user is a customer of the given company.
+     * Determine if user has acces t the given company.
      */
-    public function isCustomerOf(Company $company): bool
+    public function belongsToCompany(Company $company): bool
     {
         return $this->companies()
-            ->where('companies.id', $company->id)
-            ->wherePivot('role', Company::ROLE_USER)
+            ->whereKey($company->id)
             ->exists();
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password'          => 'hashed',
+            'status'            => UserStatus::class,
+            'type'              => UserType::class,
+        ];
     }
 }

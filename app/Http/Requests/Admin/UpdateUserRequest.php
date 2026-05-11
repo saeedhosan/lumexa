@@ -8,12 +8,13 @@ use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Models\Company;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class UpdateUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return $this->user()?->can('update', $this->route('user')) ?? false;
     }
 
     public function rules(): array
@@ -22,7 +23,7 @@ class UpdateUserRequest extends FormRequest
 
         $rules = [
             'name'               => ['required', 'string', 'max:255'],
-            'password'           => ['nullable', 'confirmed', 'min:8'],
+            'password'           => ['nullable', 'confirmed', Password::defaults()],
             'status'             => ['required', 'string', 'in:'.implode(',', UserStatus::values())],
             'current_company_id' => ['nullable', 'integer'],
         ];

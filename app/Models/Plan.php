@@ -42,20 +42,6 @@ class Plan extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected $casts = [
-        'is_active'     => 'boolean',
-        'is_default'    => 'boolean',
-        'price_monthly' => 'decimal:2',
-        'price_yearly'  => 'decimal:2',
-        'features'      => 'array',
-        'settings'      => 'array',
-    ];
-
-    /**
      * Get spatie log name
      */
     public function getLogNameToUse(): ?string
@@ -81,5 +67,22 @@ class Plan extends Model
     public function companies(): BelongsToMany
     {
         return $this->belongsToMany(Company::class, 'company_plan');
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'is_active'     => 'boolean',
+            'is_default'    => 'boolean',
+            'price_monthly' => 'decimal:2',
+            'price_yearly'  => 'decimal:2',
+            'features'      => 'array',
+            'settings'      => 'array',
+        ];
     }
 }
