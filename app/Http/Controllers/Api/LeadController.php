@@ -11,7 +11,6 @@ use App\Models\Lead;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class LeadController extends Controller
 {
@@ -19,14 +18,11 @@ class LeadController extends Controller
     {
         $perPage = min((int) $request->query('per_page', 15), 100);
 
-        $companyId = $this->authorizeCompanyAccess(
-            $request,
-            $request->query('company_id', $request->user()?->current_company_id),
-        );
+        $user = $request->user();
 
         $leads = Lead::query()
+            ->whereIn('company_id', $user->companies()->select('companies.id'))
             ->with('company')
-            ->when($companyId, fn ($q, $id) => $q->where('company_id', $id))
             ->latest()
             ->paginate($perPage);
 
@@ -35,33 +31,17 @@ class LeadController extends Controller
 
     public function show(Request $request, int $id): JsonResponse
     {
-        $companyId = $this->authorizeCompanyAccess(
-            $request,
-            $request->query('company_id', $request->user()?->current_company_id),
-        );
+        $user = $request->user();
 
         $lead = Lead::query()
+            ->whereIn('company_id', $user->companies()->select('companies.id'))
             ->with('company', 'leadList')
-            ->when($companyId, fn ($q, $id) => $q->where('company_id', $id))
             ->findOrFail($id);
+
+        $this->authorize('view', $lead);
 
         return response()->json([
             'data' => new LeadResource($lead),
         ]);
-    }
-
-    private function authorizeCompanyAccess(Request $request, int|string|null $companyId): int|string|null
-    {
-        $user = $request->user();
-
-        if ($companyId === null) {
-            return null;
-        }
-
-        $userCompanyIds = $user->companies()->pluck('companies.id')->toArray();
-
-        throw_unless(in_array((int) $companyId, $userCompanyIds, true), AccessDeniedHttpException::class, "You do not have access to this company's data.");
-
-        return $companyId;
     }
 }
