@@ -46,22 +46,16 @@ jobs:
           bun run build
 
       - name: Deploy to server
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-
-          tar czf - \
-            --exclude='.git' \
-            --exclude='.github' \
-            --exclude='node_modules' \
-            --exclude='tests' \
-            --exclude='.env' \
-            . | ssh -o StrictHostKeyChecking=no \
-                  -p "$SSH_PORT" \
-                  -i ~/.ssh/deploy_key \
-                  "$SSH_USER@$SSH_HOST" \
-                  "mkdir -p $SSH_PATH && tar xzf - -C $SSH_PATH"
+        uses: appleboy/scp-action@v1.0.0
+        with:
+          host: ${{ env.SSH_HOST }}
+          username: ${{ env.SSH_USER }}
+          key: ${{ env.SSH_KEY }}
+          port: ${{ env.SSH_PORT }}
+          source: "."
+          target: ${{ env.SSH_PATH }}
+          strip_components: 0
+          overwrite: true
 
       # --- Run server commands ---
       - name: Run Laravel commands
