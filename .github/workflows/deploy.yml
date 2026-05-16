@@ -46,21 +46,22 @@ jobs:
           bun run build
 
       - name: Deploy to server
-        uses: easingthemes/ssh-deploy@main
-        with:
-          SSH_PRIVATE_KEY: ${{ env.SSH_KEY }}
-          REMOTE_HOST: ${{ env.SSH_HOST }}
-          REMOTE_USER: ${{ env.SSH_USER }}
-          REMOTE_PORT: ${{ env.SSH_PORT }}
-          SOURCE: "./"
-          TARGET: ${{ env.SSH_PATH }}
-          ARGS: "-rlgoDzvc -i"
-          EXCLUDE: |
-            /.git,
-            /.github/,
-            /node_modules/,
-            /tests/,
-            /.env
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+          tar czf - \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='node_modules' \
+            --exclude='tests' \
+            --exclude='.env' \
+            . | ssh -o StrictHostKeyChecking=no \
+                  -p "$SSH_PORT" \
+                  -i ~/.ssh/deploy_key \
+                  "$SSH_USER@$SSH_HOST" \
+                  "mkdir -p $SSH_PATH && tar xzf - -C $SSH_PATH"
 
       # --- Run server commands ---
       - name: Run Laravel commands
