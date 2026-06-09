@@ -14,6 +14,7 @@
 [![Tests](https://img.shields.io/badge/Tests-161-green)](https://phpunit.de/)
 [![API](https://img.shields.io/badge/API-REST-brightgreen)](https://laravel.com/)
 ![Stage](https://img.shields.io/badge/Stage-production-green)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-lumexa.saeedhosan.com-blue?style=for-the-badge)](https://lumexa.saeedhosan.com/)
 
 ## Table of contents
 
@@ -31,6 +32,8 @@
 ## Introduction
 
 Lumexa is a SaaS application that allows multiple companies to use the same system while keeping their data separate.
+
+> **🚀 Live demo:** [lumexa.saeedhosan.com](https://lumexa.saeedhosan.com/) — see it in action
 
 ### The Problem
 
