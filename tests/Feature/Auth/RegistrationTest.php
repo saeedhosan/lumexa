@@ -19,9 +19,15 @@ test('new users can register', function (): void {
     ]);
 
     $response->assertSessionHasNoErrors()
-        ->assertRedirect(route('dashboard', absolute: false));
+        ->assertRedirect(route('onboarding', absolute: false));
 
     $this->assertAuthenticated();
+
+    $this->assertDatabaseHas('companies', ['name' => "John Doe's Company"]);
+
+    $user = User::query()->where('email', 'test@example.com')->first();
+
+    expect($user->current_company_id)->not->toBeNull();
 });
 
 test('user cannot register with invalid data', function (): void {

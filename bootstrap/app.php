@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Enums\UserType;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\CustomerMiddleware;
+use App\Http\Middleware\RedirectIfOnboarded;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -30,9 +31,10 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->alias([
-            'admin'    => AdminMiddleware::class,
-            'customer' => CustomerMiddleware::class,
-            'super'    => function ($request, $next) {
+            'admin'      => AdminMiddleware::class,
+            'customer'   => CustomerMiddleware::class,
+            'onboarding' => RedirectIfOnboarded::class,
+            'super'      => function ($request, $next) {
                 abort_if($request->user()?->type !== UserType::super, 403);
 
                 return $next($request);
