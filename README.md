@@ -189,7 +189,6 @@ app/
 | laravel/fortify   | 1.36.1  | Authentication backend    |
 | livewire/flux     | 2.13.0  | UI component library      |
 | livewire/livewire | 4.2.1   | Reactive PHP components   |
-| laravel/boost     | 2.3.4   | MCP server & dev tools    |
 | pestphp/pest      | 4.4.3   | Testing framework         |
 | tailwindcss       | 4.2.0   | CSS framework             |
 | maatwebsite/excel | ^3.1    | Excel exports and imports |
