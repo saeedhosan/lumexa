@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Fortify;
 
+use App\Actions\Company\CreateCompanyForUser;
 use App\Concerns\PasswordValidationRules;
 use App\Concerns\ProfileValidationRules;
 use App\Models\User;
@@ -15,11 +16,6 @@ class CreateNewUser implements CreatesNewUsers
     use PasswordValidationRules;
     use ProfileValidationRules;
 
-    /**
-     * Validate and create a newly registered user.
-     *
-     * @param  array<string, string>  $input
-     */
     public function create(array $input): User
     {
         Validator::make($input, [
@@ -27,10 +23,16 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        return User::query()->create([
+        $user = User::query()->create([
             'name'     => $input['name'],
             'email'    => $input['email'],
             'password' => $input['password'],
         ]);
+
+        $companyName = $input['name']."'s Company";
+
+        resolve(CreateCompanyForUser::class)->handle($user, $companyName);
+
+        return $user;
     }
 }
