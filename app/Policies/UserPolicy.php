@@ -13,7 +13,7 @@ class UserPolicy
 
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->companies()->exists();
     }
 
     public function view(User $user, User $model): bool
@@ -23,7 +23,7 @@ class UserPolicy
 
     public function create(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || ($user->currentCompany && $user->isAdminOf($user->currentCompany));
     }
 
     public function update(User $user, User $model): bool
