@@ -1,4 +1,4 @@
-<x-layouts::auth>
+<div>
     <flux:heading class="text-center">Welcome to Lumexa</flux:heading>
 
     <flux:separator class="my-6" />
@@ -82,4 +82,4 @@
             <div class="h-2 w-2 rounded-full {{ $step >= $i ? 'bg-zinc-800 dark:bg-white' : 'bg-zinc-300 dark:bg-zinc-600' }}"></div>
         @endfor
     </div>
-</x-layouts::auth>
+</div>

@@ -8,8 +8,10 @@ use App\Models\Company;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+#[Layout('layouts::auth')]
 class Onboarding extends Component
 {
     public int $step = 1;
