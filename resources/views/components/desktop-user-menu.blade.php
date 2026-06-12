@@ -17,6 +17,12 @@
                 <flux:text class="truncate">{{ auth()->user()->email }}</flux:text>
             </div>
         </div>
+        @if (auth()->user()->isUser())
+            <flux:menu.separator />
+            <flux:menu.item :href="route('admin.dashboard')" icon="building-office-2" wire:navigate>
+                {{ __('Admin Dashboard') }}
+            </flux:menu.item>
+        @endif
         <flux:menu.separator />
         <flux:menu.radio.group>
             <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>
