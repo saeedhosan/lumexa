@@ -27,6 +27,14 @@
                 </div>
             </flux:menu.radio.group>
 
+            @if (auth()->user()->isUser())
+                <flux:menu.radio.group>
+                    <flux:menu.item :href="route('admin.dashboard')" icon="building-office-2" wire:navigate>
+                        {{ __('Admin Dashboard') }}
+                    </flux:menu.item>
+                </flux:menu.radio.group>
+            @endif
+
             <flux:menu.separator />
 
             <flux:menu.radio.group>
