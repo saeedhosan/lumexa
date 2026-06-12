@@ -10,7 +10,7 @@ Route::view('/', 'welcome')->name('home');
 require __DIR__.'/settings.php';
 
 Route::middleware('auth')->group(function (): void {
-    Route::get('onboarding', Onboarding::class)
+    Route::livewire('onboarding', Onboarding::class)
         ->middleware('onboarding')
         ->name('onboarding');
 });
