@@ -11,7 +11,7 @@
 [![PHP Version](https://img.shields.io/badge/PHP-8.4-blue)](https://www.php.net/)
 [![Laravel Version](https://img.shields.io/badge/Laravel-13.0-red)](https://laravel.com/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.2.0-06B6D4)](https://tailwindcss.com/)
-[![Tests](https://img.shields.io/badge/Tests-161-green)](https://phpunit.de/)
+[![Tests](https://img.shields.io/badge/Tests-204-green)](https://phpunit.de/)
 [![API](https://img.shields.io/badge/API-REST-brightgreen)](https://laravel.com/)
 ![Stage](https://img.shields.io/badge/Stage-production-green)
 
@@ -48,6 +48,7 @@ Lumexa provides a unified, **multi-tenant ecosystem** where companies can secure
 -   **Role-based access control** – Three roles: Super Admin, Admin, and User
 -   **Email verification** – Email confirmation for user accounts
 -   **Password reset** – Secure password recovery flow
+-   **User onboarding** – Guided 3-step onboarding wizard on first login (company setup, profile completion)
 
 ### Multi-Tenancy
 
@@ -176,8 +177,8 @@ app/
 -   `/api/v1/*` - JSON API endpoints
 -   `/app/*` - User dashboard and features
 -   `/admin/*` - Company administration
--   `/settings/*` - User profile settings
--   `/settings/*` - User profile settings
+- `/onboarding` - New user onboarding wizard
+- `/settings/*` - User profile settings
 
 ## Dependencies
 
