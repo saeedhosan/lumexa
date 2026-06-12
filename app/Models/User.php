@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Models\Concerns\HasUserType;
 use App\Policies\UserPolicy;
 use Database\Factories\UserFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,7 +24,7 @@ use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
 #[UsePolicy(UserPolicy::class)]
 #[UseFactory(UserFactory::class)]
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -45,6 +44,7 @@ class User extends Authenticatable
         'status',
         'password',
         'current_company_id',
+        'onboarded_at',
     ];
 
     /**
@@ -131,6 +131,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'onboarded_at'      => 'datetime',
             'password'          => 'hashed',
             'status'            => UserStatus::class,
             'type'              => UserType::class,
