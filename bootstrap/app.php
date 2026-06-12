@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Enums\UserType;
-use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\CustomerMiddleware;
 use App\Http\Middleware\RedirectIfOnboarded;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
@@ -31,7 +30,6 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->alias([
-            'admin'      => AdminMiddleware::class,
             'customer'   => CustomerMiddleware::class,
             'onboarding' => RedirectIfOnboarded::class,
             'super'      => function ($request, $next) {
@@ -39,10 +37,6 @@ return Application::configure(basePath: dirname(__DIR__))
 
                 return $next($request);
             },
-        ]);
-
-        $middleware->group('admin', [
-            AdminMiddleware::class,
         ]);
 
         $middleware->group('customer', [
