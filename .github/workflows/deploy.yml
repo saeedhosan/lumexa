@@ -49,22 +49,21 @@ jobs:
                   bun install --frozen-lockfile
                   bun run build
 
+            - name: Clean unwanted files before deploy
+              run: |
+                  rm -rf .git .github node_modules tests
+
             - name: Deploy to server
-              uses: easingthemes/ssh-deploy@main
+              uses: appleboy/scp-action@v1.0.0
               with:
-                  SSH_PRIVATE_KEY: ${{ env.SSH_KEY }}
-                  REMOTE_HOST: ${{ env.SSH_HOST }}
-                  REMOTE_USER: ${{ env.SSH_USER }}
-                  REMOTE_PORT: ${{ env.SSH_PORT }}
-                  SOURCE: "./"
-                  TARGET: ${{ env.SSH_PATH }}
-                  ARGS: "-rlgoDzvc -i"
-                  EXCLUDE: |
-                      /.git,
-                      /.github/,
-                      /node_modules/,
-                      /tests/,
-                      /.env
+                  host: ${{ env.SSH_HOST }}
+                  username: ${{ env.SSH_USER }}
+                  key: ${{ env.SSH_KEY }}
+                  port: ${{ env.SSH_PORT }}
+                  source: "./"
+                  target: ${{ env.SSH_PATH }}
+                  strip_components: 0
+                  overwrite: true
 
             - name: Run Laravel commands
               uses: appleboy/ssh-action@v1.0.3
