@@ -20,6 +20,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
+use Override;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
 #[UsePolicy(UserPolicy::class)]
@@ -127,6 +128,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return array<string, string>
      */
+    #[Override]
     protected function casts(): array
     {
         return [

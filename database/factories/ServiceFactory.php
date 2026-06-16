@@ -9,6 +9,7 @@ use App\Models\Service;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Override;
 
 /**
  * @template TModel of \App\Models\Service
@@ -97,6 +98,7 @@ class ServiceFactory extends Factory
     /**
      * Configure the factory.
      */
+    #[Override]
     public function configure(): static
     {
         return $this->afterMaking(function (Service $service): void {

@@ -6,6 +6,7 @@ namespace App\Http\Requests\Super;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Override;
 
 class SettingStoreRequest extends FormRequest
 {
@@ -40,6 +41,7 @@ class SettingStoreRequest extends FormRequest
      *
      * @return array<string, string>
      */
+    #[Override]
     public function attributes(): array
     {
         return [
