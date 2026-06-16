@@ -1,91 +1,54 @@
 name: Production deploy
 
 on:
-  workflow_dispatch:
-  push:
-    tags:
-      - "v*"
-    branches:
-      - deploy
+    workflow_dispatch:
+    push:
+        tags:
+            - "v*"
+        branches:
+            - deploy
 
 permissions:
-  contents: read
+    contents: read
 
 concurrency:
-  group: deploy
-  cancel-in-progress: true
+    group: deploy
+    cancel-in-progress: true
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    environment: production
-    timeout-minutes: 30
-    env:
-      SSH_KEY: ${{ secrets.SSH_KEY }}
-      SSH_HOST: ${{ secrets.SSH_HOST }}
-      SSH_USER: ${{ secrets.SSH_USER }}
-      SSH_PATH: ${{ secrets.SSH_PATH }}
-      SSH_PORT: ${{ secrets.SSH_PORT }}
+    deploy:
+        runs-on: ubuntu-latest
+        environment: production
+        timeout-minutes: 30
 
-    steps:
-      - name: Get latest code
-        uses: actions/checkout@v4
+        env:
+            SSH_KEY: ${{ secrets.SSH_KEY }}
+            SSH_HOST: ${{ secrets.SSH_HOST }}
+            SSH_USER: ${{ secrets.SSH_USER }}
+            SSH_PATH: ${{ secrets.SSH_PATH }}
+            SSH_PORT: ${{ secrets.SSH_PORT }}
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          tools: composer:v2
-      - name: Install PHP dependencies
-        run: composer install --no-dev --optimize-autoloader
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-      - name: Install & Build UI
-        run: |
-          bun install --frozen-lockfile
-          bun run build
+        steps:
+            - name: Get latest code
+              uses: actions/checkout@v4
 
-      - name: Deploy to server
-        uses: easingthemes/ssh-deploy@main
-        with:
-          SSH_PRIVATE_KEY: ${{ env.SSH_KEY }}
-          REMOTE_HOST: ${{ env.SSH_HOST }}
-          REMOTE_USER: ${{ env.SSH_USER }}
-          REMOTE_PORT: ${{ env.SSH_PORT }}
-          SOURCE: "./"
-          TARGET: ${{ env.SSH_PATH }}
-          ARGS: "-rlgoDzvc -i"
-          EXCLUDE: |
-            /.git,
-            /.github/,
-            /node_modules/,
-            /tests/,
-            /.env
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
 
-      # --- Run server commands ---
-      - name: Run Laravel commands
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ env.SSH_HOST }}
-          username: ${{ env.SSH_USER }}
-          key: ${{ env.SSH_KEY }}
-          port: ${{ env.SSH_PORT }}
-          script: |
-            cd "${{ env.SSH_PATH }}"
+            - name: Install & Build UI
+              run: |
+                  bun install --frozen-lockfile
+                  bun run build
+                  ls
 
-            echo "Installing PHP dependencies..."
-            composer install --no-dev --optimize-autoloader
-
-            echo "Running migrations..."
-            php artisan migrate --force
-
-            echo "Fixing storage link..."
-            php artisan storage:link || true
-
-            echo "Optimizing Laravel..."
-            php artisan optimize:clear
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
-
-            echo "Deployment completed"
+            - name: Deploy to server (SCP)
+              uses: appleboy/scp-action@v1.0.0
+              with:
+                  host: ${{ env.SSH_HOST }}
+                  username: ${{ env.SSH_USER }}
+                  key: ${{ env.SSH_KEY }}
+                  port: ${{ env.SSH_PORT }}
+                  source: "dist/*"
+                  target: ${{ env.SSH_PATH }}
+                  strip_components: 1
+                  overwrite: true
