@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Override;
 use SaeedHosan\Useful\Eloquent\Concerns\HasBelongsToOne;
 use SaeedHosan\Useful\Models\Concerns\HasSlug;
 use SaeedHosan\Useful\Models\Concerns\HasUuid;
@@ -164,6 +165,7 @@ class Company extends Model
      *
      * @return array<string, string>
      */
+    #[Override]
     protected function casts(): array
     {
         return [
