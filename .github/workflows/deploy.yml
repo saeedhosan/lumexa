@@ -56,7 +56,7 @@ jobs:
                   username: ${{ env.SSH_USER }}
                   key: ${{ env.SSH_KEY }}
                   port: ${{ env.SSH_PORT }}
-                  source: "dist/*"
+                  source: "public/build/*"
                   target: ${{ env.SSH_PATH }}
                   strip_components: 1
                   overwrite: true
