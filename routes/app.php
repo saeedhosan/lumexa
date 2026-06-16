@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
  */
 Route::get('dashboard', DashboardController::class)->name('dashboard');
 Route::name('app.')->group(function (): void {
-    Route::resource('leads', LeadController::class);
-    Route::resource('campaigns', CampaignController::class);
-    Route::resource('services', ServiceController::class);
-    Route::resource('companies', CompanyController::class);
-    Route::resource('activities', ActivityController::class);
+    Route::resource('leads', LeadController::class)->only(['index', 'create', 'show', 'edit']);
+    Route::resource('campaigns', CampaignController::class)->only(['index', 'create', 'show', 'edit']);
+    Route::resource('services', ServiceController::class)->only(['index', 'create', 'show', 'edit']);
+    Route::resource('companies', CompanyController::class)->only(['index', 'create', 'show', 'edit']);
+    Route::resource('activities', ActivityController::class)->only(['index', 'create', 'show', 'edit']);
 });

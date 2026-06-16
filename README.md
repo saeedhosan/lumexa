@@ -1,244 +1,164 @@
-## ![Lumexa Logo](/docs/banner.png)
-
-![Lumexa](/docs/screenshot.png)
-
-<center>
+![Lumexa](docs/banner.png)
 
 # Lumexa
 
-</center>
+Lumexa is a multi-tenant Laravel SaaS platform for managing companies, users, leads, services, and audit activity inside a single workspace. It is built to demonstrate a production-minded Laravel architecture: authenticated tenant switching, policy-driven admin access, queued notifications, cached dashboards, API resources, and activity tracking all live in the same codebase.
 
-[![PHP Version](https://img.shields.io/badge/PHP-8.4-blue)](https://www.php.net/)
-[![Laravel Version](https://img.shields.io/badge/Laravel-13.0-red)](https://laravel.com/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.2.0-06B6D4)](https://tailwindcss.com/)
-[![Tests](https://img.shields.io/badge/Tests-204-green)](https://phpunit.de/)
-[![API](https://img.shields.io/badge/API-REST-brightgreen)](https://laravel.com/)
-![Stage](https://img.shields.io/badge/Stage-production-green)
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-lumexa.saeedhosan.com-blue?style=for-the-badge)](https://lumexa.saeedhosan.com/)
+## Project Overview
 
-## Table of contents
+Lumexa is designed for teams that need one application to coordinate multiple companies without mixing data. The application supports:
 
--   [Introduction](#introduction)
--   [Core Features](#core-features)
--   [Installation](#installation)
-    -   [Docker setup](#docker-setup)
-    -   [Quick setup](#quick-setup)
--   [Architecture](#architecture)
--   [Dependencies](#dependencies)
--   [Technologies](#technologies)
--   [JSON API](#json-api)
--   [Testing](#testing)
+- secure authentication and email verification through Fortify
+- multi-company access control through policies and pivot-based membership
+- an onboarding flow for new users
+- a Livewire dashboard with cached analytics
+- a JSON API for lead retrieval through Sanctum
+- audit visibility through Spatie activity logging
 
-## Introduction
+The codebase is intentionally split into clear layers:
 
-Lumexa is a SaaS application that allows multiple companies to use the same system while keeping their data separate.
+- `app/Http/Controllers` for request entry points
+- `app/Domain` for reusable business logic
+- `app/Actions` for transactional workflows
+- `app/Http/Requests` for validation and authorization
+- `app/Http/Resources` for API output
+- `database/seeders` and `database/factories` for realistic demo data
 
-> **🚀 Live demo:** [lumexa.saeedhosan.com](https://lumexa.saeedhosan.com/) — see it in action
+## Technical Core Features
 
-### The Problem
+- Multi-tenant company access with user-company pivot roles
+- Role-aware admin and customer policy checks
+- Fortify-powered authentication, password reset, email verification, and 2FA support
+- Sanctum-authenticated API endpoints for lead access
+- Livewire onboarding and dashboard experiences
+- Cached dashboard statistics and chart payloads
+- Queueable invite notifications
+- Event/listener activity capture for authentication and lead creation
+- Spatie activity logging for model changes and audit trails
+- Form Request validation for admin user and company workflows
+- API Resources for consistent lead serialization
+- Factory-driven demo data for companies, plans, users, leads, lead lists, invites, and logs
 
-Small to medium-sized businesses often struggle with "data sprawl"—using multiple disconnected tools for leads, team management, and internal operations. This leads to security risks, data silos, and high subscription costs.
+## Requirements
 
-### The Solution
+- PHP 8.4
+- Composer
+- Bun
+- SQLite, MySQL, or PostgreSQL
 
-Lumexa provides a unified, **multi-tenant ecosystem** where companies can securely manage their entire lifecycle—from lead acquisition via Excel imports to team collaboration—all within a single, high-performance platform.
-
-## Core Features
-
-### Authentication & Security
-
--   **Multi-factor authentication (2FA)** – Secure login with TOTP via Laravel Fortify
--   **Role-based access control** – Three roles: Super Admin, Admin, and User
--   **Email verification** – Email confirmation for user accounts
--   **Password reset** – Secure password recovery flow
--   **User onboarding** – Guided 3-step onboarding wizard on first login (company setup, profile completion)
-
-### Multi-Tenancy
-
--   **Multi-company support** – Users can work with multiple companies, each with isolated data
--   **Company workspace** – Each company has its own workspace and management area
--   **User invitations** – Invite new members to companies
-
-### Lead Management
-
--   **Lead CRUD** – Create, read, update, delete leads
--   **Lead lists** – Individual contacts within leads
--   **Lead status workflow** – Pending, Process, Cleaned, Blocked, Approved, Rejected
--   **Excel import** – Bulk import leads via Excel/CSV files
-
-### API & Integrations
-
--   **JSON API** – API for external integrations (`/api/v1`)
--   **API Resources** – Consistent JSON response formatting
--   **Rate limiting** – 60 requests/minute per IP
--   **Laravel Sanctum** – Token-based authentication ready
-
-### Performance & Scalability
-
--   **Dashboard caching** – 5-minute cache for statistics
--   **Background jobs** – Queue processing for heavy tasks
--   **Event-driven** – Laravel Events & Listeners for decoupling
-
-### Activity & Logging
-
--   **Activity tracking** – Full audit trail with Spatie ActivityLog
--   **System logging** – Comprehensive activity logging
-
-## Installation
+## Local Setup
 
 ```bash
 git clone https://github.com/saeedhosan/lumexa.git
 cd lumexa
 cp .env.example .env
+composer install
+php artisan key:generate
 ```
 
-### Docker Setup
-
-> Requires [Docker Desktop](https://www.docker.com/products/docker-desktop)
+Configure your database and app settings in `.env`, then run migrations and seed the demo data:
 
 ```bash
-docker compose down        # stop
-docker compose restart     # restart
-docker compose exec app bash # enter container
-
-## Get local data for testing
-docker compose exec app php artisan migrate:fresh --seed
+php artisan migrate --seed
 ```
 
-Open [http://localhost:8080] — done!
-
-### Quick setup
-
-**prerequisites**
-
--   PHP 8.4+ - [Download PHP](https://www.php.net/downloads.php)
--   Composer - [Get composer](https://getcomposer.org)
--   Bun - [Install Bun](https://bun.sh)
--   MySQL 8.0 or SQLite
+Install frontend dependencies and start the app:
 
 ```bash
-#1. Setup project
-composer setup
-
-#2. Genenerate local seed data (optional)
-php artisan migrate:fresh --seed
-
-#3. Start the development server
+bun install
 composer dev
 ```
 
-Open [http://localhost:8080] — done!
-
-**Seeder data users**
-
-| Role  | Email             | Password |
-| :---- | :---------------- | :------- |
-| Admin | admin@example.com | demo1234 |
-| User  | user@example.com  | demo1234 |
-
-## Architecture
-
-Lumexa follows a clean Laravel architecture with service layer pattern:
-
-**Technical Decisions & Trade-offs**
-
-| Decision           | Choice             | Rationale                                            |
-| :----------------- | :----------------- | :--------------------------------------------------- |
-| **Multi-Tenancy**  | Single Database    | Cost-efficient, data isolated via Global Scopes.     |
-| **Auth Backend**   | Laravel Fortify    | Battle-tested, headless auth with native 2FA.        |
-| **Frontend**       | Livewire + Flux UI | SPA-like reactivity without a separate JS framework. |
-| **Testing**        | Pest PHP           | Readable syntax, 160+ tests, stable production env.  |
-| **Infrastructure** | Docker             | Consistent environments - development to production. |
-
-View more technical depth in [Technologies](#technologies)
-
-```
-app/
-├── Http/
-│   ├── Controllers/
-│   │   ├── Api/                     # API controllers
-│   │   ├── App/                     # User-facing controllers
-│   │   └── Admin/                   # Admin controllers
-│   ├── Middleware/                  # Role-based access
-│   ├── Resources/                   # API Resources
-│   └── Requests/                    # Form requests
-├── Models/                          # Eloquent models
-├── Domain/                          # Service layer
-├── Events/                          # Laravel events
-├── Listeners/                       # Event listeners
-├── Jobs/                            # Queue jobs
-├── Notifications/                   # Notifications
-├── Enums/                           # PHP enums
-├── Livewire/                        # Livewire components
-├── Providers/                       # Service providers
-└── Policies/                        # Authorization policies
-```
-
-**Route Structure:**
-
--   `/` - Public landing page
--   `/api/v1/*` - JSON API endpoints
--   `/app/*` - User dashboard and features
--   `/admin/*` - Company administration
-- `/onboarding` - New user onboarding wizard
-- `/settings/*` - User profile settings
-
-## Dependencies
-
-| Package           | Version | Purpose                   |
-| ----------------- | ------- | ------------------------- |
-| laravel/fortify   | 1.36.1  | Authentication backend    |
-| livewire/flux     | 2.13.0  | UI component library      |
-| livewire/livewire | 4.2.1   | Reactive PHP components   |
-| pestphp/pest      | 4.4.3   | Testing framework         |
-| tailwindcss       | 4.2.0   | CSS framework             |
-| maatwebsite/excel | ^3.1    | Excel exports and imports |
-
-## Technologies
-
--   **Backend:** PHP 8.4, Laravel 13
--   **Frontend:** Blade templates, TailwindCSS 4, Flux UI
--   **Database:** SQLite (default), MySQL/PostgreSQL compatible
--   **Authentication:** Laravel Fortify with 2FA
--   **Testing:** Pest PHP
--   **Code Quality:** Laravel Pint, Rector
-
-## JSON API
-
-Full API docs is available in [docs/api.md](/docs/api.md).
-
-**Quick Start:**
+### Resetting the Demo
 
 ```bash
-# List leads
-curl -X GET "http://localhost:8000/api/v1/leads" \
-  -H "Accept: application/json"
-
-# Get single lead
-curl -X GET "http://localhost:8000/api/v1/leads/1" \
-  -H "Accept: application/json"
+php artisan migrate:fresh --seed
 ```
 
-**Base URL:** `/api/v1`
+### One-Command Bootstrap
 
-**Features:**
+The repository also defines a full setup script:
 
--   JSON responses via Laravel API Resources
--   Pagination support (`per_page` parameter)
--   Rate limited (60 requests/minute)
--   Event-driven architecture with Laravel Events
--   Background job processing with Laravel Queues
+```bash
+composer setup
+```
+
+## Demo Access
+
+The seeded database includes ready-to-use demo accounts.
+
+| Role | Email | Password |
+| --- | --- | --- |
+| Super Admin | `super@example.com` | `demo1234` |
+| Admin | `admin@example.com` | `demo1234` |
+| User | `user@example.com` | `demo1234` |
+
+### Live Demo
+
+- Application: `https://your-demo-url.example`
+- Admin panel: `https://your-admin-url.example/admin`
+- API base: `https://your-demo-url.example/api/v1`
+
+## API
+
+Lumexa exposes a versioned API for lead access.
+
+```bash
+GET /api/v1/leads
+GET /api/v1/leads/{lead}
+```
+
+Authentication uses Sanctum tokens. The response payloads are formatted with API resources and include pagination metadata.
 
 ## Testing
 
-Run tests:
+Run the test suite:
 
 ```bash
-composer test
+php artisan test --compact
 ```
 
-Run lint:
+## Code Quality
+
+Recommended checks:
 
 ```bash
-composer lint
+vendor/bin/pint --dirty --format agent
 ```
+
+## Architecture Notes
+
+- Companies, users, services, plans, leads, and lead lists are modeled with explicit relationships.
+- Controllers stay thin where the architecture is mature, especially in the admin company and user flows.
+- Service classes handle transactional write operations.
+- Form Requests centralize validation and authorization.
+- Seeders are designed to produce a usable demo environment with no manual data entry.
+
+## Repository Structure
+
+```text
+app/
+├── Actions/
+├── Domain/
+├── Events/
+├── Http/
+│   ├── Controllers/
+│   ├── Requests/
+│   └── Resources/
+├── Jobs/
+├── Livewire/
+├── Listeners/
+├── Models/
+├── Notifications/
+├── Observers/
+└── Policies/
+
+database/
+├── factories/
+└── seeders/
+```
+
+## Notes
+
+- The demo environment is intended to be reproducible from `migrate --seed`.
+- If the frontend changes are not visible, run `bun run dev` or rebuild assets with `bun run build`.

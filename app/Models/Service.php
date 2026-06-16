@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Override;
 use SaeedHosan\Useful\Models\Concerns\HasUuid;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
@@ -100,6 +101,7 @@ class Service extends Model
      *
      * @return array<string, string>
      */
+    #[Override]
     protected function casts(): array
     {
         return [

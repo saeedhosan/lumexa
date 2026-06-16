@@ -17,12 +17,14 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Override;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
      */
+    #[Override]
     public function register(): void
     {
         //

@@ -23,13 +23,13 @@ Route::get('/', DashboardController::class)->name('home');
 Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
 Route::resource('companies', CompanyController::class);
-Route::resource('services', ServiceController::class);
-Route::resource('billing', BillingController::class);
-Route::resource('invoices', InvoiceController::class);
+Route::resource('services', ServiceController::class)->only(['index']);
+Route::resource('billing', BillingController::class)->only(['index', 'create', 'show', 'edit']);
+Route::resource('invoices', InvoiceController::class)->only(['index', 'create', 'show', 'edit']);
 Route::resource('invites', InviteController::class);
-Route::resource('reports', ReportController::class);
+Route::resource('reports', ReportController::class)->only(['index']);
 
 Route::resource('users', UserController::class);
-Route::resource('plans', PlanController::class);
-Route::resource('settings', SettingController::class);
-Route::resource('logs', LogController::class);
+Route::resource('plans', PlanController::class)->only(['index', 'create', 'show', 'edit']);
+Route::resource('settings', SettingController::class)->only(['index', 'create', 'show', 'edit']);
+Route::resource('logs', LogController::class)->only(['index']);

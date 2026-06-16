@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Admin\CreateUser;
+use App\Actions\Admin\UpdateUser;
 use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
@@ -18,6 +20,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function __construct(
+        private readonly CreateUser $createUser,
+        private readonly UpdateUser $updateUser,
+    ) {}
+
     public function index(Request $request): Factory|View
     {
         $this->authorize('viewAny', User::class);
@@ -56,26 +63,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request): RedirectResponse
     {
         $this->authorize('create', User::class);
-
-        $validated = $request->validated();
-
-        $user = auth()->user();
-
-        if ($user->isSuper() && isset($validated['type'])) {
-            $type = $validated['type'];
-            unset($validated['type']);
-        } else {
-            $type = UserType::user;
-        }
-
-        $companyId = $validated['current_company_id'] ?? $user->current_company_id;
-        unset($validated['current_company_id']);
-
-        $newUser = User::query()->create(array_merge($validated, ['type' => $type]));
-
-        if ($companyId) {
-            $newUser->companies()->attach($companyId, ['role' => Company::ROLE_ADMIN]);
-        }
+        $this->createUser->handle(auth()->user(), $request->validated());
 
         return to_route('admin.users.index')
             ->with('success', 'User created successfully.');
@@ -110,24 +98,7 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
 
-        $data = $request->validated();
-
-        $currentUser = auth()->user();
-
-        if (isset($data['password']) && empty($data['password'])) {
-            unset($data['password']);
-        }
-
-        if ($currentUser->isAdmin() && isset($data['type'])) {
-            unset($data['type']);
-        }
-
-        $user->update($data);
-
-        $companyId = $data['current_company_id'] ?? $currentUser->current_company_id;
-        if ($companyId) {
-            $user->companies()->syncWithoutDetaching([$companyId => ['role' => Company::ROLE_ADMIN]]);
-        }
+        $this->updateUser->handle(auth()->user(), $user, $request->validated());
 
         return to_route('admin.users.index')
             ->with('success', 'User updated successfully.');

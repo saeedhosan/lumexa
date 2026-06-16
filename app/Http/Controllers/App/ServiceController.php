@@ -25,9 +25,9 @@ class ServiceController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): void
+    public function create(): Factory|View
     {
-        //
+        return view('app.services.create');
     }
 
     /**
@@ -41,17 +41,17 @@ class ServiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Service $service): void
+    public function show(Service $service): Factory|View
     {
-        //
+        return view('app.services.show', ['service' => $service]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Service $service): void
+    public function edit(Service $service): Factory|View
     {
-        //
+        return view('app.services.edit', ['service' => $service]);
     }
 
     /**

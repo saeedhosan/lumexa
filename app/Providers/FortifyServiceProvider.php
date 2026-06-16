@@ -18,9 +18,11 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Contracts\RegisterResponse;
 use Laravel\Fortify\Fortify;
+use Override;
 
 class FortifyServiceProvider extends ServiceProvider
 {
+    #[Override]
     public function register(): void
     {
         $this->app->instance(LoginResponse::class, new class implements LoginResponse

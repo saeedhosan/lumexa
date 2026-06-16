@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Override;
 
 /**
  * @extends Factory<User>
@@ -100,6 +101,7 @@ class UserFactory extends Factory
         return $this->status(UserStatus::invited);
     }
 
+    #[Override]
     public function configure(): static
     {
         return $this->afterMaking(function (User $user): void {
