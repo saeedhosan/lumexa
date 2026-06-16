@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Override;
 
 /**
  * @property int $id
@@ -65,6 +66,7 @@ class Log extends Model
      *
      * @return void
      */
+    #[Override]
     protected static function boot()
     {
         parent::boot();
@@ -82,6 +84,7 @@ class Log extends Model
      *
      * @return array<string, string>
      */
+    #[Override]
     protected function casts(): array
     {
         return [

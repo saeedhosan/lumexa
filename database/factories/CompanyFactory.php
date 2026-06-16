@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Override;
 
 /**
  * @extends Factory<Company>
@@ -66,6 +67,7 @@ class CompanyFactory extends Factory
         ]);
     }
 
+    #[Override]
     public function configure(): static
     {
         return $this->afterMaking(function (Company $company): void {

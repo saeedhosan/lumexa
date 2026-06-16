@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Models\Company;
 use App\Models\Lead;
 use App\Models\LeadList;
 use App\Models\User;
@@ -18,7 +19,28 @@ class LeadDataSeeder extends Seeder
     {
         $user = User::query()->where('email', config('demo.user.email', 'user@example.com'))->first();
 
-        if ($user && $user->currentCompany) {
+        if (! $user instanceof User) {
+            $company = Company::factory()->create();
+
+            $user = User::factory()
+                ->customer()
+                ->active()
+                ->withCompany($company, Company::ROLE_USER)
+                ->create([
+                    'name'               => config('demo.user.name', 'User'),
+                    'email'              => config('demo.user.email', 'user@example.com'),
+                    'current_company_id' => $company->id,
+                    'onboarded_at'       => now(),
+                ]);
+        }
+
+        if (! $user->currentCompany) {
+            $company = $user->companies()->first() ?? Company::factory()->create();
+
+            $user->forceFill(['current_company_id' => $company->id])->save();
+        }
+
+        if ($user->currentCompany) {
             Lead::factory()
                 ->count(5)
                 ->for($user)

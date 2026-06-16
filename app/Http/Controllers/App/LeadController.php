@@ -37,9 +37,9 @@ class LeadController extends Controller
         return view('app.leads.show', ['lead' => $lead]);
     }
 
-    public function edit(Lead $lead): void
+    public function edit(Lead $lead): Factory|View
     {
-        //
+        return view('app.leads.edit', ['lead' => $lead]);
     }
 
     public function update(Request $request, Lead $lead): void
