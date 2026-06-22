@@ -2,7 +2,7 @@
 
 # Lumexa
 
-Lumexa is an enterprise-grade multi-tenant SaaS application built with Laravel 13 and React/Livewire. It features an isolated data architecture designed to process bulk data imports concurrently while maintaining absolute tenant privacy.
+Lumexa is an enterprise-grade multi-tenant SaaS application built with Laravel 13 and Livewire 4. It uses an isolated data architecture to process bulk data imports concurrently while preserving tenant privacy.
 
 ## Project Overview
 
