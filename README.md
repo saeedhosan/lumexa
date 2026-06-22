@@ -2,7 +2,7 @@
 
 # Lumexa
 
-Lumexa is a multi-tenant Laravel SaaS platform for managing companies, users, leads, services, and audit activity inside a single workspace. It is built to demonstrate a production-minded Laravel architecture: authenticated tenant switching, policy-driven admin access, queued notifications, cached dashboards, API resources, and activity tracking all live in the same codebase.
+Lumexa is an enterprise-grade multi-tenant SaaS application built with Laravel 13 and React/Livewire. It features an isolated data architecture designed to process bulk data imports concurrently while maintaining absolute tenant privacy.
 
 ## Project Overview
 
