@@ -11,6 +11,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
+        "dedoc/scramble": "^0.13.28",
         "driftingly/rector-laravel": "*",
         "laravel/fortify": "^1.30",
         "laravel/framework": "^13.0",

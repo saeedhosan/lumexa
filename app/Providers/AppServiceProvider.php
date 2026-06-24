@@ -10,7 +10,10 @@ use App\Events\LeadCreated;
 use App\Listeners\AuthenticationActivitySubscriber;
 use App\Listeners\LogLeadCreated;
 use Carbon\CarbonImmutable;
+use Dedoc\Scramble\Scramble;
+use Dedoc\Scramble\Support\Generator\OpenApi;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
@@ -73,5 +76,11 @@ class AppServiceProvider extends ServiceProvider
         Gate::define(Access::super, fn (Authenticatable $user): bool => $user->type === UserType::super);
         Gate::define(Access::admin, fn (Authenticatable $user): bool => $user->type === UserType::admin);
         Gate::define(Access::user, fn (Authenticatable $user): bool => $user->type === UserType::user);
+
+        Scramble::afterOpenApiGenerated(function (OpenApi $openApi): void {
+            $openApi->info->description = 'Lumexa is a multi-tenant SaaS platform for managing companies, users, leads, and billing.';
+        });
+
+        Gate::define('viewApiDocs', fn (?Authenticatable $user): bool => Auth::check() || app()->isLocal());
     }
 }
