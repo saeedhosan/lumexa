@@ -19,7 +19,9 @@ use Illuminate\Support\Facades\Auth;
 class CompanyController extends Controller
 {
     public function __construct(
-        private readonly CompanyService $service
+        private readonly CompanyService $service,
+        private readonly CreateCompany $createCompany,
+        private readonly UpdateCompany $updateCompany,
     ) {}
 
     public function index(): Factory|View
@@ -40,7 +42,7 @@ class CompanyController extends Controller
     {
         $this->authorize('create', Company::class);
 
-        $company = resolve(CreateCompany::class)->handle($request->validated(), Auth::id());
+        $company = $this->createCompany->handle($request->validated(), Auth::id());
 
         return to_route('admin.companies.show', $company)
             ->with('toast', 'Company created successfully.');
@@ -64,7 +66,7 @@ class CompanyController extends Controller
     {
         $this->authorize('update', $company);
 
-        resolve(UpdateCompany::class)->handle($company, $request->validated());
+        $this->updateCompany->handle($company, $request->validated());
 
         return to_route('admin.companies.show', $company)
             ->with('toast', 'Company updated successfully.');
