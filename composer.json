@@ -29,6 +29,7 @@
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "fruitcake/laravel-debugbar": "^4.1",
+        "larastan/larastan": "^3.10",
         "laravel/boost": "^2.2",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.24",
@@ -85,6 +86,7 @@
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
         ],
+        "phpstan": "phpstan analyse --ansi --memory-limit=1G",
         "lint": [
             "rector",
             "pint --parallel"
@@ -92,6 +94,9 @@
         "test:lint": [
             "pint --parallel --test",
             "rector --dry-run"
+        ],
+        "test:phpstan": [
+            "@phpstan"
         ],
         "test:type-coverage": "pest --type-coverage --min=100",
         "test:unit": "pest --parallel",

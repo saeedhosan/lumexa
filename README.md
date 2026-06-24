@@ -2,6 +2,15 @@
 
 # Lumexa
 
+<p align="center">
+  <a href="https://lumexa.saeedhosan.com"><img src="https://img.shields.io/badge/demo-online-brightgreen" alt="Live Demo"></a>
+  <a href="https://github.com/saeedhosan/lumexa/actions"><img src="https://img.shields.io/github/actions/workflow/status/saeedhosan/lumexa/tests.yml?label=tests" alt="Tests"></a>
+  <a href="https://github.com/saeedhosan/lumexa/actions"><img src="https://img.shields.io/github/actions/workflow/status/saeedhosan/lumexa/phpstan.yml?label=PHPStan" alt="PHPStan"></a>
+  <img src="https://img.shields.io/badge/PHP-8.4-777BB4" alt="PHP 8.4">
+  <img src="https://img.shields.io/badge/Laravel-13-FF2D20" alt="Laravel 13">
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License">
+</p>
+
 Lumexa is a multi-tenant Laravel SaaS platform for managing companies, users, leads, services, and audit activity inside a single workspace. It is built to demonstrate a production-minded Laravel architecture: authenticated tenant switching, policy-driven admin access, queued notifications, cached dashboards, API resources, and activity tracking all live in the same codebase.
 
 ## Project Overview
@@ -10,9 +19,12 @@ Lumexa is designed for teams that need one application to coordinate multiple co
 
 - secure authentication and email verification through Fortify
 - multi-company access control through policies and pivot-based membership
+- subdomain-based multi-tenancy resolution
 - an onboarding flow for new users
 - a Livewire dashboard with cached analytics
-- a JSON API for lead retrieval through Sanctum
+- a RESTful JSON API through Sanctum
+- Stripe billing integration with subscription plans
+- real-time notifications through Laravel Reverb
 - audit visibility through Spatie activity logging
 
 The codebase is intentionally split into clear layers:
@@ -103,14 +115,28 @@ The seeded database includes ready-to-use demo accounts.
 
 ## API
 
-Lumexa exposes a versioned API for lead access.
+Lumexa exposes a versioned RESTful JSON API authenticated via Sanctum tokens.
+
+### Endpoints
 
 ```bash
-GET /api/v1/leads
-GET /api/v1/leads/{lead}
+GET    /api/v1/leads
+POST   /api/v1/leads
+GET    /api/v1/leads/{id}
+PUT    /api/v1/leads/{id}
+DELETE /api/v1/leads/{id}
+
+GET    /api/v1/companies
+POST   /api/v1/companies
+GET    /api/v1/companies/{id}
+PUT    /api/v1/companies/{id}
+DELETE /api/v1/companies/{id}
+
+GET    /api/v1/services
+GET    /api/v1/services/{id}
 ```
 
-Authentication uses Sanctum tokens. The response payloads are formatted with API resources and include pagination metadata.
+All collection endpoints support `?per_page=N` (max 100) and return paginated responses with `data` and `meta` keys. Authentication uses Sanctum tokens. The response payloads are formatted with API resources.
 
 ## Testing
 
@@ -128,12 +154,23 @@ Recommended checks:
 vendor/bin/pint --dirty --format agent
 ```
 
+## Health Endpoint
+
+```bash
+GET /health
+```
+
+Returns JSON with application status, environment, and service checks (database, cache). Response code `200` when healthy, `503` when degraded.
+
 ## Architecture Notes
 
 - Companies, users, services, plans, leads, and lead lists are modeled with explicit relationships.
+- Tenancy is resolved via subdomain (slug match) or route parameter, scoping all data by `company_id`.
 - Controllers stay thin where the architecture is mature, especially in the admin company and user flows.
 - Service classes handle transactional write operations.
 - Form Requests centralize validation and authorization.
+- Broadcasting uses Laravel Reverb for real-time lead creation events.
+- Billing uses Stripe Checkout Sessions with webhook-based subscription management.
 - Seeders are designed to produce a usable demo environment with no manual data entry.
 
 ## Repository Structure
