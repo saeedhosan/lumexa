@@ -4,16 +4,22 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Billing\CreateCheckoutSession;
 use App\Http\Controllers\Controller;
+use App\Models\Company;
+use App\Models\Plan;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BillingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(
+        private readonly CreateCheckoutSession $createCheckoutSession,
+    ) {}
+
     public function index(): Factory|View
     {
         return view('admin.billing.index');
@@ -27,43 +33,27 @@ class BillingController extends Controller
         return view('admin.billing.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): void
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $plan    = Plan::query()->findOrFail($request->integer('plan_id'));
+        $company = Auth::user()->currentCompany;
+
+        $session = $this->createCheckoutSession->handle(
+            $company,
+            $plan,
+            $request->string('interval', 'monthly')->value()
+        );
+
+        return redirect($session->url);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id): Factory|View
+    public function show(Company $billing): Factory|View
     {
-        return view('admin.billing.show', ['id' => $id]);
+        return view('admin.billing.show', ['company' => $billing]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id): Factory|View
+    public function edit(Company $billing): Factory|View
     {
-        return view('admin.billing.edit', ['id' => $id]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id): void
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id): void
-    {
-        //
+        return view('admin.billing.edit', ['company' => $billing]);
     }
 }

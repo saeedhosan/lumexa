@@ -21,6 +21,7 @@
         "livewire-development",
         "pest-testing",
         "tailwindcss-development",
+        "echo-development",
         "debug-using-debugbar"
     ]
 }

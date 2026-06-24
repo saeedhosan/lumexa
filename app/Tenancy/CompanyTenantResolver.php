@@ -34,6 +34,17 @@ class CompanyTenantResolver implements TenantResolverContract
 
     public function resolveRouteTenant(Request $request): ?Model
     {
+        $host      = $request->getHost();
+        $subdomain = explode('.', $host)[0] ?? null;
+
+        if (! in_array($subdomain, [null, 'app', 'www'], true)) {
+            $company = Company::query()->where('slug', $subdomain)->first();
+
+            if ($company !== null) {
+                return $company;
+            }
+        }
+
         $companyId = $request->route('company_id');
 
         return $companyId
