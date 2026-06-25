@@ -111,10 +111,6 @@
                     <flux:icon.plus variant="micro" class="mr-2" />
                     New Lead
                 </flux:button>
-                <flux:button variant="outline" class="w-full justify-start" tag="a" :href="route('app.campaigns.index')">
-                    <flux:icon.megaphone variant="micro" class="mr-2" />
-                    View Campaigns
-                </flux:button>
                 <flux:button variant="outline" class="w-full justify-start" tag="a" :href="route('app.activities.index')">
                     <flux:icon.clock variant="micro" class="mr-2" />
                     Activity Log

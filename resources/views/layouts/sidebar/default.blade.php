@@ -18,14 +18,6 @@
             >
                 {{ __('Leads') }}
             </flux:sidebar.item>
-            <flux:sidebar.item
-                icon="shield-exclamation"
-                :href="route('app.campaigns.index')"
-                :current="request()->routeIs('app.campaigns.*')"
-                wire:navigate
-            >
-                {{ __('Campaigns') }}
-            </flux:sidebar.item>
         </flux:sidebar.group>
 
         <flux:sidebar.group :heading="__('Management')" class="grid">

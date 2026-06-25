@@ -42,6 +42,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'is_active',
         'status',
         'password',
         'current_company_id',
@@ -133,6 +134,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return [
             'email_verified_at' => 'datetime',
+            'is_active'         => 'boolean',
             'onboarded_at'      => 'datetime',
             'password'          => 'hashed',
             'status'            => UserStatus::class,
