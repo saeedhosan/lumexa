@@ -95,9 +95,11 @@ The seeded database includes ready-to-use demo accounts.
 
 ### Live Demo
 
-- Application: `https://your-demo-url.example`
-- Admin panel: `https://your-admin-url.example/admin`
-- API base: `https://your-demo-url.example/api/v1`
+[![Live Demo](https://img.shields.io/badge/demo-online-brightgreen)](https://lumexa.saeedhosan.com)
+
+- Application: [https://lumexa.saeedhosan.com](https://lumexa.saeedhosan.com)
+- Admin panel: [https://lumexa.saeedhosan.com/admin](https://lumexa.saeedhosan.com/admin)
+- API base: [https://lumexa.saeedhosan.com/api/v1](https://lumexa.saeedhosan.com/api/v1)
 
 ## API
 
