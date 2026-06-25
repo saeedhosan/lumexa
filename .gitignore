@@ -25,3 +25,5 @@ yarn-error.log
 bun.lock
 package-lock.json
 docs/prompt.md
+/storage/phpstan/cache
+/storage/phpstan/resultCache.php

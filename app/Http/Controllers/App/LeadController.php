@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\App;
 
+use App\Events\LeadCreated;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\App\StoreLeadRequest;
+use App\Http\Requests\App\UpdateLeadRequest;
 use App\Models\Lead;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -27,9 +30,20 @@ class LeadController extends Controller
         return to_route('app.leads.index', ['action' => 'create']);
     }
 
-    public function store(Request $request): void
+    public function store(StoreLeadRequest $request): RedirectResponse
     {
-        //
+        $this->authorize('create', Lead::class);
+
+        $lead = Lead::query()->create([
+            'title'      => $request->validated()['title'],
+            'user_id'    => auth()->id(),
+            'company_id' => auth()->user()->current_company_id,
+        ]);
+
+        event(new LeadCreated($lead));
+
+        return to_route('app.leads.index')
+            ->with('toast', 'Lead created successfully.');
     }
 
     public function show(Lead $lead): Factory|View
@@ -42,13 +56,23 @@ class LeadController extends Controller
         return view('app.leads.edit', ['lead' => $lead]);
     }
 
-    public function update(Request $request, Lead $lead): void
+    public function update(UpdateLeadRequest $request, Lead $lead): RedirectResponse
     {
-        //
+        $this->authorize('update', $lead);
+
+        $lead->update($request->validated());
+
+        return to_route('app.leads.index')
+            ->with('toast', 'Lead updated successfully.');
     }
 
-    public function destroy(Lead $lead): void
+    public function destroy(Lead $lead): RedirectResponse
     {
-        //
+        $this->authorize('delete', $lead);
+
+        $lead->delete();
+
+        return to_route('app.leads.index')
+            ->with('toast', 'Lead deleted successfully.');
     }
 }

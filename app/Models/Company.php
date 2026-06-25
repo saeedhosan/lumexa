@@ -78,6 +78,9 @@ class Company extends Model
         'is_active',
         'plan_id',
         'settings',
+        'stripe_customer_id',
+        'stripe_subscription_id',
+        'stripe_subscription_status',
         'created_by',
         'updated_by',
     ];

@@ -9,6 +9,7 @@ use App\Models\Lead;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Component;
 use Spatie\Activitylog\Models\Activity;
@@ -152,9 +153,13 @@ class Dashboard extends Component
 
             $startDate = Date::now()->subDays($this->daysRange - 1)->startOfDay();
 
+            $dateExpression = DB::getDriverName() === 'sqlite'
+                ? "strftime('%Y-%m-%d', created_at)"
+                : 'DATE(created_at)';
+
             $counts = Lead::query()
                 ->where('created_at', '>=', $startDate)
-                ->selectRaw("strftime('%Y-%m-%d', created_at) as date, count(*) as count")
+                ->selectRaw($dateExpression.' as date, count(*) as count')
                 ->groupBy('date')
                 ->pluck('count', 'date');
 

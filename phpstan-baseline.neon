@@ -1,0 +1,1429 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method App\\Actions\\Admin\\CreateCompany\:\:handle\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Actions/Admin/CreateCompany.php
+
+		-
+			message: '#^Method App\\Actions\\Admin\\UpdateCompany\:\:handle\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Actions/Admin/UpdateCompany.php
+
+		-
+			message: '#^Method App\\Actions\\Admin\\UpdateCompany\:\:handle\(\) should return App\\Models\\Company but returns App\\Models\\Company\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Actions/Admin/UpdateCompany.php
+
+		-
+			message: '#^Method App\\Actions\\Admin\\UpdateUser\:\:handle\(\) should return App\\Models\\User but returns App\\Models\\User\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Actions/Admin/UpdateUser.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: array.invalidKey
+			count: 1
+			path: app/Actions/Admin/UpdateUser.php
+
+		-
+			message: '#^Parameter \#1 \$apiKey of static method Stripe\\Stripe\:\:setApiKey\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Billing/CreateCheckoutSession.php
+
+		-
+			message: '#^Parameter \#1 \$params of static method Stripe\\Checkout\\Session\:\:create\(\) expects array\{adaptive_pricing\?\: array\{enabled\?\: bool\}, after_expiration\?\: array\{recovery\?\: array\{allow_promotion_codes\?\: bool, enabled\: bool\}\}, allow_promotion_codes\?\: bool, automatic_tax\?\: array\{enabled\: bool, liability\?\: array\{account\?\: string, type\: string\}\}, billing_address_collection\?\: string, branding_settings\?\: array\{background_color\?\: string\|null, border_style\?\: string\|null, button_color\?\: string\|null, display_name\?\: string, font_family\?\: string\|null, icon\?\: array\{file\?\: string, type\: string, url\?\: string\}, logo\?\: array\{file\?\: string, type\: string, url\?\: string\}\}, cancel_url\?\: string, client_reference_id\?\: string, \.\.\.\}\|null, array\{mode\: ''subscription'', customer\: string\|null, line_items\: array\{array\{price\: string\|null, quantity\: 1\}\}, success_url\: non\-falsy\-string, cancel_url\: string\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Billing/CreateCheckoutSession.php
+
+		-
+			message: '#^Access to an undefined property Stripe\\StripeObject\:\:\$customer\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Actions/Billing/HandleStripeWebhook.php
+
+		-
+			message: '#^Access to an undefined property Stripe\\StripeObject\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Actions/Billing/HandleStripeWebhook.php
+
+		-
+			message: '#^Parameter \#1 \$apiKey of static method Stripe\\Stripe\:\:setApiKey\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Billing/HandleStripeWebhook.php
+
+		-
+			message: '#^Parameter \#3 \$secret of static method Stripe\\Webhook\:\:constructEvent\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Billing/HandleStripeWebhook.php
+
+		-
+			message: '#^Binary operation "\." between mixed and ''\\''s Company'' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: app/Actions/Fortify/CreateNewUser.php
+
+		-
+			message: '#^Method App\\Actions\\Fortify\\CreateNewUser\:\:create\(\) has parameter \$input with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Actions/Fortify/CreateNewUser.php
+
+		-
+			message: '#^Method App\\Actions\\Fortify\\CreateNewUser\:\:emailRules\(\) should return array\<int, array\<mixed\>\|Illuminate\\Contracts\\Validation\\Rule\|string\> but returns array\<int, Illuminate\\Validation\\Rules\\Unique\|string\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Actions/Fortify/CreateNewUser.php
+
+		-
+			message: '#^Method App\\Domain\\Company\\CompanyService\:\:create\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Domain/Company/CompanyService.php
+
+		-
+			message: '#^Method App\\Domain\\Company\\CompanyService\:\:delete\(\) should return bool\|int but returns bool\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Domain/Company/CompanyService.php
+
+		-
+			message: '#^Method App\\Domain\\Company\\CompanyService\:\:getAdmins\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Domain/Company/CompanyService.php
+
+		-
+			message: '#^Method App\\Domain\\Company\\CompanyService\:\:getAll\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Domain/Company/CompanyService.php
+
+		-
+			message: '#^Method App\\Domain\\Company\\CompanyService\:\:getCustomers\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Domain/Company/CompanyService.php
+
+		-
+			message: '#^Method App\\Domain\\Company\\CompanyService\:\:getForAdmin\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Domain/Company/CompanyService.php
+
+		-
+			message: '#^Method App\\Domain\\Company\\CompanyService\:\:getForUser\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Domain/Company/CompanyService.php
+
+		-
+			message: '#^Method App\\Domain\\Company\\CompanyService\:\:getUsers\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Domain/Company/CompanyService.php
+
+		-
+			message: '#^Method App\\Domain\\Company\\CompanyService\:\:paginate\(\) return type with generic class Illuminate\\Pagination\\LengthAwarePaginator does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Domain/Company/CompanyService.php
+
+		-
+			message: '#^Method App\\Domain\\Company\\CompanyService\:\:paginateForAdmin\(\) return type with generic class Illuminate\\Pagination\\LengthAwarePaginator does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Domain/Company/CompanyService.php
+
+		-
+			message: '#^Method App\\Domain\\Company\\CompanyService\:\:update\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Domain/Company/CompanyService.php
+
+		-
+			message: '#^Method App\\Domain\\Company\\CompanyService\:\:update\(\) should return App\\Models\\Company but returns App\\Models\\Company\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Domain/Company/CompanyService.php
+
+		-
+			message: '#^Parameter \#1 \$attributes of method Illuminate\\Database\\Eloquent\\Builder\<App\\Models\\Company\>\:\:create\(\) expects array\<string, mixed\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Domain/Company/CompanyService.php
+
+		-
+			message: '#^Parameter \#1 \$attributes of method Illuminate\\Database\\Eloquent\\Model\:\:update\(\) expects array\<string, mixed\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Domain/Company/CompanyService.php
+
+		-
+			message: '#^Method App\\Domain\\Lead\\LeadService\:\:create\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Domain/Lead/LeadService.php
+
+		-
+			message: '#^Method App\\Domain\\Lead\\LeadService\:\:delete\(\) should return bool\|int but returns bool\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Domain/Lead/LeadService.php
+
+		-
+			message: '#^Method App\\Domain\\Lead\\LeadService\:\:getAll\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Domain/Lead/LeadService.php
+
+		-
+			message: '#^Method App\\Domain\\Lead\\LeadService\:\:search\(\) return type with generic class Illuminate\\Pagination\\LengthAwarePaginator does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Domain/Lead/LeadService.php
+
+		-
+			message: '#^Method App\\Domain\\Lead\\LeadService\:\:update\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Domain/Lead/LeadService.php
+
+		-
+			message: '#^Method App\\Domain\\Lead\\LeadService\:\:update\(\) should return App\\Models\\Lead but returns App\\Models\\Lead\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Domain/Lead/LeadService.php
+
+		-
+			message: '#^Parameter \#1 \$attributes of method Illuminate\\Database\\Eloquent\\Builder\<App\\Models\\Lead\>\:\:create\(\) expects array\<string, mixed\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Domain/Lead/LeadService.php
+
+		-
+			message: '#^Parameter \#1 \$attributes of method Illuminate\\Database\\Eloquent\\Model\:\:update\(\) expects array\<string, mixed\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Domain/Lead/LeadService.php
+
+		-
+			message: '#^Parameter \#1 \$value of function escape_like expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Domain/Lead/LeadService.php
+
+		-
+			message: '#^Parameter \#2 \$direction of method Illuminate\\Database\\Eloquent\\Builder\<App\\Models\\Lead\>\:\:orderBy\(\) expects ''asc''\|''desc''\|SortDirection, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Domain/Lead/LeadService.php
+
+		-
+			message: '#^Method App\\Enums\\UserStatus\:\:values\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Enums/UserStatus.php
+
+		-
+			message: '#^Method App\\Enums\\UserType\:\:values\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Enums/UserType.php
+
+		-
+			message: '#^Method App\\Events\\LeadCreated\:\:broadcastWith\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Events/LeadCreated.php
+
+		-
+			message: '#^Cannot access property \$type on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Foundation/helpers.php
+
+		-
+			message: '#^Match arm comparison between string and App\\Enums\\UserType\:\:admin is always false\.$#'
+			identifier: match.alwaysFalse
+			count: 1
+			path: app/Foundation/helpers.php
+
+		-
+			message: '#^Match arm comparison between string and App\\Enums\\UserType\:\:super is always false\.$#'
+			identifier: match.alwaysFalse
+			count: 1
+			path: app/Foundation/helpers.php
+
+		-
+			message: '#^Cannot access property \$currentCompany on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Controllers/Admin/BillingController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Admin\\BillingController\:\:store\(\) should return Illuminate\\Http\\RedirectResponse but returns Illuminate\\Http\\RedirectResponse\|Illuminate\\Routing\\Redirector\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Http/Controllers/Admin/BillingController.php
+
+		-
+			message: '#^Parameter \#1 \$company of method App\\Actions\\Billing\\CreateCheckoutSession\:\:handle\(\) expects App\\Models\\Company, App\\Models\\Company\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Admin/BillingController.php
+
+		-
+			message: '#^Parameter \#1 \$user of method App\\Domain\\Company\\CompanyService\:\:paginateForAdmin\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Admin/CompanyController.php
+
+		-
+			message: '#^Parameter \#2 \$userId of method App\\Actions\\Admin\\CreateCompany\:\:handle\(\) expects int, int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Admin/CompanyController.php
+
+		-
+			message: '#^Cannot call method companies\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Controllers/Admin/InviteController.php
+
+		-
+			message: '#^Cannot call method isSuper\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Controllers/Admin/InviteController.php
+
+		-
+			message: '#^Parameter \#1 \$actor of method App\\Actions\\Admin\\AddExistingUserToCompany\:\:handle\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Admin/InviteController.php
+
+		-
+			message: '#^Parameter \#2 \$company of method App\\Actions\\Admin\\AddExistingUserToCompany\:\:handle\(\) expects App\\Models\\Company, App\\Models\\Company\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\Company\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Admin/InviteController.php
+
+		-
+			message: '#^Parameter \#3 \$email of method App\\Actions\\Admin\\AddExistingUserToCompany\:\:handle\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Admin/InviteController.php
+
+		-
+			message: '#^Parameter \#4 \$role of method App\\Actions\\Admin\\AddExistingUserToCompany\:\:handle\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Admin/InviteController.php
+
+		-
+			message: '#^Cannot call method companies\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Controllers/Admin/ReportController.php
+
+		-
+			message: '#^Cannot call method isSuper\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Controllers/Admin/ReportController.php
+
+		-
+			message: '#^Cannot access property \$type on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Controllers/Admin/UserController.php
+
+		-
+			message: '#^Cannot call method companies\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Controllers/Admin/UserController.php
+
+		-
+			message: '#^Cannot call method isSuper\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: app/Http/Controllers/Admin/UserController.php
+
+		-
+			message: '#^Parameter \#1 \$actor of method App\\Actions\\Admin\\CreateUser\:\:handle\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Admin/UserController.php
+
+		-
+			message: '#^Parameter \#1 \$actor of method App\\Actions\\Admin\\UpdateUser\:\:handle\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Admin/UserController.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between string and App\\Enums\\UserType\:\:super will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: app/Http/Controllers/Admin/UserController.php
+
+		-
+			message: '#^Cannot call method companies\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: app/Http/Controllers/Api/LeadController.php
+
+		-
+			message: '#^Parameter \#2 \$callback of method Illuminate\\Database\\Eloquent\\Builder\<Spatie\\Activitylog\\Models\\Activity\>\:\:when\(\) expects \(callable\(Illuminate\\Database\\Eloquent\\Builder\<Spatie\\Activitylog\\Models\\Activity\>, array\|string\)\: void\)\|null, Closure\(mixed, string\)\: void given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/App/ActivityController.php
+
+		-
+			message: '#^Parameter \#1 \$user of method App\\Domain\\Company\\CompanyService\:\:getForUser\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/App/CompanyController.php
+
+		-
+			message: '#^Cannot access property \$current_company_id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Controllers/App/LeadController.php
+
+		-
+			message: '#^Parameter \#1 \$name of static method Illuminate\\Cache\\CacheManager\:\:store\(\) expects string\|UnitEnum\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: app/Http/Controllers/HealthController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Contracts\\Auth\\Authenticatable\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Middleware/CustomerMiddleware.php
+
+		-
+			message: '#^Method App\\Http\\Middleware\\RedirectIfOnboarded\:\:handle\(\) should return Symfony\\Component\\HttpFoundation\\Response but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Http/Middleware/RedirectIfOnboarded.php
+
+		-
+			message: '#^Cannot call method add\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Requests/Admin/SendInviteRequest.php
+
+		-
+			message: '#^Cannot call method after\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Requests/Admin/SendInviteRequest.php
+
+		-
+			message: '#^Cannot call method errors\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Requests/Admin/SendInviteRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Admin\\SendInviteRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/Admin/SendInviteRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Admin\\SendInviteRequest\:\:withValidator\(\) has parameter \$validator with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Requests/Admin/SendInviteRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Admin\\StoreCompanyRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/Admin/StoreCompanyRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Admin\\StorePlanRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/Admin/StorePlanRequest.php
+
+		-
+			message: '#^Cannot call method add\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Requests/Admin/StoreUserRequest.php
+
+		-
+			message: '#^Cannot call method after\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Requests/Admin/StoreUserRequest.php
+
+		-
+			message: '#^Cannot call method can\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Requests/Admin/StoreUserRequest.php
+
+		-
+			message: '#^Cannot call method companies\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Requests/Admin/StoreUserRequest.php
+
+		-
+			message: '#^Cannot call method errors\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Requests/Admin/StoreUserRequest.php
+
+		-
+			message: '#^Cannot call method isSuper\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Requests/Admin/StoreUserRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Admin\\StoreUserRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/Admin/StoreUserRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Admin\\StoreUserRequest\:\:withValidator\(\) has parameter \$validator with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Requests/Admin/StoreUserRequest.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array given\.$#'
+			identifier: argument.type
+			count: 2
+			path: app/Http/Requests/Admin/StoreUserRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Admin\\UpdateCompanyRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/Admin/UpdateCompanyRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Admin\\UpdatePlanRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/Admin/UpdatePlanRequest.php
+
+		-
+			message: '#^Cannot call method add\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Requests/Admin/UpdateUserRequest.php
+
+		-
+			message: '#^Cannot call method after\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Requests/Admin/UpdateUserRequest.php
+
+		-
+			message: '#^Cannot call method companies\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Requests/Admin/UpdateUserRequest.php
+
+		-
+			message: '#^Cannot call method errors\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Requests/Admin/UpdateUserRequest.php
+
+		-
+			message: '#^Cannot call method isSuper\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Requests/Admin/UpdateUserRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Admin\\UpdateUserRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/Admin/UpdateUserRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Admin\\UpdateUserRequest\:\:withValidator\(\) has parameter \$validator with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Requests/Admin/UpdateUserRequest.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array given\.$#'
+			identifier: argument.type
+			count: 2
+			path: app/Http/Requests/Admin/UpdateUserRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Api\\StoreCompanyRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/Api/StoreCompanyRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Api\\StoreLeadRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/Api/StoreLeadRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Api\\UpdateCompanyRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/Api/UpdateCompanyRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Api\\UpdateLeadRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/Api/UpdateLeadRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\App\\StoreLeadRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/App/StoreLeadRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\App\\UpdateLeadRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/App/UpdateLeadRequest.php
+
+		-
+			message: '#^Call to an undefined static method Illuminate\\Support\\Facades\\Password\:\:defaults\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Requests/Super/UserStoreRequest.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array given\.$#'
+			identifier: argument.type
+			count: 2
+			path: app/Http/Requests/Super/UserStoreRequest.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\CompanyCollection\:\:currentPage\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/CompanyCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\CompanyCollection\:\:lastPage\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Http/Resources/CompanyCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\CompanyCollection\:\:nextPageUrl\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/CompanyCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\CompanyCollection\:\:perPage\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/CompanyCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\CompanyCollection\:\:previousPageUrl\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/CompanyCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\CompanyCollection\:\:total\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/CompanyCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\CompanyCollection\:\:url\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Http/Resources/CompanyCollection.php
+
+		-
+			message: '#^Method App\\Http\\Resources\\CompanyCollection\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Resources/CompanyCollection.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CompanyResource\:\:\$country\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CompanyResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CompanyResource\:\:\$currency\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CompanyResource\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CompanyResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CompanyResource\:\:\$is_active\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CompanyResource\:\:\$language\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CompanyResource\:\:\$logo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CompanyResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CompanyResource\:\:\$plan\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CompanyResource\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CompanyResource\:\:\$timezone\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CompanyResource\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CompanyResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CompanyResource\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Cannot access property \$id on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Cannot access property \$name on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Cannot call method toIsoString\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Method App\\Http\\Resources\\CompanyResource\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Resources/CompanyResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\LeadCollection\:\:currentPage\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/LeadCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\LeadCollection\:\:lastPage\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Http/Resources/LeadCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\LeadCollection\:\:nextPageUrl\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/LeadCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\LeadCollection\:\:perPage\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/LeadCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\LeadCollection\:\:previousPageUrl\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/LeadCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\LeadCollection\:\:total\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/LeadCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\LeadCollection\:\:url\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Http/Resources/LeadCollection.php
+
+		-
+			message: '#^Method App\\Http\\Resources\\LeadCollection\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Resources/LeadCollection.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\LeadResource\:\:\$company\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\LeadResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\LeadResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\LeadResource\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\LeadResource\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\LeadResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\LeadResource\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Cannot access property \$id on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Cannot access property \$name on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Cannot access property \$value on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Cannot call method label\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Cannot call method toIsoString\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Method App\\Http\\Resources\\LeadResource\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ServiceCollection\:\:currentPage\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ServiceCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ServiceCollection\:\:lastPage\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Http/Resources/ServiceCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ServiceCollection\:\:nextPageUrl\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ServiceCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ServiceCollection\:\:perPage\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ServiceCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ServiceCollection\:\:previousPageUrl\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ServiceCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ServiceCollection\:\:total\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ServiceCollection.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ServiceCollection\:\:url\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Http/Resources/ServiceCollection.php
+
+		-
+			message: '#^Method App\\Http\\Resources\\ServiceCollection\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Resources/ServiceCollection.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ServiceResource\:\:\$about\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ServiceResource\:\:\$code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ServiceResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ServiceResource\:\:\$features\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ServiceResource\:\:\$icon\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ServiceResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ServiceResource\:\:\$is_active\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ServiceResource\:\:\$logo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ServiceResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ServiceResource\:\:\$provider\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ServiceResource\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ServiceResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ServiceResource\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ServiceResource\:\:\$version\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Cannot call method toIsoString\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Method App\\Http\\Resources\\ServiceResource\:\:toArray\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Resources/ServiceResource.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: app/Imports/LeadListImport.php
+
+		-
+			message: '#^Method App\\Imports\\LeadListImport\:\:model\(\) has parameter \$row with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Imports/LeadListImport.php
+
+		-
+			message: '#^Parameter \#1 \$time of static method Illuminate\\Support\\Facades\\Date\:\:parse\(\) expects Carbon\\Month\|Carbon\\WeekDay\|DateTimeInterface\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Imports/LeadListImport.php
+
+		-
+			message: '#^Method App\\Listeners\\AuthenticationActivitySubscriber\:\:subscribe\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Listeners/AuthenticationActivitySubscriber.php
+
+		-
+			message: '#^Property App\\Livewire\\Admin\\Dashboard\:\:\$quickStats with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Livewire/Admin/Dashboard.php
+
+		-
+			message: '#^Property App\\Livewire\\Admin\\Dashboard\:\:\$recentActivities with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Livewire/Admin/Dashboard.php
+
+		-
+			message: '#^Property App\\Livewire\\Admin\\Dashboard\:\:\$recentRegistrations with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Livewire/Admin/Dashboard.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 6
+			path: app/Livewire/Dashboard.php
+
+		-
+			message: '#^Property App\\Livewire\\Dashboard\:\:\$donutChartData type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Livewire/Dashboard.php
+
+		-
+			message: '#^Property App\\Livewire\\Dashboard\:\:\$lineChartData type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Livewire/Dashboard.php
+
+		-
+			message: '#^Property App\\Livewire\\Dashboard\:\:\$recentActivities with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Livewire/Dashboard.php
+
+		-
+			message: '#^Property App\\Livewire\\Dashboard\:\:\$recentLeads with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Livewire/Dashboard.php
+
+		-
+			message: '#^Cannot access property \$currentCompany on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Livewire/Onboarding.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Livewire/Onboarding.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Livewire/Onboarding.php
+
+		-
+			message: '#^Class App\\Models\\Company uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Company.php
+
+		-
+			message: '#^Method App\\Models\\Company\:\:services\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Service, Illuminate\\Database\\Eloquent\\Relations\\Pivot, ''pivot''\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Service, \$this\(App\\Models\\Company\), Illuminate\\Database\\Eloquent\\Relations\\Pivot, ''pivot''\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Company.php
+
+		-
+			message: '#^Method App\\Models\\Company\:\:users\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\User, Illuminate\\Database\\Eloquent\\Relations\\Pivot, ''pivot''\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\User, \$this\(App\\Models\\Company\), Illuminate\\Database\\Eloquent\\Relations\\Pivot, ''pivot''\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Company.php
+
+		-
+			message: '#^Type string in generic type Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Service, Illuminate\\Database\\Eloquent\\Relations\\Pivot, string\> in PHPDoc tag @return is not subtype of template type TPivotModel of Illuminate\\Database\\Eloquent\\Relations\\Pivot \= Illuminate\\Database\\Eloquent\\Relations\\Pivot of class Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\.$#'
+			identifier: generics.notSubtype
+			count: 1
+			path: app/Models/Company.php
+
+		-
+			message: '#^Type string in generic type Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\User, Illuminate\\Database\\Eloquent\\Relations\\Pivot, string\> in PHPDoc tag @return is not subtype of template type TPivotModel of Illuminate\\Database\\Eloquent\\Relations\\Pivot \= Illuminate\\Database\\Eloquent\\Relations\\Pivot of class Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\.$#'
+			identifier: generics.notSubtype
+			count: 3
+			path: app/Models/Company.php
+
+		-
+			message: '#^Class App\\Models\\Invite uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Invite.php
+
+		-
+			message: '#^Method App\\Models\\Invite\:\:company\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Invite.php
+
+		-
+			message: '#^Method App\\Models\\Invite\:\:inviter\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Invite.php
+
+		-
+			message: '#^Class App\\Models\\Lead uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Lead.php
+
+		-
+			message: '#^Class App\\Models\\LeadList uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/LeadList.php
+
+		-
+			message: '#^Method App\\Models\\LeadList\:\:fullAddress\(\) return type with generic class Illuminate\\Database\\Eloquent\\Casts\\Attribute does not specify its types\: TGet, TSet$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/LeadList.php
+
+		-
+			message: '#^Method App\\Models\\LeadList\:\:name\(\) return type with generic class Illuminate\\Database\\Eloquent\\Casts\\Attribute does not specify its types\: TGet, TSet$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/LeadList.php
+
+		-
+			message: '#^PHPDoc type array of property App\\Models\\LeadList\:\:\$appends is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$appends\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: app/Models/LeadList.php
+
+		-
+			message: '#^Property App\\Models\\LeadList\:\:\$appends type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Models/LeadList.php
+
+		-
+			message: '#^Class App\\Models\\Log uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Log.php
+
+		-
+			message: '#^Class App\\Models\\Plan uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Plan.php
+
+		-
+			message: '#^Method App\\Models\\Plan\:\:companies\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Company, App\\Models\\Plan, Illuminate\\Database\\Eloquent\\Relations\\Pivot, ''pivot''\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Company, \$this\(App\\Models\\Plan\), Illuminate\\Database\\Eloquent\\Relations\\Pivot, ''pivot''\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Plan.php
+
+		-
+			message: '#^Method App\\Models\\Plan\:\:services\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Service, App\\Models\\Plan, Illuminate\\Database\\Eloquent\\Relations\\Pivot, ''pivot''\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Service, \$this\(App\\Models\\Plan\), Illuminate\\Database\\Eloquent\\Relations\\Pivot, ''pivot''\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Plan.php
+
+		-
+			message: '#^Class App\\Models\\Service uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Service.php
+
+		-
+			message: '#^Method App\\Models\\Service\:\:companies\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Company, Illuminate\\Database\\Eloquent\\Relations\\Pivot, ''pivot''\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Company, \$this\(App\\Models\\Service\), Illuminate\\Database\\Eloquent\\Relations\\Pivot, ''pivot''\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Service.php
+
+		-
+			message: '#^Method App\\Models\\Service\:\:plans\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Plan, Illuminate\\Database\\Eloquent\\Relations\\Pivot, ''pivot''\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Plan, \$this\(App\\Models\\Service\), Illuminate\\Database\\Eloquent\\Relations\\Pivot, ''pivot''\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Service.php
+
+		-
+			message: '#^Method App\\Models\\Service\:\:scopeActive\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Service.php
+
+		-
+			message: '#^Method App\\Models\\Service\:\:scopeActive\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Service.php
+
+		-
+			message: '#^Method App\\Models\\Service\:\:scopeDefault\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Service.php
+
+		-
+			message: '#^Method App\\Models\\Service\:\:scopeDefault\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Service.php
+
+		-
+			message: '#^Type string in generic type Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Company, Illuminate\\Database\\Eloquent\\Relations\\Pivot, string\> in PHPDoc tag @return is not subtype of template type TPivotModel of Illuminate\\Database\\Eloquent\\Relations\\Pivot \= Illuminate\\Database\\Eloquent\\Relations\\Pivot of class Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\.$#'
+			identifier: generics.notSubtype
+			count: 1
+			path: app/Models/Service.php
+
+		-
+			message: '#^Type string in generic type Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Plan, Illuminate\\Database\\Eloquent\\Relations\\Pivot, string\> in PHPDoc tag @return is not subtype of template type TPivotModel of Illuminate\\Database\\Eloquent\\Relations\\Pivot \= Illuminate\\Database\\Eloquent\\Relations\\Pivot of class Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\.$#'
+			identifier: generics.notSubtype
+			count: 1
+			path: app/Models/Service.php
+
+		-
+			message: '#^Class App\\Models\\User uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:companies\(\) should return Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Company, Illuminate\\Database\\Eloquent\\Relations\\Pivot, ''pivot''\> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Company, \$this\(App\\Models\\User\), Illuminate\\Database\\Eloquent\\Relations\\Pivot, ''pivot''\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between string and App\\Enums\\UserType\:\:admin will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between string and App\\Enums\\UserType\:\:super will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between string and App\\Enums\\UserType\:\:user will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Type string in generic type Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Company, Illuminate\\Database\\Eloquent\\Relations\\Pivot, string\> in PHPDoc tag @return is not subtype of template type TPivotModel of Illuminate\\Database\\Eloquent\\Relations\\Pivot \= Illuminate\\Database\\Eloquent\\Relations\\Pivot of class Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\.$#'
+			identifier: generics.notSubtype
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Notifications\\CompanyInviteNotification\:\:via\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Notifications/CompanyInviteNotification.php
+
+		-
+			message: '#^Parameter \#1 \$company of method App\\Models\\User\:\:belongsToCompany\(\) expects App\\Models\\Company, App\\Models\\Company\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Policies/CompanyPolicy.php
+
+		-
+			message: '#^Parameter \#1 \$company of method App\\Models\\User\:\:belongsToCompany\(\) expects App\\Models\\Company, int\<0, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Policies/InvitePolicy.php
+
+		-
+			message: '#^Parameter \#1 \$company of method App\\Models\\User\:\:isAdminOf\(\) expects App\\Models\\Company, int\<0, max\> given\.$#'
+			identifier: argument.type
+			count: 2
+			path: app/Policies/InvitePolicy.php
+
+		-
+			message: '#^Parameter \#1 \$company of method App\\Models\\User\:\:belongsToCompany\(\) expects App\\Models\\Company, App\\Models\\Company\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Policies/LeadPolicy.php
+
+		-
+			message: '#^Parameter \#1 \$company of method App\\Models\\User\:\:isAdminOf\(\) expects App\\Models\\Company, App\\Models\\Company\|null given\.$#'
+			identifier: argument.type
+			count: 2
+			path: app/Policies/LeadPolicy.php
+
+		-
+			message: '#^Parameter \#1 \$company of method App\\Models\\User\:\:belongsToCompany\(\) expects App\\Models\\Company, App\\Models\\Company\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Policies/UserPolicy.php
+
+		-
+			message: '#^Parameter \#1 \$company of method App\\Models\\User\:\:isAdminOf\(\) expects App\\Models\\Company, App\\Models\\Company\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Policies/UserPolicy.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Contracts\\Auth\\Authenticatable\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Parameter \#1 \$value of static method Illuminate\\Support\\Str\:\:lower\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Providers/FortifyServiceProvider.php
+
+		-
+			message: '#^Class App\\Tenancy\\CompanyTenantResolver implements generic interface SaeedHosan\\Tenancy\\Contracts\\TenantResolver but does not specify its types\: TTenant$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Tenancy/CompanyTenantResolver.php
+
+		-
+			message: '#^Method App\\Tenancy\\CompanyTenantResolver\:\:resolveAccessibleTenantKeys\(\) should return array\<int, int\|string\> but returns list\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Tenancy/CompanyTenantResolver.php
+
+		-
+			message: '#^Method App\\Tenancy\\CompanyTenantResolver\:\:resolveRouteTenant\(\) should return Illuminate\\Database\\Eloquent\\Model\|null but returns Illuminate\\Database\\Eloquent\\Collection\<int, Illuminate\\Database\\Eloquent\\Model\>\|Illuminate\\Database\\Eloquent\\Model\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Tenancy/CompanyTenantResolver.php
+
+		-
+			message: '#^Offset 0 on non\-empty\-list\<string\> on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: app/Tenancy/CompanyTenantResolver.php

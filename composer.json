@@ -11,6 +11,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
+        "dedoc/scramble": "^0.13.28",
         "driftingly/rector-laravel": "*",
         "laravel/fortify": "^1.30",
         "laravel/framework": "^13.0",
@@ -23,11 +24,13 @@
         "saeedhosan/laravel-tenancy": "^0.0",
         "saeedhosan/laravel-useful": "^0.0",
         "spatie/laravel-activitylog": "^5.0",
-        "spatie/laravel-ignition": "^2.12"
+        "spatie/laravel-ignition": "^2.12",
+        "stripe/stripe-php": "^20.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "fruitcake/laravel-debugbar": "^4.1",
+        "larastan/larastan": "^3.10",
         "laravel/boost": "^2.2",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.24",
@@ -84,6 +87,7 @@
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
         ],
+        "phpstan": "phpstan analyse --ansi --memory-limit=1G",
         "lint": [
             "rector",
             "pint --parallel"
@@ -91,6 +95,9 @@
         "test:lint": [
             "pint --parallel --test",
             "rector --dry-run"
+        ],
+        "test:phpstan": [
+            "@phpstan"
         ],
         "test:type-coverage": "pest --type-coverage --min=100",
         "test:unit": "pest --parallel",

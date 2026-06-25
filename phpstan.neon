@@ -1,0 +1,20 @@
+includes:
+    - phpstan-baseline.neon
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: max
+
+    paths:
+        - app/
+
+    excludePaths:
+        - vendor/
+
+    tmpDir: storage/phpstan
+
+    earlyTerminatingMethodCalls:
+        abort: []
+        redirect: []
+        to_route: []
+

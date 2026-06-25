@@ -1,0 +1,20 @@
+name: load tests
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 1'
+
+jobs:
+  k6:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run K6 load test
+        uses: grafana/k6-action@v0.3.1
+        with:
+          filename: tests/Load/health.js
+          flags: --env BASE_URL=https://lumexa.saeedhosan.com
