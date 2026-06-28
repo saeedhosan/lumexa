@@ -3,15 +3,24 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      tags:
+        - lumexa_app
+    image: lumexa_app
     container_name: lumexa_server
     restart: unless-stopped
     ports:
       - "${APP_PORT:-8000}:8000"
     volumes:
       - .:/var/www/html
-      - /var/www/html/vendor
-      - /var/www/html/node_modules
-    command: ["php", "artisan", "octane:frankenphp", "--host=0.0.0.0", "--port=8000", "--watch"]
+    command:
+      [
+        "php",
+        "artisan",
+        "octane:frankenphp",
+        "--host=0.0.0.0",
+        "--port=8000",
+        "--watch",
+      ]
     environment:
       - APP_ENV=local
       - APP_DEBUG=true
