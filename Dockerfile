@@ -1,6 +1,7 @@
 FROM dunglas/frankenphp:1.3-php8.4-alpine
 
-RUN apk add --no-cache \
+RUN apk add --no-cache --upgrade -X https://dl-cdn.alpinelinux.org/alpine/edge/main sqlite-libs \
+    && apk add --no-cache \
     git \
     unzip \
     libzip-dev \
