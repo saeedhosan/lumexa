@@ -2,9 +2,13 @@
 set -e
 
 if [ ! -f .env ]; then
-    echo "Creating .env from .env.example..."
-    cp .env.example .env
-    php artisan key:generate --force
+    if [ -f .env.example ]; then
+        echo "Creating .env from .env.example..."
+        cp .env.example .env
+        php artisan key:generate --force
+    else
+        echo "No .env or .env.example found — relying on environment variables."
+    fi
 fi
 
 if [ ! -d vendor ]; then
