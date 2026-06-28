@@ -38,7 +38,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
-            $table->string('zip_code', 6)->nullable();
+            $table->string('zip_code', 10)->nullable();
             $table->date('birth_of_date')->nullable();
             $table->enum('status', LeadListStatus::values())->nullable();
             $table->timestamps();
