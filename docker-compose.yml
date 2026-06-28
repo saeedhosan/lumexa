@@ -12,6 +12,7 @@ services:
       - "${APP_PORT:-8000}:8000"
     volumes:
       - .:/var/www/html
+      - /var/www/html/frankenphp
     command:
       [
         "php",
