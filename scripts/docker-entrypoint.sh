@@ -1,6 +1,11 @@
 #!/bin/sh
 set -e
 
+if [ ! -d vendor ]; then
+    echo "Installing Composer dependencies..."
+    composer install --no-interaction --prefer-dist --optimize-autoloader
+fi
+
 if [ ! -f .env ]; then
     if [ -f .env.example ]; then
         echo "Creating .env from .env.example..."
@@ -9,11 +14,6 @@ if [ ! -f .env ]; then
     else
         echo "No .env or .env.example found — relying on environment variables."
     fi
-fi
-
-if [ ! -d vendor ]; then
-    echo "Installing Composer dependencies..."
-    composer install --no-interaction --prefer-dist --optimize-autoloader
 fi
 
 if [ ! -d node_modules ]; then
