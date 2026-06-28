@@ -1,11 +1,11 @@
 services:
-  app:
+  lumexa:
     build:
       context: .
       dockerfile: Dockerfile
       tags:
-        - lumexa_app
-    image: lumexa_app
+        - lumexa
+    image: lumexa
     container_name: lumexa_server
     restart: unless-stopped
     ports:
