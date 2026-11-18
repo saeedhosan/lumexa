@@ -11,6 +11,7 @@ use App\Http\Requests\Api\UpdateCompanyRequest;
 use App\Http\Resources\CompanyCollection;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -25,8 +26,10 @@ class CompanyController extends Controller
 
         $query = Company::query()->with('plan');
 
-        if ($request->user()->type === UserType::user) {
-            $query->whereIn('companies.id', $request->user()->companies()->select('companies.id'));
+        $user = $request->user();
+
+        if ($user instanceof User && $user->isUser()) {
+            $query->whereIn('companies.id', $user->companies()->select('companies.id'));
         }
 
         return new CompanyCollection($query->latest()->paginate($perPage));
