@@ -1,20 +1,26 @@
 includes:
-    - phpstan-baseline.neon
     - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+    - phar://phpstan.phar/conf/bleedingEdge.neon
 
 parameters:
-    level: max
-
+    parallel:
+        maximumNumberOfProcesses: 4
+    reportUnmatchedIgnoredErrors: false
+    stubFiles:
+        # - stubs/phpstan/your.stub
     paths:
-        - app/
+        - app
 
     excludePaths:
-        - vendor/
+        analyse:
+            # - item
+        analyseAndScan:
+            ## Ignore especific files
 
-    tmpDir: storage/phpstan
+    level: 4
 
-    earlyTerminatingMethodCalls:
-        abort: []
-        redirect: []
-        to_route: []
+    tmpDir: /tmp/phpstan
 
+    ignoreErrors:
+        - "#PHPDoc tag @var#"

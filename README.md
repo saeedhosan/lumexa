@@ -99,19 +99,19 @@ composer setup
 
 The seeded database includes ready-to-use demo accounts.
 
-| Role | Email | Password |
-| --- | --- | --- |
+| Role        | Email               | Password   |
+| ----------- | ------------------- | ---------- |
 | Super Admin | `super@example.com` | `demo1234` |
-| Admin | `admin@example.com` | `demo1234` |
-| User | `user@example.com` | `demo1234` |
+| Admin       | `admin@example.com` | `demo1234` |
+| User        | `user@example.com`  | `demo1234` |
 
-### Live Demo
+<!-- ### Live Demo
 
 [![Live Demo](https://img.shields.io/badge/demo-online-brightgreen)](https://lumexa.saeedhosan.com)
 
 - Application: [https://lumexa.saeedhosan.com](https://lumexa.saeedhosan.com)
 - Admin panel: [https://lumexa.saeedhosan.com/admin](https://lumexa.saeedhosan.com/admin)
-- API base: [https://lumexa.saeedhosan.com/api/v1](https://lumexa.saeedhosan.com/api/v1)
+- API base: [https://lumexa.saeedhosan.com/api/v1](https://lumexa.saeedhosan.com/api/v1) -->
 
 ## API
 
