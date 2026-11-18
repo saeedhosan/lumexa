@@ -19,6 +19,7 @@ RUN install-php-extensions \
     opcache
 
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+COPY --from=oven/bun:1-alpine /usr/local/bin/bun /usr/local/bin/bun
 
 WORKDIR /var/www/html
 
@@ -41,13 +42,11 @@ ENTRYPOINT ["docker-entrypoint.sh"]
 
 FROM base AS dev
 
-RUN apk add --no-cache nodejs npm
-
 COPY . .
 
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader \
-    && npm ci \
-    && npm run build \
+    && bun install --frozen-lockfile \
+    && bun --bun run build \
     && php artisan storage:link --force \
     && chown -R www-data:www-data /var/www/html
 
@@ -55,13 +54,11 @@ CMD ["php", "artisan", "octane:frankenphp", "--host=0.0.0.0", "--port=8000", "--
 
 FROM base AS assets
 
-RUN apk add --no-cache nodejs npm
-
 COPY . .
 
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader \
-    && npm ci \
-    && npm run build
+    && bun install --frozen-lockfile \
+    && bun --bun run build
 
 FROM base AS production
 

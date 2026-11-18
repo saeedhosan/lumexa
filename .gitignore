@@ -22,7 +22,6 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
-bun.lock
 package-lock.json
 docs/prompt.md
 /storage/phpstan/cache

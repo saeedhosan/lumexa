@@ -126,7 +126,7 @@ services:
         depends_on:
             app:
                 condition: service_started
-        command: [ "sh", "-c", "npm ci --no-audit --no-fund && npm run dev -- --host 0.0.0.0" ]
+        command: [ "sh", "-c", "bun install --frozen-lockfile && bun --bun run dev -- --host 0.0.0.0" ]
 
     mysql:
         image: mysql:8.0
