@@ -88,7 +88,6 @@
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
         ],
-        "phpstan": "phpstan analyse --ansi --memory-limit=1G",
         "lint": [
             "rector",
             "pint --parallel"
@@ -97,12 +96,11 @@
             "pint --parallel --test",
             "rector --dry-run"
         ],
-        "test:phpstan": [
-            "@phpstan"
-        ],
+        "test:types": "phpstan",
         "test:type-coverage": "pest --type-coverage --min=100",
         "test:unit": "pest --parallel",
         "test": [
+            "@test:types",
             "@test:unit",
             "@test:lint"
         ]
