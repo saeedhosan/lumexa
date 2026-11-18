@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tenancy;
 
-use App\Enums\UserType;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -31,7 +30,7 @@ class CompanyTenantResolver implements TenantResolverContract
 
     public function resolveUserTenant(?Authenticatable $user): ?Model
     {
-        if (! $user instanceof User || $user->type !== UserType::user) {
+        if (! $user instanceof User || ! $user->isUser()) {
             return null;
         }
 
@@ -57,14 +56,16 @@ class CompanyTenantResolver implements TenantResolverContract
 
         $companyId = $request->route('company_id');
 
-        return $companyId
-            ? Company::query()->find($companyId)
-            : null;
+        if (! is_numeric($companyId)) {
+            return null;
+        }
+
+        return Company::query()->whereKey((int) $companyId)->first();
     }
 
     public function resolveAccessibleTenantKeys(?Authenticatable $user, ?Model $userTenant): array
     {
-        if (! $user instanceof User || $user->type !== UserType::user || ! $userTenant instanceof Company) {
+        if (! $user instanceof User || ! $user->isUser() || ! $userTenant instanceof Company) {
             return [];
         }
 
@@ -76,6 +77,6 @@ class CompanyTenantResolver implements TenantResolverContract
     public function shouldScope(?Authenticatable $user): bool
     {
         // Admin and super-admin routes are intentionally outside customer tenancy.
-        return $user instanceof User && $user->type === UserType::user;
+        return $user instanceof User && $user->isUser();
     }
 }
