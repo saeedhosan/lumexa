@@ -28,13 +28,10 @@ return Application::configure(basePath: dirname(__DIR__))
             EnsureFrontendRequestsAreStateful::class,
         ]);
 
-        $middleware->web(append: [
-            TenantMiddleware::class,
-        ]);
-
         $middleware->alias([
             'customer'   => CustomerMiddleware::class,
             'onboarding' => RedirectIfOnboarded::class,
+            'tenant'     => TenantMiddleware::class,
             'super'      => function ($request, $next) {
                 abort_if($request->user()?->type !== UserType::super, 403);
 
@@ -47,7 +44,7 @@ return Application::configure(basePath: dirname(__DIR__))
             CustomerMiddleware::class,
         ]);
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
+    ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthorizationException $e, Request $request) {
             if ($request->expectsJson()) {
                 return response()->json(['message' => $e->getMessage()], 403);
