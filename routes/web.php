@@ -18,6 +18,6 @@ Route::middleware('auth')->group(function (): void {
         ->name('onboarding');
 });
 
-Route::middleware(['auth', 'customer'])->group(base_path('routes/app.php'));
+Route::middleware(['auth', 'customer', 'tenant'])->group(base_path('routes/app.php'));
 
 Route::middleware('auth')->name('admin.')->prefix('admin')->group(base_path('routes/admin.php'));

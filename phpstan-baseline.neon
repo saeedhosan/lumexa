@@ -397,12 +397,6 @@ parameters:
 			path: app/Http/Controllers/App/CompanyController.php
 
 		-
-			message: '#^Cannot access property \$current_company_id on App\\Models\\User\|null\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: app/Http/Controllers/App/LeadController.php
-
-		-
 			message: '#^Parameter \#1 \$name of static method Illuminate\\Cache\\CacheManager\:\:store\(\) expects string\|UnitEnum\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 3
@@ -1273,30 +1267,6 @@ parameters:
 			path: app/Models/Service.php
 
 		-
-			message: '#^Method App\\Models\\Service\:\:scopeActive\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: app/Models/Service.php
-
-		-
-			message: '#^Method App\\Models\\Service\:\:scopeActive\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: app/Models/Service.php
-
-		-
-			message: '#^Method App\\Models\\Service\:\:scopeDefault\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: app/Models/Service.php
-
-		-
-			message: '#^Method App\\Models\\Service\:\:scopeDefault\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: app/Models/Service.php
-
-		-
 			message: '#^Type string in generic type Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\<App\\Models\\Company, Illuminate\\Database\\Eloquent\\Relations\\Pivot, string\> in PHPDoc tag @return is not subtype of template type TPivotModel of Illuminate\\Database\\Eloquent\\Relations\\Pivot \= Illuminate\\Database\\Eloquent\\Relations\\Pivot of class Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany\.$#'
 			identifier: generics.notSubtype
 			count: 1
@@ -1403,27 +1373,3 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: app/Providers/FortifyServiceProvider.php
-
-		-
-			message: '#^Class App\\Tenancy\\CompanyTenantResolver implements generic interface SaeedHosan\\Tenancy\\Contracts\\TenantResolver but does not specify its types\: TTenant$#'
-			identifier: missingType.generics
-			count: 1
-			path: app/Tenancy/CompanyTenantResolver.php
-
-		-
-			message: '#^Method App\\Tenancy\\CompanyTenantResolver\:\:resolveAccessibleTenantKeys\(\) should return array\<int, int\|string\> but returns list\<mixed\>\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Tenancy/CompanyTenantResolver.php
-
-		-
-			message: '#^Method App\\Tenancy\\CompanyTenantResolver\:\:resolveRouteTenant\(\) should return Illuminate\\Database\\Eloquent\\Model\|null but returns Illuminate\\Database\\Eloquent\\Collection\<int, Illuminate\\Database\\Eloquent\\Model\>\|Illuminate\\Database\\Eloquent\\Model\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Tenancy/CompanyTenantResolver.php
-
-		-
-			message: '#^Offset 0 on non\-empty\-list\<string\> on left side of \?\? always exists and is not nullable\.$#'
-			identifier: nullCoalesce.offset
-			count: 1
-			path: app/Tenancy/CompanyTenantResolver.php

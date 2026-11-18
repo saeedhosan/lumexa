@@ -10,6 +10,7 @@ use App\Http\Requests\Api\UpdateCompanyRequest;
 use App\Http\Resources\CompanyCollection;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -18,18 +19,25 @@ class CompanyController extends Controller
 {
     public function index(Request $request): JsonResource
     {
+        $this->authorize('viewAny', Company::class);
+
         $perPage = min((int) $request->query('per_page', 15), 100);
 
-        $companies = Company::query()
-            ->with('plan')
-            ->latest()
-            ->paginate($perPage);
+        $query = Company::query()->with('plan');
 
-        return new CompanyCollection($companies);
+        $user = $request->user();
+
+        if ($user instanceof User && $user->isUser()) {
+            $query->whereIn('companies.id', $user->companies()->select('companies.id'));
+        }
+
+        return new CompanyCollection($query->latest()->paginate($perPage));
     }
 
     public function store(StoreCompanyRequest $request): JsonResource
     {
+        $this->authorize('create', Company::class);
+
         $company = Company::query()->create(
             $request->validated() + ['created_by' => $request->user()?->id]
         );
@@ -37,9 +45,11 @@ class CompanyController extends Controller
         return new CompanyResource($company);
     }
 
-    public function show(int $id): JsonResource
+    public function show(Request $request, int $id): JsonResource
     {
         $company = Company::query()->with('plan')->findOrFail($id);
+
+        $this->authorize('view', $company);
 
         return new CompanyResource($company);
     }
@@ -47,6 +57,9 @@ class CompanyController extends Controller
     public function update(UpdateCompanyRequest $request, int $id): JsonResource
     {
         $company = Company::query()->findOrFail($id);
+
+        $this->authorize('update', $company);
+
         $company->update($request->validated());
 
         return new CompanyResource($company->load('plan'));
@@ -54,7 +67,11 @@ class CompanyController extends Controller
 
     public function destroy(int $id): JsonResponse
     {
-        Company::query()->findOrFail($id)->delete();
+        $company = Company::query()->findOrFail($id);
+
+        $this->authorize('delete', $company);
+
+        $company->delete();
 
         return response()->json(['message' => 'Company deleted successfully.']);
     }

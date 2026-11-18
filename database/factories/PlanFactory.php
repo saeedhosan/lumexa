@@ -20,9 +20,9 @@ class PlanFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'                    => $this->faker->word(),
-            'slug'                    => $this->faker->unique()->slug(),
-            'description'             => $this->faker->sentence(),
+            'name'                    => fake()->word(),
+            'slug'                    => fake()->unique()->slug(),
+            'description'             => fake()->sentence(),
             'is_active'               => true,
             'is_default'              => false,
             'trial_days'              => 14,

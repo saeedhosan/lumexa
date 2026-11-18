@@ -17,29 +17,29 @@ class CompanyFactory extends Factory
 {
     public function definition(): array
     {
-        $name = $this->faker->company();
+        $name = fake()->company();
 
         return [
-            'uuid'        => $this->faker->uuid(),
+            'uuid'        => fake()->uuid(),
             'name'        => $name,
             'slug'        => Str::slug($name),
-            'logo'        => $this->faker->imageUrl(200, 200, 'business', true, 'logo'),
-            'title'       => $this->faker->catchPhrase(),
-            'description' => $this->faker->paragraph(),
+            'logo'        => fake()->imageUrl(200, 200, 'business', true, 'logo'),
+            'title'       => fake()->catchPhrase(),
+            'description' => fake()->paragraph(),
             'settings'    => [
-                'theme'         => $this->faker->randomElement(['light', 'dark']),
+                'theme'         => fake()->randomElement(['light', 'dark']),
                 'notifications' => [
-                    'email' => $this->faker->boolean(),
-                    'push'  => $this->faker->boolean(),
+                    'email' => fake()->boolean(),
+                    'push'  => fake()->boolean(),
                 ],
             ],
 
-            'language' => $this->faker->randomElement(['en', 'es', 'fr', 'de']),
-            'timezone' => $this->faker->timezone(),
-            'currency' => $this->faker->randomElement(['USD', 'EUR', 'GBP']),
-            'country'  => $this->faker->countryCode(),
+            'language' => fake()->randomElement(['en', 'es', 'fr', 'de']),
+            'timezone' => fake()->timezone(),
+            'currency' => fake()->randomElement(['USD', 'EUR', 'GBP']),
+            'country'  => fake()->countryCode(),
 
-            'is_active' => $this->faker->boolean(80),
+            'is_active' => fake()->boolean(80),
 
             'created_by' => null,
             'updated_by' => null,

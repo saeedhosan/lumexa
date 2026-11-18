@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Policies\ServicePolicy;
 use Database\Factories\ServiceFactory;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Builder;
@@ -124,7 +125,12 @@ class Service extends Model
     /**
      * Scope active services.
      */
-    protected function scopeActive(Builder $query): Builder
+    /**
+     * @param  Builder<Service>  $query
+     * @return Builder<Service>
+     */
+    #[Scope]
+    protected function active(Builder $query): Builder
     {
         return $query->where('is_active', true);
     }
@@ -132,7 +138,12 @@ class Service extends Model
     /**
      * Scope default service.
      */
-    protected function scopeDefault(Builder $query): Builder
+    /**
+     * @param  Builder<Service>  $query
+     * @return Builder<Service>
+     */
+    #[Scope]
+    protected function default(Builder $query): Builder
     {
         return $query->where('is_default', true);
     }

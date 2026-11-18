@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\App\StoreLeadRequest;
 use App\Http\Requests\App\UpdateLeadRequest;
 use App\Models\Lead;
+use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -34,10 +35,13 @@ class LeadController extends Controller
     {
         $this->authorize('create', Lead::class);
 
+        $user = $request->user();
+
+        abort_unless($user instanceof User, 401);
+
         $lead = Lead::query()->create([
-            'title'      => $request->validated()['title'],
-            'user_id'    => auth()->id(),
-            'company_id' => auth()->user()->current_company_id,
+            'title'   => $request->validated()['title'],
+            'user_id' => $user->getAuthIdentifier(),
         ]);
 
         event(new LeadCreated($lead));
