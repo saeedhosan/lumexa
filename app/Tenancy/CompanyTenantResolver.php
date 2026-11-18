@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tenancy;
 
+use App\Enums\UserType;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -11,6 +12,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use SaeedHosan\Tenancy\Contracts\TenantResolver as TenantResolverContract;
 
+/**
+ * Resolve the active company as the request tenant.
+ *
+ * @implements TenantResolverContract<Company>
+ */
 class CompanyTenantResolver implements TenantResolverContract
 {
     public function tenantModel(): string
@@ -25,7 +31,7 @@ class CompanyTenantResolver implements TenantResolverContract
 
     public function resolveUserTenant(?Authenticatable $user): ?Model
     {
-        if (! $user instanceof User) {
+        if (! $user instanceof User || $user->type !== UserType::user) {
             return null;
         }
 
@@ -48,21 +54,24 @@ class CompanyTenantResolver implements TenantResolverContract
         $companyId = $request->route('company_id');
 
         return $companyId
-            ? $this->tenantModel()::query()->find($companyId)
+            ? Company::query()->find($companyId)
             : null;
     }
 
     public function resolveAccessibleTenantKeys(?Authenticatable $user, ?Model $userTenant): array
     {
-        if (! $user instanceof User) {
+        if (! $user instanceof User || $user->type !== UserType::user || ! $userTenant instanceof Company) {
             return [];
         }
 
-        return $userTenant instanceof Model ? [$userTenant->getKey()] : [];
+        // A user may belong to several companies, but each request is scoped
+        // to the currently selected company only.
+        return [$userTenant->getKey()];
     }
 
     public function shouldScope(?Authenticatable $user): bool
     {
-        return $user instanceof User;
+        // Admin and super-admin routes are intentionally outside customer tenancy.
+        return $user instanceof User && $user->type === UserType::user;
     }
 }
