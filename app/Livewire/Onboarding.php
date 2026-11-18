@@ -28,7 +28,7 @@ class Onboarding extends Component
 
         $company = $user->currentCompany;
 
-        $this->companyName = $company?->name ?? $user->name."'s Company";
+        $this->companyName = $company->name ?? $user->name."'s Company";
     }
 
     public function nextStep(): void

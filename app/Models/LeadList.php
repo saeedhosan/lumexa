@@ -40,7 +40,7 @@ class LeadList extends Model
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array
+     * @var list<string>
      */
     protected $appends = ['name', 'full_address'];
 

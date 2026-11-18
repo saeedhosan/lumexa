@@ -116,7 +116,7 @@ class Company extends Model
     /**
      * Get all user for this compoany
      *
-     * @return BelongsToMany<User>
+     * @return BelongsToMany<User, $this>
      */
     public function users(): BelongsToMany
     {
@@ -126,7 +126,7 @@ class Company extends Model
     /**
      * Get admin users
      *
-     * @return BelongsToMany<User>
+     * @return BelongsToMany<User, $this>
      */
     public function admins(): BelongsToMany
     {
@@ -136,7 +136,7 @@ class Company extends Model
     /**
      * Get customers
      *
-     * @return BelongsToMany<User>
+     * @return BelongsToMany<User, $this>
      */
     public function customers(): BelongsToMany
     {
@@ -146,7 +146,7 @@ class Company extends Model
     /**
      * Service assigned to the company.
      *
-     * @return BelongsToMany<Service>
+     * @return BelongsToMany<Service, $this>
      */
     public function services(): BelongsToMany
     {

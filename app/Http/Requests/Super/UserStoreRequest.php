@@ -8,7 +8,7 @@ use App\Enums\UserStatus;
 use App\Enums\UserType;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\Rules\Password;
 
 class UserStoreRequest extends FormRequest
 {

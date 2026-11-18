@@ -25,7 +25,6 @@ class LeadListImport implements ToModel, WithHeadingRow
             try {
                 $birthDate = Date::parse($row['birth_of_date']);
             } catch (Throwable) {
-                $birthDate = null;
             }
         }
 

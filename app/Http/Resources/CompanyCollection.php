@@ -6,8 +6,12 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Override;
 
+/**
+ * @mixin LengthAwarePaginator
+ */
 class CompanyCollection extends ResourceCollection
 {
     public $collects = CompanyResource::class;

@@ -23,6 +23,9 @@ use Laravel\Sanctum\HasApiTokens;
 use Override;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
+/**
+ * @property UserType $type
+ */
 #[UsePolicy(UserPolicy::class)]
 #[UseFactory(UserFactory::class)]
 class User extends Authenticatable implements MustVerifyEmail
@@ -96,7 +99,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * All companies the user belongs to via pivot table.
      *
-     * @return BelongsToMany<Company>
+     * @return BelongsToMany<Company, $this>
      */
     public function companies(): BelongsToMany
     {

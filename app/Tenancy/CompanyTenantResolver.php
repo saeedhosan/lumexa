@@ -46,7 +46,7 @@ class CompanyTenantResolver implements TenantResolverContract
         $host      = $request->getHost();
         $subdomain = explode('.', $host)[0];
 
-        if (! in_array($subdomain, [null, 'app', 'www'], true)) {
+        if (! in_array($subdomain, ['app', 'www'], true)) {
             $company = Company::query()->where('slug', $subdomain)->first();
 
             if ($company !== null) {

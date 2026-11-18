@@ -71,7 +71,7 @@ it('assigns api-created leads to the active company and ignores a submitted comp
         'company_id' => $otherCompany->id,
     ]);
 
-    $response->assertOk();
+    $response->assertCreated();
 
     $this->assertDatabaseHas('leads', [
         'title'      => 'Tenant-safe lead',

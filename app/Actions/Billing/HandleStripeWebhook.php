@@ -8,6 +8,7 @@ use App\Models\Company;
 use Illuminate\Http\Response;
 use Stripe\Event;
 use Stripe\Stripe;
+use Stripe\Subscription;
 use Stripe\Webhook;
 
 class HandleStripeWebhook
@@ -34,7 +35,7 @@ class HandleStripeWebhook
 
     private function handleSubscriptionUpdated(Event $event): void
     {
-        $subscription = $event->data->object;
+        $subscription = Subscription::constructFrom($event->data->object->toArray());
 
         Company::query()
             ->where('stripe_customer_id', $subscription->customer)
@@ -45,7 +46,7 @@ class HandleStripeWebhook
 
     private function handleSubscriptionDeleted(Event $event): void
     {
-        $subscription = $event->data->object;
+        $subscription = Subscription::constructFrom($event->data->object->toArray());
 
         Company::query()
             ->where('stripe_customer_id', $subscription->customer)

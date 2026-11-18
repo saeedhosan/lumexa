@@ -53,7 +53,7 @@ class Plan extends Model
     /**
      * The services that belong to the plan.
      *
-     * @return BelongsToMany<Service, self>
+     * @return BelongsToMany<Service, $this>
      */
     public function services(): BelongsToMany
     {
@@ -63,7 +63,7 @@ class Plan extends Model
     /**
      * The companies that belong to the plan.
      *
-     * @return BelongsToMany<Company, self>
+     * @return BelongsToMany<Company, $this>
      */
     public function companies(): BelongsToMany
     {

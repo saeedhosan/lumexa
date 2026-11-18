@@ -10,6 +10,7 @@ pest()->extend(TestCase::class)
     ->use(RefreshDatabase::class)
     ->beforeEach(function (): void {
         $this->withoutMiddleware(PreventRequestForgery::class);
+        $this->withoutVite();
     })
     ->in('Feature');
 

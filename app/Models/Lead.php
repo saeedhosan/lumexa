@@ -18,6 +18,9 @@ use SaeedHosan\Tenancy\Concerns\HasTenant;
 use SaeedHosan\Useful\Models\Concerns\HasUuid;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
+/**
+ * @property LeadStatus $status
+ */
 #[UsePolicy(LeadPolicy::class)]
 #[UseFactory(LeadFactory::class)]
 class Lead extends Model

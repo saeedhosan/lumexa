@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Enums\Access;
-use App\Enums\UserType;
 use App\Events\LeadCreated;
 use App\Listeners\AuthenticationActivitySubscriber;
 use App\Listeners\LogLeadCreated;
+use App\Models\User;
 use Carbon\CarbonImmutable;
 use Dedoc\Scramble\Scramble;
 use Dedoc\Scramble\Support\Generator\OpenApi;
@@ -73,9 +73,9 @@ class AppServiceProvider extends ServiceProvider
 
     private function configureGateAccess(): void
     {
-        Gate::define(Access::super, fn (Authenticatable $user): bool => $user->type === UserType::super);
-        Gate::define(Access::admin, fn (Authenticatable $user): bool => $user->type === UserType::admin);
-        Gate::define(Access::user, fn (Authenticatable $user): bool => $user->type === UserType::user);
+        Gate::define(Access::super, fn (User $user): bool => $user->isSuper());
+        Gate::define(Access::admin, fn (User $user): bool => $user->isAdmin());
+        Gate::define(Access::user, fn (User $user): bool => $user->isUser());
 
         Scramble::afterOpenApiGenerated(function (OpenApi $openApi): void {
             $openApi->info->description = 'Lumexa is a multi-tenant SaaS platform for managing companies, users, leads, and billing.';

@@ -60,7 +60,7 @@ class Service extends Model
     /**
      * The companies that use this Service.
      *
-     * @return BelongsToMany<Company>
+     * @return BelongsToMany<Company, $this>
      */
     public function companies(): BelongsToMany
     {
@@ -70,7 +70,7 @@ class Service extends Model
     /**
      * The plans that include this service.
      *
-     * @return BelongsToMany<Plan>
+     * @return BelongsToMany<Plan, $this>
      */
     public function plans(): BelongsToMany
     {

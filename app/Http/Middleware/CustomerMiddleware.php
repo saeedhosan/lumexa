@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Enums\UserType;
+use App\Models\User;
 use Closure;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -35,11 +35,11 @@ class CustomerMiddleware
 
     private function getRedirect(?Authenticatable $user): ?string
     {
-        if (is_null($user)) {
+        if (! $user instanceof User) {
             return null;
         }
 
-        if ($user->type === UserType::admin || $user->type === UserType::super) {
+        if ($user->isAdmin() || $user->isSuper()) {
             return route('admin.dashboard', absolute: true);
         }
 
@@ -48,6 +48,6 @@ class CustomerMiddleware
 
     private function isCustomer(?Authenticatable $user): bool
     {
-        return $user instanceof Authenticatable && $user->type === UserType::user;
+        return $user instanceof User && $user->isUser();
     }
 }
