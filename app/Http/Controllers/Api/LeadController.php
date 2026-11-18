@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\LeadStatus;
 use App\Events\LeadCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreLeadRequest;
@@ -34,6 +35,7 @@ class LeadController extends Controller
         $lead = Lead::query()->create([
             ...$request->validated(),
             'user_id' => $request->user()->getAuthIdentifier(),
+            'status'  => LeadStatus::pending,
         ]);
 
         event(new LeadCreated($lead));
