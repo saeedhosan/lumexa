@@ -12,6 +12,7 @@ use App\Http\Requests\Api\UpdateLeadRequest;
 use App\Http\Resources\LeadCollection;
 use App\Http\Resources\LeadResource;
 use App\Models\Lead;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -32,9 +33,13 @@ class LeadController extends Controller
 
     public function store(StoreLeadRequest $request): JsonResource
     {
+        $user = $request->user();
+
+        abort_unless($user instanceof User, 401);
+
         $lead = Lead::query()->create([
             ...$request->validated(),
-            'user_id' => $request->user()->getAuthIdentifier(),
+            'user_id' => $user->getAuthIdentifier(),
             'status'  => LeadStatus::pending,
         ]);
 
