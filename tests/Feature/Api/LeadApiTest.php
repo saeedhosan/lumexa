@@ -35,9 +35,9 @@ it('api leads index requires authentication', function (): void {
 });
 
 it('scopes api leads to the active company only', function (): void {
-    $user = User::factory()->create();
+    $user          = User::factory()->create();
     $activeCompany = Company::factory()->create();
-    $otherCompany = Company::factory()->create();
+    $otherCompany  = Company::factory()->create();
 
     $user->companies()->attach($activeCompany, ['role' => Company::ROLE_USER]);
     $user->companies()->attach($otherCompany, ['role' => Company::ROLE_USER]);
@@ -56,9 +56,9 @@ it('scopes api leads to the active company only', function (): void {
 });
 
 it('assigns api-created leads to the active company and ignores a submitted company id', function (): void {
-    $user = User::factory()->create();
+    $user          = User::factory()->create();
     $activeCompany = Company::factory()->create();
-    $otherCompany = Company::factory()->create();
+    $otherCompany  = Company::factory()->create();
 
     $user->companies()->attach($activeCompany, ['role' => Company::ROLE_USER]);
     $user->companies()->attach($otherCompany, ['role' => Company::ROLE_USER]);
@@ -67,15 +67,15 @@ it('assigns api-created leads to the active company and ignores a submitted comp
     $token = $user->createToken('test')->plainTextToken;
 
     $response = $this->withToken($token)->postJson('/api/v1/leads', [
-        'title' => 'Tenant-safe lead',
+        'title'      => 'Tenant-safe lead',
         'company_id' => $otherCompany->id,
     ]);
 
     $response->assertOk();
 
     $this->assertDatabaseHas('leads', [
-        'title' => 'Tenant-safe lead',
+        'title'      => 'Tenant-safe lead',
         'company_id' => $activeCompany->id,
-        'user_id' => $user->id,
+        'user_id'    => $user->id,
     ]);
 });

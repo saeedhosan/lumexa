@@ -21,8 +21,8 @@ class LogFactory extends Factory
     public function definition(): array
     {
         return [
-            'level'   => $this->faker->randomElement(['info', 'warning', 'error', 'success']),
-            'message' => $this->faker->sentence(),
+            'level'   => fake()->randomElement(['info', 'warning', 'error', 'success']),
+            'message' => fake()->sentence(),
             'context' => [],
             'sources' => [],
         ];

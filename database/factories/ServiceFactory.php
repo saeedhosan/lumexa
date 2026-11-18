@@ -32,31 +32,31 @@ class ServiceFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->unique()->words(3, true);
+        $name = fake()->unique()->words(3, true);
 
         return [
-            'uuid'       => $this->faker->uuid(),
+            'uuid'       => fake()->uuid(),
             'name'       => $name,
             'slug'       => Str::slug($name),
-            'icon'       => $this->faker->imageUrl(64, 64, 'technology', true, 'icon'),
-            'logo'       => $this->faker->imageUrl(200, 200, 'technology', true, 'logo'),
-            'code'       => mb_strtoupper($this->faker->unique()->lexify('????')),
-            'about'      => $this->faker->paragraph(),
-            'is_active'  => $this->faker->boolean(80),
+            'icon'       => fake()->imageUrl(64, 64, 'technology', true, 'icon'),
+            'logo'       => fake()->imageUrl(200, 200, 'technology', true, 'logo'),
+            'code'       => mb_strtoupper(fake()->unique()->lexify('????')),
+            'about'      => fake()->paragraph(),
+            'is_active'  => fake()->boolean(80),
             'is_default' => false,
             'version'    => Service::DEFAULT_VERSION,
-            'provider'   => $this->faker->randomElement(['internal', 'external', null]),
+            'provider'   => fake()->randomElement(['internal', 'external', null]),
             'features'   => [
-                'api_access'      => $this->faker->boolean(),
-                'webhooks'        => $this->faker->boolean(),
-                'custom_branding' => $this->faker->boolean(),
-                'analytics'       => $this->faker->boolean(),
+                'api_access'      => fake()->boolean(),
+                'webhooks'        => fake()->boolean(),
+                'custom_branding' => fake()->boolean(),
+                'analytics'       => fake()->boolean(),
             ],
             'settings' => [
-                'theme'         => $this->faker->randomElement(['light', 'dark', 'system']),
+                'theme'         => fake()->randomElement(['light', 'dark', 'system']),
                 'notifications' => [
-                    'email' => $this->faker->boolean(),
-                    'push'  => $this->faker->boolean(),
+                    'email' => fake()->boolean(),
+                    'push'  => fake()->boolean(),
                 ],
             ],
 
