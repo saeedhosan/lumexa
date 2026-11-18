@@ -35,7 +35,11 @@ class CompanyTenantResolver implements TenantResolverContract
             return null;
         }
 
-        return $user->currentCompany;
+        $company = $user->currentCompany;
+
+        return $company instanceof Company && $user->belongsToCompany($company)
+            ? $company
+            : null;
     }
 
     public function resolveRouteTenant(Request $request): ?Model
