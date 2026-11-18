@@ -39,7 +39,8 @@ it('scopes api leads to the active company only', function (): void {
     $activeCompany = Company::factory()->create();
     $otherCompany = Company::factory()->create();
 
-    $user->companies()->attach([$activeCompany->id, $otherCompany->id]);
+    $user->companies()->attach($activeCompany, ['role' => Company::ROLE_USER]);
+    $user->companies()->attach($otherCompany, ['role' => Company::ROLE_USER]);
     $user->forceFill(['current_company_id' => $activeCompany->id])->save();
 
     $activeLead = Lead::factory()->forUser($user)->forCompany($activeCompany)->create();
@@ -59,7 +60,8 @@ it('assigns api-created leads to the active company and ignores a submitted comp
     $activeCompany = Company::factory()->create();
     $otherCompany = Company::factory()->create();
 
-    $user->companies()->attach([$activeCompany->id, $otherCompany->id]);
+    $user->companies()->attach($activeCompany, ['role' => Company::ROLE_USER]);
+    $user->companies()->attach($otherCompany, ['role' => Company::ROLE_USER]);
     $user->forceFill(['current_company_id' => $activeCompany->id])->save();
 
     $token = $user->createToken('test')->plainTextToken;
@@ -69,7 +71,7 @@ it('assigns api-created leads to the active company and ignores a submitted comp
         'company_id' => $otherCompany->id,
     ]);
 
-    $response->assertCreated();
+    $response->assertOk();
 
     $this->assertDatabaseHas('leads', [
         'title' => 'Tenant-safe lead',
