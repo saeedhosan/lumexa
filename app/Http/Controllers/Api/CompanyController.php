@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreCompanyRequest;
 use App\Http\Requests\Api\UpdateCompanyRequest;
