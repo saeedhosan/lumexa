@@ -13,15 +13,7 @@ services:
     volumes:
       - .:/var/www/html
       - /var/www/html/frankenphp
-    command:
-      [
-        "php",
-        "artisan",
-        "octane:frankenphp",
-        "--host=0.0.0.0",
-        "--port=8000",
-        "--watch",
-      ]
+    command: [ "php", "artisan", "octane:frankenphp", "--host=0.0.0.0", "--port=8000", "--watch" ]
     environment:
       - APP_ENV=local
       - APP_DEBUG=true
@@ -47,7 +39,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD:-secret}"]
+      test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD:-secret}" ]
       retries: 3
       timeout: 5s
     networks:
