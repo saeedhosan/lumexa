@@ -16,8 +16,7 @@ class UpdateLeadRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'      => ['required', 'string', 'max:255'],
-            'company_id' => ['required', 'integer', 'exists:companies,id'],
+            'title' => ['required', 'string', 'max:255'],
         ];
     }
 }
