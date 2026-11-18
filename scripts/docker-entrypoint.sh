@@ -1,38 +1,19 @@
 #!/bin/sh
 set -e
 
-if [ ! -d vendor ]; then
-    echo "Installing Composer dependencies..."
-    composer install --no-interaction --prefer-dist --optimize-autoloader
+mkdir -p \
+    bootstrap/cache \
+    storage/app \
+    storage/framework/cache/data \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/logs
+chown -R www-data:www-data bootstrap/cache storage
+
+if [ "${APP_TARGET:-dev}" = "production" ]; then
+    php artisan config:cache
+    php artisan event:cache
+    chown -R www-data:www-data bootstrap/cache storage
 fi
 
-if [ ! -f .env ]; then
-    if [ -f .env.example ]; then
-        echo "Creating .env from .env.example..."
-        cp .env.example .env
-        php artisan key:generate --force
-    else
-        echo "No .env or .env.example found — relying on environment variables."
-    fi
-fi
-
-if [ ! -d node_modules ]; then
-    echo "Installing npm dependencies..."
-    npm ci
-fi
-
-if [ ! -d public/build ]; then
-    echo "Building frontend assets..."
-    npm run build
-fi
-
-if [ ! -d storage/app/public ]; then
-    echo "Linking storage..."
-    php artisan storage:link --force
-fi
-
-echo "Setting storage permissions..."
-chmod -R 775 storage bootstrap/cache
-
-echo "Starting Octane..."
 exec "$@"

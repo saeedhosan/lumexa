@@ -2,7 +2,8 @@
     "preset": "laravel",
     "notPath": [
         "tests/TestCase.php",
-        "packages"
+        "packages",
+        "public/frankenphp-worker.php"
     ],
     "rules": {
         "strict_param": true,

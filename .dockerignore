@@ -11,3 +11,10 @@ storage/*.key
 .idea/
 .vscode/
 *.log
+public/build
+public/storage
+bootstrap/cache/*.php
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*

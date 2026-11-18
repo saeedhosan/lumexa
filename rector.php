@@ -47,6 +47,7 @@ return RectorConfig::configure()
         FillablePropertyToFillableAttributeRector::class,
         HiddenPropertyToHiddenAttributeRector::class,
         AppendsPropertyToAppendsAttributeRector::class,
+        __DIR__.'/public/frankenphp-worker.php',
         // AddOverrideAttributeToOverriddenMethodsRector::class,
         // AddOverrideAttributeToOverriddenPropertiesRector::class,
     ])

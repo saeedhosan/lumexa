@@ -41,13 +41,15 @@ jobs:
       - name: Install PHP dependencies
         run: composer install --no-dev --optimize-autoloader
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
 
       - name: Install & Build UI
         run: |
-          bun install --frozen-lockfile
-          bun run build
+          npm ci
+          npm run build
 
       - name: Clean unwanted files before deploy
         run: |

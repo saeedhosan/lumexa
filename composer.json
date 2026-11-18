@@ -96,7 +96,7 @@
             "pint --parallel --test",
             "rector --dry-run"
         ],
-        "test:types": "phpstan",
+        "test:types": "phpstan --memory-limit=1G",
         "test:type-coverage": "pest --type-coverage --min=100",
         "test:unit": "pest --parallel",
         "test": [
