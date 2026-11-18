@@ -44,7 +44,7 @@ class CompanyTenantResolver implements TenantResolverContract
     public function resolveRouteTenant(Request $request): ?Model
     {
         $host      = $request->getHost();
-        $subdomain = explode('.', $host)[0] ?? null;
+        $subdomain = explode('.', $host)[0];
 
         if (! in_array($subdomain, [null, 'app', 'www'], true)) {
             $company = Company::query()->where('slug', $subdomain)->first();
@@ -71,7 +71,7 @@ class CompanyTenantResolver implements TenantResolverContract
 
         // A user may belong to several companies, but each request is scoped
         // to the currently selected company only.
-        return [$userTenant->getKey()];
+        return [(int) $userTenant->getKey()];
     }
 
     public function shouldScope(?Authenticatable $user): bool
