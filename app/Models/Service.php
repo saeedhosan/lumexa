@@ -125,6 +125,10 @@ class Service extends Model
     /**
      * Scope active services.
      */
+    /**
+     * @param Builder<Service> $query
+     * @return Builder<Service>
+     */
     #[Scope]
     protected function active(Builder $query): Builder
     {
@@ -133,6 +137,10 @@ class Service extends Model
 
     /**
      * Scope default service.
+     */
+    /**
+     * @param Builder<Service> $query
+     * @return Builder<Service>
      */
     #[Scope]
     protected function default(Builder $query): Builder
