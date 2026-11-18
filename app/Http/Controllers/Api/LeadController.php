@@ -21,10 +21,7 @@ class LeadController extends Controller
     {
         $perPage = min((int) $request->query('per_page', 15), 100);
 
-        $user = $request->user();
-
         $leads = Lead::query()
-            ->whereIn('company_id', $user->companies()->select('companies.id'))
             ->with('company')
             ->latest()
             ->paginate($perPage);
@@ -34,7 +31,10 @@ class LeadController extends Controller
 
     public function store(StoreLeadRequest $request): JsonResource
     {
-        $lead = Lead::query()->create($request->validated());
+        $lead = Lead::query()->create([
+            ...$request->validated(),
+            'user_id' => $request->user()->getAuthIdentifier(),
+        ]);
 
         event(new LeadCreated($lead));
 
@@ -43,10 +43,7 @@ class LeadController extends Controller
 
     public function show(Request $request, int $id): JsonResponse
     {
-        $user = $request->user();
-
         $lead = Lead::query()
-            ->whereIn('company_id', $user->companies()->select('companies.id'))
             ->with('company', 'leadList')
             ->findOrFail($id);
 
@@ -59,11 +56,7 @@ class LeadController extends Controller
 
     public function update(UpdateLeadRequest $request, int $id): JsonResource
     {
-        $user = $request->user();
-
-        $lead = Lead::query()
-            ->whereIn('company_id', $user->companies()->select('companies.id'))
-            ->findOrFail($id);
+        $lead = Lead::query()->findOrFail($id);
 
         $this->authorize('update', $lead);
 
@@ -74,11 +67,7 @@ class LeadController extends Controller
 
     public function destroy(Request $request, int $id): JsonResponse
     {
-        $user = $request->user();
-
-        $lead = Lead::query()
-            ->whereIn('company_id', $user->companies()->select('companies.id'))
-            ->findOrFail($id);
+        $lead = Lead::query()->findOrFail($id);
 
         $this->authorize('delete', $lead);
 
